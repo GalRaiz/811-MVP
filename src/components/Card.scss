@@ -1,16 +1,18 @@
+@use '../styles/variables' as *;
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 25px;
-  padding: 16px;
+  gap: $padding-large;
+  padding: $padding-normal;
 }
 
 .card {
   width: 260px;
-  background: #f4f8ff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background: rgba($primary-color, 0.05);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -27,19 +29,19 @@
 }
 
 .card-content {
-  padding: 15px;
+  padding: $padding-normal;
   text-align: center;
 }
 
 .card-title {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.8rem;
-  font-weight: normal;
+  font-family: $title-font-family;
+  font-size: $h4-font-size;
+  font-weight: $body-font-weight;
   letter-spacing: 1px;
-  color: #333;
+  color: $text-color;
 }
 
 .card-description {
-  font-size: 16px;
-  color: #666;
+  font-size: $body-font-size;
+  color: $text-muted;
 }

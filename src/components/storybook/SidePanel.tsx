@@ -46,10 +46,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
               onChange={(e) => onFilterChange(e.target.value)}
             >
               <option value="">All Types</option>
-              <option value="שינוע">Red</option>
-              <option value="מזון">White</option>
-              <option value="ביגוד">Rosé</option>
-              <option value="בייביסיטר">Sparkling</option>
+
             </select>
           </div>
         );

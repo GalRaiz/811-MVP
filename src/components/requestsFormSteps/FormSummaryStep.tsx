@@ -1,34 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import './FormSummaryStep.scss';
-
-interface CollapsibleSectionProps {
-  title: string;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-}
-
-const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({ title, children, defaultOpen = false }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-
-  return (
-    <div className="collapsible-section">
-      <button 
-        className="collapsible-section__header" 
-        onClick={() => setIsOpen(!isOpen)}
-        type="button"
-      >
-        <span className="collapsible-section__title">{title}</span>
-        <span className={`collapsible-section__arrow ${isOpen ? 'collapsible-section__arrow--open' : ''}`}>
-          ▼
-        </span>
-      </button>
-      <div className={`collapsible-section__content ${isOpen ? 'collapsible-section__content--open' : ''}`}>
-        {children}
-      </div>
-    </div>
-  );
-};
+import CollapsibleSection from '../storybook/Accordion/CollapsibleSection'; 
 
 const FormSummaryStep: React.FC = () => {
   const { formState } = useAssistanceForm();
@@ -53,7 +26,6 @@ const FormSummaryStep: React.FC = () => {
     console.log('===================');
   }, [formState]);
 
-  const formatBoolean = (value: boolean | undefined) => (value ? 'כן' : 'לא');
   const formatArray = (arr: string[] | undefined) => (arr && arr.length > 0 ? arr.join(', ') : 'לא נבחר');
   const formatAttachments = (attachments: string | undefined) => {
     if (!attachments) return 'לא הועלו קבצים';
@@ -82,13 +54,9 @@ const FormSummaryStep: React.FC = () => {
           {formState.needTransportation && <span className="form-summary-step__tag">🚚 שינוע</span>}
           {formState.needVolunteers && <span className="form-summary-step__tag">👥 מתנדבים</span>}
           {formState.district && <span className="form-summary-step__tag">📍 {formState.district}</span>}
-          {formState.requestType && <span className="form-summary-step__tag">🍽️ {formState.requestType}</span>}
-          {formState.requestSubType && formState.requestSubType.length > 0 && (
-            <span className="form-summary-step__tag">{formState.requestSubType[0]}</span>
-          )}
+          {formState.requestType && <span className="form-summary-step__tag">{formState.requestType}</span>}
         </div>
-
-        <CollapsibleSection title="פרטים כלליים" defaultOpen={true}>
+        <CollapsibleSection title="סוג סיוע" defaultOpen={true}>
           <div className="summary-field">
             <label>סוג סיוע:</label>
             <span>{formState.requestType || 'לא נבחר'}</span>
@@ -96,10 +64,6 @@ const FormSummaryStep: React.FC = () => {
           <div className="summary-field">
             <label>תת-סוגים:</label>
             <span>{formatArray(formState.requestSubType)}</span>
-          </div>
-          <div className="summary-field">
-            <label>סטטוס:</label>
-            <span className="summary-field__status">{formState.requestStatus || 'pending'}</span>
           </div>
         </CollapsibleSection>
 
@@ -129,23 +93,13 @@ const FormSummaryStep: React.FC = () => {
           </div>
         </CollapsibleSection>
 
-        <CollapsibleSection title="צרכים נוספים">
-          <div className="summary-field">
-            <label>נדרש שינוע:</label>
-            <span>{formatBoolean(formState.needTransportation)}</span>
-          </div>
-          <div className="summary-field">
-            <label>דרושים מתנדבים:</label>
-            <span>{formatBoolean(formState.needVolunteers)}</span>
-          </div>
-        </CollapsibleSection>
-
         <CollapsibleSection title="קבצים מצורפים">
           <div className="summary-field">
             <label>קבצים:</label>
             <span>{formatAttachments(formState.attachment)}</span>
           </div>
         </CollapsibleSection>
+       
 
         {formState.requestDescription && (
           <div className="form-summary-step__description">
@@ -153,7 +107,6 @@ const FormSummaryStep: React.FC = () => {
             <p className="form-summary-step__description-text">{formState.requestDescription}</p>
           </div>
         )}
-
         <div className="form-summary-step__tasks">
           <h3 className="form-summary-step__tasks-title">משימות</h3>
           <div className="form-summary-step__task-list">
@@ -167,6 +120,12 @@ const FormSummaryStep: React.FC = () => {
               <div className="form-summary-step__task-item">
                 <span className="form-summary-step__task-status">ממתין</span>
                 <span className="form-summary-step__task-text">→ שינוע לכתובת</span>
+              </div>
+            )}
+            {formState.needVolunteers && (
+              <div className="form-summary-step__task-item">
+                <span className="form-summary-step__task-status">ממתין</span>
+                <span className="form-summary-step__task-text">→ מתנדבים</span>
               </div>
             )}
           </div>

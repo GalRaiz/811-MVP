@@ -8,7 +8,7 @@
   
   &__label {
     font-weight: 500;
-    color: #333333;
+    color: $text-color;
     font-size: $body-font-size;
     min-width: 120px;
     text-align: right;
@@ -17,21 +17,21 @@
   &__input {
     flex: 1;
     padding: $padding-normal;
-    border: 1px solid #cccccc;
+    border: 1px solid rgba($border-color, 0.3);
     border-radius: $border-radius;
     font-size: $body-font-size;
-    background-color: #ffffff;
+    background-color: $background-color;
     text-align: right; // Hebrew text alignment
     
     &::placeholder {
-      color: #999999;
+      color: $text-muted;
       text-align: right;
     }
     
     &:focus {
       outline: none;
-      border-color: #2d5016;
-      box-shadow: 0 0 0 2px rgba(45, 80, 22, 0.1);
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
     }
     
     &--with-dropdown {
@@ -53,7 +53,7 @@
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #666666;
+    color: $text-muted;
     font-size: 12px;
     pointer-events: none;
   }

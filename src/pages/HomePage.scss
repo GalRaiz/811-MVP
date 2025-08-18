@@ -1,5 +1,7 @@
+@use '../styles/variables' as *;
+
 body {
-  font-family: "Arial", sans-serif;
+  font-family: $text-font-family-body;
   text-align: center;
 }
 
@@ -8,7 +10,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px 8px;
+  padding: $padding-normal $padding-small;
 }
 
 .header img {
@@ -17,14 +19,14 @@ body {
 
 .header a {
   text-decoration: none;
-  color: #0073e6;
-  font-size: 18px;
+  color: $text-link;
+  font-size: $h5-font-size;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .header a:hover {
-  color: #005bb5;
+  color: $primary-color;
   text-decoration: underline;
 }
 
@@ -34,19 +36,19 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 16px;
-  background-color: #d4e7fa;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: $padding-normal;
+  background-color: rgba($primary-color, 0.1);
+  box-shadow: $box-shadow;
 }
 
 .content-title {
-  font-size: 24px;
+  font-size: $h3-font-size;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
+  color: $text-color;
+  margin-bottom: $padding-small;
 }
 
 .content-subtitle {
-  font-size: 18px;
-  color: #666;
+  font-size: $h5-font-size;
+  color: $text-muted;
 }

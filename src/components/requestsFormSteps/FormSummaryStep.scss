@@ -2,31 +2,18 @@
 @use 'sass:color';
 
 .form-summary-step {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: $padding-large;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
+  padding: $padding-normal;
+  
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: $padding-normal;
     border-bottom: 1px solid rgba($border-color, 0.3);
-    margin-bottom: $padding-large;
+    margin-bottom: $padding-xs;
   }
 
-  &__title {
-    font-size: 24px;
-    font-weight: 700;
-    color: $text-color;
-    margin: 0;
-  }
-
+  
   &__date {
-    font-size: 14px;
     color: $text-muted;
   }
 
@@ -66,6 +53,12 @@
     font-size: 12px;
     font-weight: 500;
     border: 1px solid rgba($primary-color, 0.2);
+  }
+
+  &__collapsible-sections {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-normal;
   }
 
   &__description {
@@ -117,8 +110,8 @@
   }
 
   &__task-status {
-    background-color: #ffd700;
-    color: #333;
+    background-color: $highlight-color;
+    color: $text-color;
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -128,57 +121,6 @@
   &__task-text {
     color: $text-color;
     font-weight: 500;
-  }
-}
-
-// Collapsible Section Styles
-.collapsible-section {
-  margin-bottom: $padding-normal;
-  border: 1px solid rgba($border-color, 0.3);
-  border-radius: $border-radius;
-  overflow: hidden;
-  background-color: white;
-
-  &__header {
-    width: 100%;
-    padding: $padding-normal $padding-large;
-    background-color: rgba($secondary-color, 0.5);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    color: $text-color;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: rgba($secondary-color, 0.7);
-    }
-  }
-
-  &__title {
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  &__arrow {
-    font-size: 12px;
-    transition: transform 0.2s ease;
-
-    &--open {
-      transform: rotate(180deg);
-    }
-  }
-
-  &__content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-
-    &--open {
-      max-height: 500px;
-    }
   }
 }
 
