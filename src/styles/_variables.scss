@@ -1,0 +1,59 @@
+// Color Palette
+$primary-color: #0f3d2e;      
+$secondary-color: #c1b6b6;     
+$background-color: #ffffff;    
+$text-color: #131212;          
+$border-color: #2e2e2e;      
+$highlight-color: #4caf50;    
+$error-color: #d9534f;        
+$notification-color: #5bc0de;  
+
+// Typography
+$text-font-family-body: Arial;
+$base-font-size: 16px;
+$line-height: 1.5;
+
+// Header Fonts
+$header-font-family: Arial;
+$header-font-weight: 700;
+$h1-font-size: 36px;
+$h2-font-size: 30px;
+$h3-font-size: 24px;
+$h4-font-size: 20px;
+$h5-font-size: 18px;
+$h6-font-size: 16px;
+
+// Text Fonts
+$title-font-family: Arial;
+$sub-title-font-family: Arial;
+$text-font-family-body: sans-serif;
+$body-font-size: $base-font-size;
+$body-font-weight: 400;
+$body-line-height: $line-height;
+
+// Text Colors
+$text-primary: $text-color;
+$text-secondary: $secondary-color;
+$text-muted: #6c757d;
+$text-link: $primary-color;
+$text-inverse: #ffffff;
+
+// Border and Shadow
+$border-radius: 4px;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// Spacing
+$padding-xs: 4px;
+$padding-small: 8px;
+$padding-normal: 16px;
+$padding-medium: 24px;
+$padding-large: 32px;
+
+// Button Styles
+$button-font-size: $base-font-size;
+$button-padding: $padding-normal $padding-medium;
+$button-border-radius: $border-radius;
+$button-primary-bg: $primary-color;
+$button-secondary-bg: $secondary-color;
+$button-tertiary-bg: $background-color;
+$button-color: $text-inverse;

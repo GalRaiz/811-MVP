@@ -1,0 +1,18 @@
+@use '../styles/variables' as *;
+
+.assistance-request-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  direction: rtl; // Hebrew text direction
+  
+  &__main {
+    flex: 1;
+    background-color: #ffffff;
+    padding: $padding-large;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+

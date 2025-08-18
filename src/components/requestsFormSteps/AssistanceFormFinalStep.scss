@@ -1,0 +1,40 @@
+@use '../../styles/variables' as *;
+
+.assistance-form {
+  max-width: 600px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $padding-large;
+  
+  &__title {
+    font-size: $h2-font-size;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 $padding-large 0;
+    color: #000000;
+  }
+  
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-medium;
+    margin-bottom: $padding-large;
+  }
+  
+  &__instructions {
+    background-color: #f8f9fa;
+    padding: $padding-medium;
+    border-radius: $border-radius;
+    border-right: 4px solid #2d5016;
+    
+    p {
+      margin: 0;
+      line-height: 1.6;
+      color: #333333;
+      font-size: $body-font-size;
+    }
+  }
+}
+

@@ -1,0 +1,104 @@
+@use "../../styles/variables" as *;
+
+.assistance-type-step {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $padding-large;
+  
+  &__title {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    font-weight: $header-font-weight;
+    color: $text-color;
+    text-align: center;
+    margin: 0 0 $padding-large 0;
+  }
+  
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-6, 24px);
+  }
+  
+  &__option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $padding-small;
+    padding: $padding-medium;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 100px;
+    
+    &:hover {
+      border-color: $primary-color;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    &--selected {
+      border-color: $primary-color;
+      background-color: rgba($primary-color, 0.1);
+      box-shadow: 0 2px 4px rgba($primary-color, 0.2);
+    }
+    
+    &-icon {
+      font-size: 24px;
+    }
+    
+    &-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-color;
+      text-align: center;
+      line-height: 1.3;
+    }
+  }
+  
+  &__instructions {
+    text-align: center;
+    
+    p {
+      color: $text-muted;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .assistance-type-step {
+    padding: $padding-normal;
+    
+    &__title {
+      font-size: $h3-font-size;
+    }
+    
+    &__grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: $padding-small;
+    }
+    
+    &__option {
+      min-height: 80px;
+      padding: $padding-normal;
+      
+      &-icon {
+        font-size: 20px;
+      }
+      
+      &-label {
+        font-size: 12px;
+      }
+    }
+  }
+} 

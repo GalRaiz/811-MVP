@@ -1,0 +1,92 @@
+@use "../../styles/variables" as *;
+
+.step-sub-type-selection {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $padding-large;
+  
+  &__title {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    font-weight: $header-font-weight;
+    color: $text-color;
+    text-align: center;
+    margin: 0 0 $padding-large 0;
+  }
+  
+  &__main-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $padding-small;
+    margin-bottom: $padding-large;
+    padding: $padding-normal;
+    background-color: rgba($primary-color, 0.05);
+    border-radius: $border-radius;
+    border: 1px solid rgba($primary-color, 0.2);
+    
+    &-icon {
+      font-size: 24px;
+    }
+    
+    &-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: $primary-color;
+    }
+    
+    &-subtitle {
+      font-size: 14px;
+      color: $text-muted;
+      font-weight: 400;
+    }
+  }
+  
+  &__instructions {
+    text-align: center;
+    
+    p {
+      color: $text-muted;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+  
+  &__error {
+    text-align: center;
+    padding: $padding-large;
+    
+    p {
+      color: $error-color;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .step-sub-type-selection {
+    padding: $padding-normal;
+    
+    &__title {
+      font-size: $h3-font-size;
+    }
+    
+    &__main-type {
+      padding: $padding-small;
+      
+      &-icon {
+        font-size: 20px;
+      }
+      
+      &-label {
+        font-size: 16px;
+      }
+    }
+  }
+}

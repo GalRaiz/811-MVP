@@ -1,0 +1,57 @@
+@use "../styles/variables" as *;
+
+.requester-home-page {
+  min-height: 100vh;
+  background-color: $background-color;
+  color: $text-color;
+  font-family: $text-font-family-body;
+  
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    
+    .main-content {
+      flex: 1;
+      padding: $padding-large;
+      margin-left: 280px; // Space for sidebar
+      
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $padding-large;
+        margin-bottom: $padding-large;
+        
+        .left-column,
+        .right-column {
+          display: flex;
+          flex-direction: column;
+          gap: $padding-large;
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  .requester-home-page {
+    .dashboard-container {
+      .main-content {
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .requester-home-page {
+    .dashboard-container {
+      .main-content {
+        margin-left: 0;
+        padding: $padding-normal;
+      }
+    }
+  }
+}

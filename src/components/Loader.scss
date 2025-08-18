@@ -1,0 +1,44 @@
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  // background: #f9fafb;
+  gap: 2rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.loader-logo {
+  height: 400px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.loader-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.5;
+  animation: float 3s ease-in-out infinite;
+  direction: rtl;
+}
+
+/* אנימציות */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,61 @@
+@use '../../styles/variables' as *;
+
+.form-field {
+  display: flex;
+  flex-direction: row-reverse; // Hebrew layout - label on right
+  align-items: center;
+  gap: $padding-medium;
+  
+  &__label {
+    font-weight: 500;
+    color: #333333;
+    font-size: $body-font-size;
+    min-width: 120px;
+    text-align: right;
+  }
+  
+  &__input {
+    flex: 1;
+    padding: $padding-normal;
+    border: 1px solid #cccccc;
+    border-radius: $border-radius;
+    font-size: $body-font-size;
+    background-color: #ffffff;
+    text-align: right; // Hebrew text alignment
+    
+    &::placeholder {
+      color: #999999;
+      text-align: right;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: #2d5016;
+      box-shadow: 0 0 0 2px rgba(45, 80, 22, 0.1);
+    }
+    
+    &--with-dropdown {
+      padding-right: 40px; // Space for dropdown arrow
+    }
+  }
+  
+  &__dropdown-container {
+    position: relative;
+    flex: 1;
+    
+    .form-field__input {
+      width: 100%;
+    }
+  }
+  
+  &__dropdown-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666666;
+    font-size: 12px;
+    pointer-events: none;
+  }
+}
+
