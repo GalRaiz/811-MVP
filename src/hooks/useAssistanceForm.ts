@@ -1,13 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { updateField, setCurrentStep, setLoading, setError, setAssistanceType, setSelectedSubTypes, toggleSelectedSubType, setTransportationNeeded, setVolunteersNeeded, addUploadedFile, removeUploadedFile, resetForm, resetAll } from '../store/assistanceFormSlice';
+import {
+  updateField,
+  setCurrentStep,
+  setLoading,
+  setError,
+  setAssistanceType,
+  setSelectedSubTypes,
+  toggleSelectedSubType,
+  setTransportationNeeded,
+  setVolunteersNeeded,
+  addUploadedFile,
+  removeUploadedFile,
+  resetForm,
+  resetAll,
+} from '../store/assistanceFormSlice';
 
 export const useAssistanceForm = () => {
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.assistanceForm);
 
-  const updateFormField = (field: 'requesterName' | 'requesterPhone' | 'requestName' | 'district' | 'city' | 'street' | 'requestDescription', value: string) => {
+  const updateFormField = (
+    field:
+      | 'requesterName'
+      | 'requesterPhone'
+      | 'requestName'
+      | 'district'
+      | 'city'
+      | 'street'
+      | 'requestDescription',
+    value: string
+  ) => {
     dispatch(updateField({ field, value }));
   };
 
@@ -60,23 +84,27 @@ export const useAssistanceForm = () => {
   const isFormValid = () => {
     switch (formState.currentStep) {
       case 1:
-        return (formState.requesterName?.trim() || '') !== '' && 
-               (formState.requesterPhone?.trim() || '') !== '' && 
-               (formState.requestName?.trim() || '') !== '';
+        return (
+          (formState.requesterName?.trim() || '') !== '' &&
+          (formState.requesterPhone?.trim() || '') !== '' &&
+          (formState.requestName?.trim() || '') !== ''
+        );
       case 2:
-        return (formState.district?.trim() || '') !== '' && 
-               (formState.city?.trim() || '') !== '' && 
-               (formState.street?.trim() || '') !== '';
+        return (
+          (formState.district?.trim() || '') !== '' &&
+          (formState.city?.trim() || '') !== ''
+        );
       case 3:
         return (formState.requestType?.trim() || '') !== '';
       case 4:
         return (formState.requestSubType?.length || 0) > 0;
       case 5:
-        return formState.needTransportation !== undefined && 
-               formState.needVolunteers !== undefined;
+        return (
+          formState.needTransportation !== undefined &&
+          formState.needVolunteers !== undefined
+        );
       case 6:
-        return (formState.requestName?.trim() || '') !== '' && 
-               (formState.requestDescription?.trim() || '') !== '';
+        return (formState.requestName?.trim() || '') !== '';
       case 7:
         return true; // Summary step - always valid for submission
       case 8:
@@ -119,7 +147,6 @@ export const useAssistanceForm = () => {
     removeFile,
     resetFormData,
     resetAllData,
-    isFormValid
+    isFormValid,
   };
 };
-

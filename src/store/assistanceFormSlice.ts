@@ -6,11 +6,11 @@ interface AssistanceFormState {
   currentStep: number;
   isLoading: boolean;
   error: string | null;
-  
+
   // IRequest fields - aligned with interface
   id?: number | string;
   requestName?: string;
-  requestStatus?: "pending" | "in-progress" | "completed";
+  requestStatus?: 'pending' | 'in-progress' | 'completed';
   createdAt?: number;
   updatedAt?: number;
   district?: string;
@@ -36,7 +36,7 @@ const initialState: AssistanceFormState = {
 
   // IRequest fields with proper defaults
   requestName: '',
-  requestStatus: "pending",
+  requestStatus: 'pending',
   createdAt: Date.now(),
   updatedAt: Date.now(),
   requesterName: '', // Required field
@@ -51,14 +51,27 @@ const initialState: AssistanceFormState = {
   street: '',
   attachment: '',
   requestImage: '',
-  assignedTo: []
+  assignedTo: [],
 };
 
 const assistanceFormSlice = createSlice({
   name: 'assistanceForm',
   initialState,
   reducers: {
-    updateField: (state, action: PayloadAction<{ field: 'requestName' | 'requestDescription' | 'district' | 'city' | 'street' | 'requesterName' | 'requesterPhone'; value: string }>) => {
+    updateField: (
+      state,
+      action: PayloadAction<{
+        field:
+          | 'requestName'
+          | 'requestDescription'
+          | 'district'
+          | 'city'
+          | 'street'
+          | 'requesterName'
+          | 'requesterPhone';
+        value: string;
+      }>
+    ) => {
       const { field, value } = action.payload;
       (state as any)[field] = value;
     },
@@ -107,7 +120,9 @@ const assistanceFormSlice = createSlice({
     addUploadedFile: (state, action: PayloadAction<File>) => {
       // Convert File to string for storage (or handle as needed)
       const fileData = action.payload.name;
-      state.attachment = state.attachment ? `${state.attachment},${fileData}` : fileData;
+      state.attachment = state.attachment
+        ? `${state.attachment},${fileData}`
+        : fileData;
     },
     removeUploadedFile: (state, action: PayloadAction<number>) => {
       // Handle file removal logic
@@ -115,7 +130,7 @@ const assistanceFormSlice = createSlice({
       files.splice(action.payload, 1);
       state.attachment = files.join(',');
     },
-    resetForm: (state) => {
+    resetForm: state => {
       console.log('resetForm called - resetting form data only');
       // Reset form data but keep current step
       state.requestName = '';
@@ -131,25 +146,25 @@ const assistanceFormSlice = createSlice({
       state.requestSubType = [];
       state.attachment = '';
       state.assignedTo = [];
-      state.requestStatus = "pending";
+      state.requestStatus = 'pending';
       state.createdAt = Date.now();
       state.updatedAt = Date.now();
       console.log('resetForm completed - current step:', state.currentStep);
     },
-    resetAll: (state) => {
+    resetAll: state => {
       console.log('resetAll called - resetting everything including step');
       // Reset everything including current step
       Object.assign(state, initialState);
       console.log('resetAll completed - current step:', state.currentStep);
-    }
-  }
+    },
+  },
 });
 
-export const { 
-  updateField, 
-  setCurrentStep, 
-  setLoading, 
-  setError, 
+export const {
+  updateField,
+  setCurrentStep,
+  setLoading,
+  setError,
   toggleAssistanceType,
   setAssistanceType,
   setSelectedSubTypes,
@@ -159,8 +174,7 @@ export const {
   addUploadedFile,
   removeUploadedFile,
   resetForm,
-  resetAll 
+  resetAll,
 } = assistanceFormSlice.actions;
 
 export default assistanceFormSlice.reducer;
-

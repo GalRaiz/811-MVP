@@ -1,43 +1,40 @@
 import React from 'react';
 import './SummaryCards.scss';
+import Button from './storybook/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 interface ISummaryCard {
   id: number;
   title: string;
   count?: number;
-  type: 'open' | 'new' | 'in-progress' | 'closed';
+  type: 'open' | 'in-progress' | 'closed';
   icon?: string;
 }
 
 const SummaryCards: React.FC = () => {
+  const navigate = useNavigate();
   const summaryCards: ISummaryCard[] = [
     {
       id: 1,
       title: 'בקשות פתוחות',
       count: 4,
       type: 'open',
-      icon: '🟡'
-    },
-    {
-      id: 2,
-      title: 'פתיחת בקשה חדשה',
-      type: 'new',
-      icon: '+'
+      icon: '🟡',
     },
     {
       id: 3,
       title: 'בקשות בטיפול',
       count: 23,
       type: 'in-progress',
-      icon: '🟢'
+      icon: '🟢',
     },
     {
       id: 4,
       title: 'בקשות סגורות',
       count: 12,
       type: 'closed',
-      icon: '⚫'
-    }
+      icon: '⚫',
+    },
   ];
 
   const getCardClass = (type: string) => {
@@ -45,28 +42,23 @@ const SummaryCards: React.FC = () => {
   };
 
   const handleNewRequest = () => {
-    // Navigate to new request form
+    navigate('/AssistanceFormRequest');
     console.log('Navigate to new request form');
   };
 
   return (
-    <div className="summary-cards">
-      {summaryCards.map((card) => (
+    <div className='summary-cards'>
+    <Button size='medium' type='secondary' onClick={handleNewRequest} btnText={"פתיחת בקשה חדשה"} icon={"+"}/>
+      {summaryCards.map(card => (
         <div key={card.id} className={getCardClass(card.type)}>
-          {card.type === 'new' ? (
-            <button className="new-request-btn" onClick={handleNewRequest}>
-              <div className="icon">{card.icon}</div>
-              <span className="title">{card.title}</span>
-            </button>
-          ) : (
             <>
-              <div className="card-header">
-                <div className="icon">{card.icon}</div>
-                <span className="count">{card.count}</span>
+              <div className='card-header'>
+                <div className='icon'>{card.icon}</div>
+                <span className='count'>{card.count}</span>
               </div>
-              <h3 className="title">{card.title}</h3>
+              <h3 className='title'>{card.title}</h3>
             </>
-          )}
+          
         </div>
       ))}
     </div>

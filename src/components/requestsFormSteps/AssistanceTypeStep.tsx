@@ -3,10 +3,8 @@ import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { assistanceTypes } from '../../data/assistanceTypesData';
 import './AssistanceTypeStep.scss';
 
-
 const AssistanceTypeStep: React.FC = () => {
   const { formState, setAssistanceTypes, goToNextStep } = useAssistanceForm();
-
 
   const handleTypeToggle = (typeId: string) => {
     // Set only this type as selected (single selection)
@@ -22,32 +20,34 @@ const AssistanceTypeStep: React.FC = () => {
   };
 
   return (
-    <div className="assistance-type-step">
-      <h2 className="assistance-type-step__title">איזה סוג סיוע נדרש?</h2>
-      
-      <div className="assistance-type-step__grid">
-        {assistanceTypes.map((type) => (
+    <div className='assistance-type-step'>
+      <h2 className='assistance-type-step__title'>איזה סוג סיוע נדרש?</h2>
+
+      <div className='assistance-type-step__grid'>
+        {assistanceTypes.map(type => (
           <button
             key={type.id}
             className={`assistance-type-step__option ${
-              isSelected(type.id) ? 'assistance-type-step__option--selected' : ''
+              isSelected(type.id)
+                ? 'assistance-type-step__option--selected'
+                : ''
             }`}
             onClick={() => handleTypeToggle(type.id)}
-            type="button"
+            type='button'
           >
-            <div className="assistance-type-step__option-icon">{type.icon}</div>
-            <span className="assistance-type-step__option-label">{type.label}</span>
+            <div className='assistance-type-step__option-icon'>{type.icon}</div>
+            <span className='assistance-type-step__option-label'>
+              {type.label}
+            </span>
           </button>
         ))}
       </div>
-      
-      <div className="assistance-type-step__instructions">
-        <p>
-          בחירה של קטגוריה עוזרת לנו להפנות את הבקשה לגורמים הנכונים.
-        </p>
+
+      <div className='assistance-type-step__instructions'>
+        <p>בחירה של קטגוריה עוזרת לנו להפנות את הבקשה לגורמים הנכונים.</p>
       </div>
     </div>
   );
 };
 
-export default AssistanceTypeStep; 
+export default AssistanceTypeStep;

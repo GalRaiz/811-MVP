@@ -1,26 +1,26 @@
-@use "../styles/variables" as *;
+@use '../styles/variables' as *;
 
 .requester-home-page {
   min-height: 100vh;
   background-color: $background-color;
   color: $text-color;
   font-family: $text-font-family-body;
-  
+
   .dashboard-container {
     display: flex;
     min-height: 100vh;
-    
+
     .main-content {
       flex: 1;
       padding: $padding-large;
       margin-left: 280px; // Space for sidebar
-      
+
       .dashboard-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: $padding-large;
         margin-bottom: $padding-large;
-        
+
         .left-column,
         .right-column {
           display: flex;

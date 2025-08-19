@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./Modal.scss";
+import { useState } from 'react';
+import './Modal.scss';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,12 +10,12 @@ interface ModalProps {
 const Modal = ({ isOpen, onClose, existingEmails }: ModalProps) => {
   const [isSignUp, setIsSignUp] = useState(false); // To toggle between login and sign-up
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,56 +27,56 @@ const Modal = ({ isOpen, onClose, existingEmails }: ModalProps) => {
 
     if (isSignUp) {
       if (formData.password !== formData.confirmPassword) {
-        setError("Passwords do not match!");
+        setError('Passwords do not match!');
         return;
       }
 
       if (existingEmails.includes(formData.email)) {
-        setError("Email already exists! Please log in.");
+        setError('Email already exists! Please log in.');
         return;
       }
 
-      console.log("User created successfully:", formData);
-      onClose(); 
+      console.log('User created successfully:', formData);
+      onClose();
     } else {
       if (!existingEmails.includes(formData.email)) {
-        setError("No user found with that email. Please sign up.");
+        setError('No user found with that email. Please sign up.');
         return;
       }
 
-      console.log("User logged in successfully:", formData);
-      onClose(); 
+      console.log('User logged in successfully:', formData);
+      onClose();
     }
   };
 
   return (
-    <div className={`modal ${isOpen ? "open" : ""}`}>
-      <div className="modal-content">
-        <button className="close-btn" onClick={onClose}>
+    <div className={`modal ${isOpen ? 'open' : ''}`}>
+      <div className='modal-content'>
+        <button className='close-btn' onClick={onClose}>
           &times;
         </button>
-        <h2>{isSignUp ? "Sign Up" : "Login"}</h2>
-        {error && <p className="error-message">{error}</p>}
+        <h2>{isSignUp ? 'Sign Up' : 'Login'}</h2>
+        {error && <p className='error-message'>{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
+          <div className='form-group'>
+            <label htmlFor='email'>Email:</label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type='email'
+              id='email'
+              name='email'
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
+          <div className='form-group'>
+            <label htmlFor='password'>Password:</label>
             <input
-              type="password"
-              id="password"
-              name="password"
+              type='password'
+              id='password'
+              name='password'
               value={formData.password}
               onChange={handleChange}
               required
@@ -84,12 +84,12 @@ const Modal = ({ isOpen, onClose, existingEmails }: ModalProps) => {
           </div>
 
           {isSignUp && (
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password:</label>
+            <div className='form-group'>
+              <label htmlFor='confirmPassword'>Confirm Password:</label>
               <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
+                type='password'
+                id='confirmPassword'
+                name='confirmPassword'
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
@@ -97,18 +97,18 @@ const Modal = ({ isOpen, onClose, existingEmails }: ModalProps) => {
             </div>
           )}
 
-          <button type="submit">{isSignUp ? "Sign Up" : "Login"}</button>
+          <button type='submit'>{isSignUp ? 'Sign Up' : 'Login'}</button>
         </form>
 
-        <div className="toggle-link">
+        <div className='toggle-link'>
           {isSignUp ? (
             <p>
-              Already have an account?{" "}
+              Already have an account?{' '}
               <span onClick={() => setIsSignUp(false)}>Login</span>
             </p>
           ) : (
             <p>
-              Don't have an account?{" "}
+              Don't have an account?{' '}
               <span onClick={() => setIsSignUp(true)}>Sign Up</span>
             </p>
           )}

@@ -1,23 +1,23 @@
-@use "../styles/variables" as *;
+@use '../styles/variables' as *;
 
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: $padding-large;
   margin-top: $padding-large;
-  
+
   .summary-card {
     background-color: $background-color;
     border-radius: $border-radius;
     padding: $padding-large;
     box-shadow: $box-shadow;
     transition: all 0.2s ease;
-    
+
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    
+
     &.new {
       .new-request-btn {
         width: 100%;
@@ -33,18 +33,18 @@
         cursor: pointer;
         transition: all 0.2s ease;
         color: $text-color;
-        
+
         &:hover {
           border-color: $primary-color;
           background-color: rgba($primary-color, 0.1);
         }
-        
+
         .icon {
           font-size: 32px;
           font-weight: bold;
           color: $primary-color;
         }
-        
+
         .title {
           font-size: 16px;
           font-weight: 500;
@@ -52,24 +52,24 @@
         }
       }
     }
-    
+
     .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: $padding-normal;
-      
+
       .icon {
         font-size: 24px;
       }
-      
+
       .count {
         font-size: 32px;
         font-weight: bold;
         color: $text-color;
       }
     }
-    
+
     .title {
       font-size: 16px;
       font-weight: 500;

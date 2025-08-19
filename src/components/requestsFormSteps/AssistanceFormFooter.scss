@@ -1,9 +1,9 @@
-@use "../../styles/variables" as *;
+@use '../../styles/variables' as *;
 
 .assistance-form-footer {
   padding: $padding-large;
   border-top: 1px solid $border-color;
-  
+
   &__content {
     display: flex;
     align-items: center;
@@ -11,7 +11,7 @@
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   &__button {
     background-color: $button-primary-bg;
     color: $button-color;
@@ -24,55 +24,52 @@
     display: flex;
     align-items: center;
     gap: $padding-small;
-    
+
     &:hover {
       background-color: $border-color;
     }
-    
+
     &--disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      
+
       &:hover {
         background-color: $secondary-color;
       }
     }
-    
+
     &--previous {
       .assistance-form-footer__button-arrow {
         order: -1;
       }
     }
-    
+
     &--next {
       .assistance-form-footer__button-arrow {
         order: 1;
       }
     }
-    
+
     &-arrow {
       font-size: 12px;
     }
   }
-  
+
   &__progress {
     display: flex;
     gap: $padding-small;
     align-items: center;
-    
+
     &-bar {
       width: 40px;
       height: 4px;
       background-color: #e0e0e0;
       border-radius: 2px;
       transition: all 0.3s ease;
-      
-      &--active {
-        background-color: $primary-color;
-      }
-      
+
+      &--active,
       &--completed {
-        background-color: ($primary-color, 15%);
+        background-color: $primary-color;
       }
     }
   }
@@ -82,20 +79,20 @@
 @media (max-width: 768px) {
   .assistance-form-footer {
     padding: $padding-normal;
-    
+
     &__content {
       flex-direction: column;
       gap: $padding-normal;
     }
-    
+
     &__button {
       width: 100%;
       justify-content: center;
     }
-    
+
     &__progress {
       order: -1;
-      
+
       &-bar {
         width: 30px;
         height: 3px;
@@ -103,4 +100,3 @@
     }
   }
 }
-

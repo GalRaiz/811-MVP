@@ -1,16 +1,25 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { resetAll } from '../../store/assistanceFormSlice';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { addRequest } from '../../store/requestsSlice';
 import { IRequest } from '../../store/types';
 import './AssistanceFormFooter.scss';
+import Button from '../storybook/Button/Button';
 
 const AssistanceFormFooter: React.FC = () => {
   const { formState, goToPreviousStep, goToNextStep, isFormValid } = useAssistanceForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handlePrevious = () => {
     goToPreviousStep();
+  };
+
+  const handleGoHome = () => {
+    dispatch(resetAll());
+    navigate('/');
   };
 
   const handleNext = () => {
@@ -29,10 +38,10 @@ const AssistanceFormFooter: React.FC = () => {
         needTransportation: formState.needTransportation,
         needVolunteers: formState.needVolunteers,
         attachment: formState.attachment,
-        requestStatus: "pending",
+        requestStatus: 'pending',
         createdAt: Date.now(),
         updatedAt: Date.now(),
-        assignedTo: []
+        assignedTo: [],
       };
 
       // Add the request to the store
@@ -61,37 +70,43 @@ const AssistanceFormFooter: React.FC = () => {
     <footer className="assistance-form-footer">
       <div className="assistance-form-footer__content">
         {/* Don't show Previous button on first step */}
-        {formState.currentStep > 1 && (
-          <button 
-            className="assistance-form-footer__button assistance-form-footer__button--previous"
+        {formState.currentStep > 1 ? (
+          <Button
+            type="primary"
+            icon={<span className="assistance-form-footer__button-arrow">→</span>}
+            btnText="השלב הקודם"
             onClick={handlePrevious}
-          >
-            <span className="assistance-form-footer__button-arrow">←</span>
-            השלב הקודם
-          </button>
+          />
+        ) : (
+          <Button type="secondary" btnText="חזור לדף הבית" onClick={handleGoHome} />
         )}
-        
+
         <div className="assistance-form-footer__progress">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((step) => (
-            <div 
+            <div
               key={step}
               className={`assistance-form-footer__progress-bar ${getProgressBarClass(step)}`}
             />
           ))}
         </div>
-        
-        <button 
-          className={`assistance-form-footer__button assistance-form-footer__button--next ${
-            !isFormValid() ? 'assistance-form-footer__button--disabled' : ''
-          }`}
+
+        <Button
+          type="primary"
+          size="medium"
           onClick={handleNext}
-          disabled={!isFormValid()}
-        >
-          {formState.currentStep === 7 ? 'שמירה ושליחה' : 'השלב הבא'}
-          <span className="assistance-form-footer__button-arrow">
-            {formState.currentStep === 7 ? '✓' : '→'}
-          </span>
-        </button>
+          isDisabled={!isFormValid()}
+          btnText={
+            formState.currentStep === 7
+              ? 'שמירה ושליחה'
+              : 'השלב הבא '
+          }
+          icon={
+            <span className="assistance-form-footer__button-arrow">
+              {formState.currentStep === 7 ? '✓' : '←'}
+            </span>
+          }
+          iconPosition="right"
+        />
       </div>
     </footer>
   );

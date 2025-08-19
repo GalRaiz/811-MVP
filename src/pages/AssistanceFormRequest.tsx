@@ -6,9 +6,9 @@ import './AssistanceFormRequest.scss';
 
 const AssistanceForm: React.FC = () => {
   return (
-    <div className="assistance-request-page">
+    <div className='assistance-request-page'>
       <AssistanceFormHeader />
-      <main className="assistance-request-page__main">
+      <main className='assistance-request-page__main'>
         <AssistanceFormContainer />
       </main>
       <AssistanceFormFooter />
@@ -17,4 +17,3 @@ const AssistanceForm: React.FC = () => {
 };
 
 export default AssistanceForm;
-

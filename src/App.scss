@@ -1,4 +1,4 @@
-@use "styles/variables" as *;
+@use 'styles/variables' as *;
 
 // body {
 //   font-family: $text-font-family-body;
@@ -11,7 +11,6 @@
   padding: $padding-large;
 }
 
-
 .App-header {
   position: fixed;
   top: 10px;
@@ -20,7 +19,7 @@
 }
 
 .App-logo {
-  width: 200px; 
+  width: 200px;
   height: auto;
 }
 

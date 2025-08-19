@@ -5,10 +5,10 @@
   border-radius: $border-radius;
   padding: $padding-large;
   box-shadow: $box-shadow;
-  
+
   .section-header {
     margin-bottom: $padding-large;
-    
+
     h2 {
       font-family: $header-font-family;
       font-size: $h2-font-size;
@@ -18,12 +18,12 @@
       text-align: right;
     }
   }
-  
+
   .alerts-list {
     display: flex;
     flex-direction: column;
     gap: $padding-medium;
-    
+
     .alert-item {
       display: flex;
       gap: $padding-normal;
@@ -31,23 +31,23 @@
       background-color: rgba($border-color, 0.1);
       border-radius: $border-radius;
       border-left: 3px solid $primary-color;
-      
+
       .alert-icon {
         font-size: 20px;
         display: flex;
         align-items: flex-start;
         padding-top: 2px;
       }
-      
+
       .alert-content {
         flex: 1;
-        
+
         .alert-header {
           display: flex;
           flex-direction: column;
           gap: $padding-xs;
           margin-bottom: $padding-small;
-          
+
           h3 {
             font-size: 16px;
             font-weight: 600;
@@ -55,7 +55,7 @@
             margin: 0;
             text-align: right;
           }
-          
+
           .request-name {
             font-size: 14px;
             color: $primary-color;
@@ -63,7 +63,7 @@
             text-align: right;
           }
         }
-        
+
         .alert-description {
           font-size: 14px;
           color: $text-muted;
@@ -71,7 +71,7 @@
           line-height: 1.4;
           text-align: right;
         }
-        
+
         .alert-action-btn {
           background-color: $primary-color;
           color: $text-inverse;
@@ -81,7 +81,7 @@
           cursor: pointer;
           font-size: 14px;
           transition: all 0.2s ease;
-          
+
           &:hover {
             background-color: ($primary-color, 10%);
           }

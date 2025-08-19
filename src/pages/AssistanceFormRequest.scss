@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   direction: rtl; // Hebrew text direction
-  
+
   &__main {
     flex: 1;
     background-color: #ffffff;
@@ -15,4 +15,3 @@
     align-items: flex-start;
   }
 }
-

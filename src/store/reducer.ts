@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { assistanceRequets } from "../data/requestsData.ts";
+import { createSlice } from '@reduxjs/toolkit';
+import { assistanceRequets } from '../data/requestsData.ts';
 
 const itemsSlice = createSlice({
-  name: "Requests",
+  name: 'Requests',
   initialState: assistanceRequets,
   reducers: {
     setItems: (_state, action) => {

@@ -20,8 +20,12 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'hot-meals', label: 'מנות חמות', icon: '🍲' },
       { id: 'food-packages', label: 'חבילות מזון', icon: '📦' },
       { id: 'baby-food', label: 'מזון לתינוקות', icon: '🍼' },
-      { id: 'dietary-restrictions', label: 'מזון מיוחד (צליאק, סוכרת)', icon: '🥗' }
-    ]
+      {
+        id: 'dietary-restrictions',
+        label: 'מזון מיוחד (צליאק, סוכרת)',
+        icon: '🥗',
+      },
+    ],
   },
   {
     id: 'transportation',
@@ -31,8 +35,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'medical-transport', label: 'הסעות רפואיות', icon: '🚑' },
       { id: 'public-transport', label: 'כרטיסי תחבורה ציבורית', icon: '🚌' },
       { id: 'evacuation', label: 'פינוי ופיזור', icon: '🚁' },
-      { id: 'delivery', label: 'משלוחים והובלות', icon: '🚚' }
-    ]
+      { id: 'delivery', label: 'משלוחים והובלות', icon: '🚚' },
+    ],
   },
   {
     id: 'logistics',
@@ -42,8 +46,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'equipment-move', label: 'העברת ציוד', icon: '📦' },
       { id: 'furniture-move', label: 'העברת רהיטים', icon: '🪑' },
       { id: 'storage', label: 'אחסון זמני', icon: '🏭' },
-      { id: 'packaging', label: 'אריזה ומיון', icon: '📋' }
-    ]
+      { id: 'packaging', label: 'אריזה ומיון', icon: '📋' },
+    ],
   },
   {
     id: 'personal-equipment',
@@ -53,8 +57,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'clothing', label: 'ביגוד', icon: '👕' },
       { id: 'hygiene', label: 'מוצרי היגיינה', icon: '🧴' },
       { id: 'medical-supplies', label: 'ציוד רפואי', icon: '💊' },
-      { id: 'electronics', label: 'מכשירים אלקטרוניים', icon: '📱' }
-    ]
+      { id: 'electronics', label: 'מכשירים אלקטרוניים', icon: '📱' },
+    ],
   },
   {
     id: 'housing',
@@ -64,8 +68,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'temporary-housing', label: 'דיור זמני', icon: '🏠' },
       { id: 'hotel-accommodation', label: 'אירוח במלון', icon: '🏨' },
       { id: 'community-shelter', label: 'מקלט קהילתי', icon: '🏛️' },
-      { id: 'rental-assistance', label: 'סיוע בשכירות', icon: '🏘️' }
-    ]
+      { id: 'rental-assistance', label: 'סיוע בשכירות', icon: '🏘️' },
+    ],
   },
   {
     id: 'shelters',
@@ -75,8 +79,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'bomb-shelter', label: 'מקלט מפני טילים', icon: '🛡️' },
       { id: 'safe-room', label: 'חדר מוגן', icon: '🚪' },
       { id: 'underground-shelter', label: 'מקלט תת קרקעי', icon: '⛰️' },
-      { id: 'community-center', label: 'מרכז קהילתי מוגן', icon: '🏛️' }
-    ]
+      { id: 'community-center', label: 'מרכז קהילתי מוגן', icon: '🏛️' },
+    ],
   },
   {
     id: 'volunteers',
@@ -86,8 +90,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'medical-volunteers', label: 'מתנדבים רפואיים', icon: '👨‍⚕️' },
       { id: 'logistics-volunteers', label: 'מתנדבים לוגיסטיים', icon: '📦' },
       { id: 'social-volunteers', label: 'מתנדבים חברתיים', icon: '🤝' },
-      { id: 'technical-volunteers', label: 'מתנדבים טכניים', icon: '🔧' }
-    ]
+      { id: 'technical-volunteers', label: 'מתנדבים טכניים', icon: '🔧' },
+    ],
   },
   {
     id: 'mental-health',
@@ -97,8 +101,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'counseling', label: 'ייעוץ פסיכולוגי', icon: '💭' },
       { id: 'crisis-support', label: 'תמיכה במשבר', icon: '🆘' },
       { id: 'group-therapy', label: 'טיפול קבוצתי', icon: '👥' },
-      { id: 'emergency-psychiatry', label: 'פסיכיאטריה דחופה', icon: '🏥' }
-    ]
+      { id: 'emergency-psychiatry', label: 'פסיכיאטריה דחופה', icon: '🏥' },
+    ],
   },
   {
     id: 'education-equipment',
@@ -108,8 +112,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'computers', label: 'מחשבים וטכנולוגיה', icon: '💻' },
       { id: 'books', label: 'ספרים וחומרי לימוד', icon: '📚' },
       { id: 'furniture', label: 'רהיטים לכיתות', icon: '🪑' },
-      { id: 'playground', label: 'ציוד לגן שעשועים', icon: '🎠' }
-    ]
+      { id: 'playground', label: 'ציוד לגן שעשועים', icon: '🎠' },
+    ],
   },
   {
     id: 'maintenance',
@@ -119,8 +123,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'electrical', label: 'תיקונים חשמליים', icon: '⚡' },
       { id: 'plumbing', label: 'תיקונים אינסטלציה', icon: '🚰' },
       { id: 'construction', label: 'עבודות בנייה', icon: '🏗️' },
-      { id: 'cleaning', label: 'ניקוי ותחזוקה', icon: '🧹' }
-    ]
+      { id: 'cleaning', label: 'ניקוי ותחזוקה', icon: '🧹' },
+    ],
   },
   {
     id: 'operations-support',
@@ -130,8 +134,8 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'administrative', label: 'עזרה אדמיניסטרטיבית', icon: '📝' },
       { id: 'coordination', label: 'תיאום וניהול', icon: '📞' },
       { id: 'logistics-support', label: 'תמיכה לוגיסטית', icon: '📦' },
-      { id: 'communication', label: 'תקשורת ומידע', icon: '📢' }
-    ]
+      { id: 'communication', label: 'תקשורת ומידע', icon: '📢' },
+    ],
   },
   {
     id: 'reporting',
@@ -141,7 +145,7 @@ export const assistanceTypes: AssistanceType[] = [
       { id: 'damage-assessment', label: 'הערכת נזקים', icon: '📊' },
       { id: 'status-updates', label: 'עדכוני סטטוס', icon: '📈' },
       { id: 'resource-tracking', label: 'מעקב משאבים', icon: '📋' },
-      { id: 'emergency-alerts', label: 'התראות חירום', icon: '🚨' }
-    ]
-  }
+      { id: 'emergency-alerts', label: 'התראות חירום', icon: '🚨' },
+    ],
+  },
 ];

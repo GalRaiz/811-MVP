@@ -1,5 +1,5 @@
-import React from "react";
-import "./SearchBar.scss";
+import React from 'react';
+import './SearchBar.scss';
 
 interface ISearchBarProps {
   searchQuery: string;
@@ -12,11 +12,11 @@ const SearchBar: React.FC<ISearchBarProps> = ({
 }) => {
   return (
     <input
-      type="text"
+      type='text'
       value={searchQuery}
-      onChange={(e) => onSearchChange(e.target.value)}
-      placeholder="Are you looking for something specific? just start typing..."
-      className="search-bar"
+      onChange={e => onSearchChange(e.target.value)}
+      placeholder='חיפוש בכל הבקשות...'
+      className='search-bar'
     />
   );
 };

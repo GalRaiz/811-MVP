@@ -1,9 +1,9 @@
-import React from "react";
-import "./SidePanel.scss";
-import EmptyState from "../EmptyState.tsx";
+import React from 'react';
+import './SidePanel.scss';
+import EmptyState from '../EmptyState.tsx';
 
 interface ISidePanelProps {
-  sidePanelType: "filterRequests" | "requestDetails";
+  sidePanelType: 'filterRequests' | 'requestDetails';
   filterType?: string;
   onFilterChange: (filterType: string) => void;
   onClose: () => void;
@@ -22,9 +22,9 @@ interface ISidePanelProps {
     requesterPhone: string;
     needTransportation: boolean;
     needVolunteers: boolean;
-    description?: string ;
+    description?: string;
     attachment?: string;
-};
+  };
 }
 
 const SidePanel: React.FC<ISidePanelProps> = ({
@@ -37,30 +37,30 @@ const SidePanel: React.FC<ISidePanelProps> = ({
 }) => {
   const sidePanelDetails = () => {
     switch (sidePanelType) {
-      case "filterRequests":
+      case 'filterRequests':
         return (
           <div>
             <h3>Filter request by Type</h3>
             <select
               value={filterType}
-              onChange={(e) => onFilterChange(e.target.value)}
+              onChange={e => onFilterChange(e.target.value)}
             >
-              <option value="">All Types</option>
-
+              <option value=''>All Types</option>
             </select>
           </div>
         );
 
-      case "requestDetails":
+      case 'requestDetails':
         return (
           <div>
             {request && (
-              <div className="side-panel-content">
+              <div className='side-panel-content'>
                 <h2>{request.requestName}</h2>
                 <h3>{request.requestType}</h3>
                 {request.requestSubType.map((subType: string) => (
                   <p key={subType}>{subType}</p>
                 ))}
+
                 <h3>סטטוס</h3>
                 <p>{request.requestStatus}</p>
                 <p>{request.createdAt}</p>
@@ -90,8 +90,8 @@ const SidePanel: React.FC<ISidePanelProps> = ({
 
   if (!isOpen) return null;
   return (
-    <div className={`side-panel ${isOpen ? "open" : ""}`}>
-      <button className="close-btn" onClick={onClose}>
+    <div className={`side-panel ${isOpen ? 'open' : ''}`}>
+      <button className='close-btn' onClick={onClose}>
         X
       </button>
       {sidePanelDetails()}

@@ -1,9 +1,9 @@
-import React from "react";
-import "./NavBar.scss";
-import mateLogoGreen from "../../assets/mate-logo-green.png";
+import React from 'react';
+import './NavBar.scss';
+import mateLogoGreen from '../../assets/mate-logo-green.png';
 
 interface INavBar {
-  userType: "requester" | "org" | "admin";
+  userType: 'requester' | 'org' | 'admin';
   onClose: () => void;
   isNavBarOpen: boolean;
   onNavigate?: (page: string) => void;
@@ -17,24 +17,24 @@ const NavBar: React.FC<INavBar> = ({
 }) => {
   const navBarDetails = () => {
     switch (userType) {
-      case "org":
+      case 'org':
         return <div></div>;
 
-      case "admin":
+      case 'admin':
         return <div></div>;
 
       default:
-      case "requester":
+      case 'requester':
         return (
           <>
-            <div className="nav-buttons">
-              <button onClick={() => onNavigate?.("HomePage")}>
+            <div className='nav-buttons'>
+              <button onClick={() => onNavigate?.('HomePage')}>
                 עמוד הבית
               </button>
-              <button onClick={() => onNavigate?.("RequestsPage")}>
+              <button onClick={() => onNavigate?.('RequestsPage')}>
                 בקשות
               </button>
-              <button onClick={() => onNavigate?.("ProfilePage")}>
+              <button onClick={() => onNavigate?.('ProfilePage')}>
                 הפרופיל שלי
               </button>
             </div>
@@ -46,12 +46,12 @@ const NavBar: React.FC<INavBar> = ({
   if (!isNavBarOpen) return null;
   return (
     <>
-      <div className={`nav-bar ${isNavBarOpen ? "open" : ""}`}>
-        <button className="close-btn" onClick={onClose}>
+      <div className={`nav-bar ${isNavBarOpen ? 'open' : ''}`}>
+        <button className='close-btn' onClick={onClose}>
           X
         </button>
-        <div className="nav-header">
-          <img src={mateLogoGreen} alt="logo" className="nav-logo" />
+        <div className='nav-header'>
+          <img src={mateLogoGreen} alt='logo' className='nav-logo' />
         </div>
         {navBarDetails()}
       </div>

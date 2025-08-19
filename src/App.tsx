@@ -1,23 +1,22 @@
-import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import AssistanceFormRequest from "./pages/AssistanceFormRequest";
-import RequesterHomePage from "./pages/RequesterHomePage";
-import Loader from "./components/Loader";
-import "../src/styles/_variables.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store/store";
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import AssistanceFormRequest from './pages/AssistanceFormRequest';
+import RequesterHomePage from './pages/RequesterHomePage';
+import Loader from './components/Loader';
+import '../src/styles/_variables.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store/store';
 import {
   setRequestsStart,
   setRequestsSuccess,
   setRequestsFailure,
-} from "./store/requestsSlice";
-import { resetForm } from "./store/assistanceFormSlice";
-import "./App.scss";
-import RequestsPage from "./pages/RequestsPage";
-import { assistanceRequets } from "./data/requestsData";
-import NotFoundPage from "./pages/NotFoundPage";
-
+} from './store/requestsSlice';
+import { resetForm } from './store/assistanceFormSlice';
+import './App.scss';
+import RequestsPage from './pages/RequestsPage';
+import { assistanceRequets } from './data/requestsData';
+import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const App = () => {
         dispatch(setRequestsSuccess(assistanceRequets));
       }, 3000);
     } catch {
-      dispatch(setRequestsFailure("Failed to load requests"));
+      dispatch(setRequestsFailure('Failed to load requests'));
     }
   }, [dispatch]);
 
@@ -46,19 +45,18 @@ const App = () => {
           {/* <header className="App-header">
             <img src={mateLogoGreen} className="App-logo" alt="logo" />
           </header> */}
-          
+
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/requesterHomePage" element={<RequesterHomePage />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/requesterHomePage' element={<RequesterHomePage />} />
             <Route
-              path="/AssistanceFormRequest"
+              path='/AssistanceFormRequest'
               element={<AssistanceFormRequest />}
             />
-            <Route path="/RequestsPage" element={<RequestsPage />} />
+            <Route path='/RequestsPage' element={<RequestsPage />} />
 
             {/* 404 Page */}
-            <Route path="*" element={<NotFoundPage />} />
-            
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </>
       )}

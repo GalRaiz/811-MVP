@@ -1,27 +1,27 @@
-import { Link, useNavigate } from "react-router-dom";
-import "./HomePage.scss";
-import mateLogoGreen from "../assets/mate-logo-green.png";
+import { Link, useNavigate } from 'react-router-dom';
+import './HomePage.scss';
+import mateLogoGreen from '../assets/mate-logo-green.png';
 
-import Card from "../components/Card.tsx";
+import Card from '../components/Card.tsx';
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   const cards = [
     {
-      title: "requesterHomePage",
+      title: 'requesterHomePage',
       imageUrl: mateLogoGreen,
-      description: "מרכז בקרה - דשבורד בקשות",
+      description: 'מרכז בקרה - דשבורד בקשות',
     },
     {
-      title: "AssistanceFormRequest",
+      title: 'AssistanceFormRequest',
       imageUrl: mateLogoGreen,
-      description: "דוגמא",
+      description: 'דוגמא',
     },
     {
-      title: "RequestsPage",
+      title: 'RequestsPage',
       imageUrl: mateLogoGreen,
-      description: "דוגמא",
+      description: 'דוגמא',
     },
   ];
   const clickHandler = (title: string) => {
@@ -29,23 +29,23 @@ const HomePage = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="header">
+    <div className='main-container'>
+      <div className='header'>
         <Link
-          className="App-link"
-          to="https://300.org.il/"
-          target="_blank"
-          rel="noopener noreferrer"
+          className='App-link'
+          to='https://300.org.il/'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           מטה החמ״לים הארצי עמוד תדמית
         </Link>
       </div>
-      <div className="content">
-        <div className="content-title">ברוכים הבאים למערכת 811 של מטה החמ״לים הארצי</div>
-        <div className="content-subtitle">
-          איך נוכל לעזור היום?
+      <div className='content'>
+        <div className='content-title'>
+          ברוכים הבאים למערכת 811 של מטה החמ״לים הארצי
         </div>
-        <div className="card-container">
+        <div className='content-subtitle'>איך נוכל לעזור היום?</div>
+        <div className='card-container'>
           {cards.map((card, index) => (
             <Card
               key={index}

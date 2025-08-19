@@ -14,7 +14,9 @@
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card:hover {

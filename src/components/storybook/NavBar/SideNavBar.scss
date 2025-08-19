@@ -1,0 +1,104 @@
+@use "../../../styles/variables" as *;
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: $primary-color;
+  color: $text-inverse;
+  display: flex;
+  flex-direction: column;
+  padding: $padding-medium;
+  box-shadow: $box-shadow;
+  transition: width 0.3s ease;
+
+  &.closed {
+    width: 60px;
+
+    .nav-top {
+      gap: 0;
+    }
+
+    .nav-title {
+      display: none; 
+    }
+
+    .nav-logo {
+      height: 40px;
+      width: 40px; 
+    }
+
+    .nav-buttons {
+      display: none;
+    }
+
+    .nav-header {
+      justify-content: center;
+
+      .toggle-btn {
+        padding: $padding-xs;
+      }
+    }
+  }
+
+  .nav-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: $padding-medium;
+
+    .toggle-btn {
+      background-color: $secondary-color;
+      color: $text-primary;
+      border: none;
+      padding: $padding-small $padding-normal;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-family: $text-font-family-body;
+      font-size: $body-font-size;
+      font-weight: $body-font-weight;
+
+      &:hover {
+        background-color: $highlight-color;
+        color: $text-inverse;
+      }
+    }
+  }
+
+  .nav-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $padding-small;
+    overflow: hidden;
+
+    .nav-logo {
+      height: 60px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-title {
+      font-family: $header-font-family;
+      font-weight: $header-font-weight;
+      font-size: $h3-font-size;
+      color: $text-inverse;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-small;
+    margin-top: 0; 
+
+
+    .nav-action {
+      width: 100%;
+    }
+  }
+}

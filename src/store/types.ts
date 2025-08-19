@@ -1,6 +1,6 @@
 export interface IRequest {
   requestName?: string;
-  requestStatus?: "pending" | "in-progress" | "completed";
+  requestStatus?: 'pending' | 'in-progress' | 'completed';
   createdAt?: number;
   updatedAt?: number;
   district?: string;
@@ -33,4 +33,3 @@ export interface IUserData {
   email: string;
   password: string;
 }
-

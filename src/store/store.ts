@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import assistanceFormReducer from "./assistanceFormSlice";
-import requestsReducer from "./requestsSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import assistanceFormReducer from './assistanceFormSlice';
+import requestsReducer from './requestsSlice';
 
 export const store = configureStore({
   reducer: {

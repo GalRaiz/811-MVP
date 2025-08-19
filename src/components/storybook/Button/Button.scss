@@ -1,0 +1,123 @@
+@use "../../../styles/variables" as *;
+@use "sass:color";
+@use "sass:map";
+
+// ========================================
+// Maps
+// ========================================
+$button-types: (
+  primary: (
+    bg: $button-primary-bg,
+    color: $text-inverse,
+    hover: color.adjust($button-primary-bg, $lightness: -5%),
+    border: $border-color,
+  ),
+  secondary: (
+    bg: $button-secondary-bg,
+    color: $text-color,
+    hover: color.adjust($button-secondary-bg, $lightness: -5%),
+    border: $border-color,
+  ),
+  tertiary: (
+    bg: $text-color,
+    color: $text-inverse,
+    hover: $text-muted,
+    border: transparent,
+  ),
+  transparent-on-dark: (
+    bg: transparent,
+    color: $text-inverse,
+    hover: $text-muted,
+    border: transparent,
+  ),
+  transparent-on-light: (
+    bg: transparent,
+    color: $text-color,
+    hover: $text-muted,
+    border: transparent,
+  ),
+);
+
+$button-sizes: (
+  small: (
+    padding: $padding-xs $padding-small,
+    font-size: 12px,
+  ),
+  medium: (
+    padding: $padding-normal $padding-medium,
+    font-size: 14px,
+  ),
+  large: (
+    padding: $padding-medium $padding-large,
+    font-size: 16px,
+  ),
+);
+
+// ========================================
+// Mixins
+// ========================================
+@mixin button-type($props) {
+  background-color: map.get($props, bg);
+  color: map.get($props, color);
+  border: 1px solid map.get($props, border);
+
+  &:hover {
+    background-color: map.get($props, hover);
+  }
+
+  &:disabled,
+  &.btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+@mixin button-size($props) {
+  padding: map.get($props, padding);
+  font-size: map.get($props, font-size);
+}
+
+// ========================================
+// Base Button
+// ========================================
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius;
+  font-weight: 500;
+  cursor: pointer;
+  gap: $padding-small;
+  transition: all 0.2s ease;
+
+  // Types
+  @each $type, $props in $button-types {
+    &--#{$type} {
+      @include button-type($props);
+    }
+  }
+
+  // Sizes
+  @each $size, $props in $button-sizes {
+    &--#{$size} {
+      @include button-size($props);
+    }
+  }
+
+  // Full width
+  &--fullWidth {
+    width: 100%;
+  }
+
+  // Icon
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  // Reverse icon order (icon right)
+  &--icon-right {
+    flex-direction: row-reverse;
+  }
+}

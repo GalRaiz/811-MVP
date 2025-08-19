@@ -1,4 +1,4 @@
-@use "../styles/variables" as *;
+@use '../styles/variables' as *;
 
 .not-found-page {
   min-height: 100vh;
@@ -7,24 +7,24 @@
   justify-content: center;
   background-color: $background-color;
   color: $text-color;
-  
+
   .not-found-content {
     text-align: center;
     padding: $padding-large;
-    
+
     h1 {
       font-size: 72px;
       font-weight: bold;
       color: $primary-color;
       margin: 0 0 $padding-normal 0;
     }
-    
+
     h2 {
       font-size: $h2-font-size;
       font-weight: $header-font-weight;
       margin: 0 0 $padding-normal 0;
     }
-    
+
     p {
       font-size: $body-font-size;
       color: $text-muted;

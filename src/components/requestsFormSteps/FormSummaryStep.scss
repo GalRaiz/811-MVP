@@ -3,7 +3,7 @@
 
 .form-summary-step {
   padding: $padding-normal;
-  
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -12,7 +12,6 @@
     margin-bottom: $padding-xs;
   }
 
-  
   &__date {
     color: $text-muted;
   }
