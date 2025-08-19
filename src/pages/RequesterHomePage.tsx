@@ -1,6 +1,6 @@
 import React from 'react';
 import './RequesterHomePage.scss';
-import DashboardHeader from '../components/DashboardHeader';
+import DashboardHeader from '../components/storybook/NavBar/DashboardHeader';
 import RequestsSection from '../components/RequestsSection';
 import AlertsSection from '../components/AlertsSection';
 import SummaryCards from '../components/SummaryCards';
@@ -24,7 +24,7 @@ const RequesterHomePage: React.FC = () => {
           ]}
         />
         <div className='main-content'>
-          <DashboardHeader />
+          <DashboardHeader title='מרכז בקרה' breadcrumb={[{ label: 'דף הבית' }, { label: 'מרכז בקרה' }]} />
 
           <div className='dashboard-grid'>
             <div className='left-column'>
