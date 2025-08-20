@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
-import FormField from './FormAssets/FormField';
+import FormField from '../storybook/FormField/FormField';
 import './AssistanceForm.scss';
 
 const AssistanceForm: React.FC = () => {
@@ -13,51 +13,37 @@ const AssistanceForm: React.FC = () => {
     updateFormField(fieldName, value);
   };
 
-  const fields = [
-    {
-      id: 'requesterName',
-      label: 'שם מקבל הסיוע',
-      placeholder: 'שם מלא',
-      type: 'text' as const,
-      value: formState.requesterName || '',
-    },
-    {
-      id: 'requesterPhone',
-      label: 'מספר טלפון',
-      placeholder: 'מספר טלפון',
-      type: 'tel' as const,
-      value: formState.requesterPhone || '',
-    },
-    {
-      id: 'requestName',
-      label: 'כותרת הבקשה',
-      placeholder: 'תיאור קצר של הבקשה',
-      type: 'text' as const,
-      value: formState.requestName || '',
-    },
-  ];
-
   return (
     <div className='assistance-form'>
       <h2 className='assistance-form__title'>מי צריך עזרה?</h2>
 
       <div className='assistance-form__fields'>
-        {fields.map(field => (
-          <FormField
-            key={field.id}
-            id={field.id}
-            label={field.label}
-            placeholder={field.placeholder}
-            type={field.type}
-            value={field.value}
-            onChange={value =>
-              handleFieldChange(
-                field.id as 'requesterName' | 'requesterPhone' | 'requestName',
-                value
-              )
-            }
-          />
-        ))}
+        <FormField
+          id="requesterName"
+          label="שם מקבל הסיוע"
+          placeholder="שם מלא"
+          type="text"
+          value={formState.requesterName || ''}
+          onChange={(value) => handleFieldChange('requesterName', value as string)}
+        />
+
+        <FormField
+          id="requesterPhone"
+          label="מספר טלפון"
+          placeholder="מספר טלפון"
+          type="tel"
+          value={formState.requesterPhone || ''}
+          onChange={(value) => handleFieldChange('requesterPhone', value as string)}
+        />
+
+        <FormField
+          id="requestName"
+          label="כותרת הבקשה"
+          placeholder="תיאור קצר של הבקשה"
+          type="text"
+          value={formState.requestName || ''}
+          onChange={(value) => handleFieldChange('requestName', value as string)}
+        />
       </div>
 
       <div className='assistance-form__instructions'>

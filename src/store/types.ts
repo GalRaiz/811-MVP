@@ -1,3 +1,5 @@
+import { IAssistanceSubType, IAssistanceType } from "../data/assistanceTypesData";
+
 export interface IRequest {
   id: number | string;
   requesterDetails: {
@@ -9,8 +11,8 @@ export interface IRequest {
   };
   requestDetails: {
     requestName: string;
-    requestType: string;
-    requestSubType?: string[];
+    requestType: IAssistanceType["label"];
+    requestSubType?: IAssistanceSubType["label"][];
     requestDescription?: string;
     requestImage?: string;
     needTransportation?: boolean;
@@ -40,3 +42,4 @@ export interface IUserData {
   userPassword: string;
   userRole: string;
 }
+

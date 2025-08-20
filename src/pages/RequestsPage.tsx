@@ -4,24 +4,35 @@ import "./RequestsPage.scss";
 import { assistanceRequests } from "../data/requestsData";
 import { IRequest } from "../store/types";
 import PageHeader from "../components/storybook/NavBar/PageHeade";
+import { getAssistanceTypeOptions, getAssistanceTypeLabel, getAssistanceSubTypeLabel, getSubTypeOptions } from "../utils/assistanceTypeUtils";
 
 const RequestsPage: React.FC = () => {
   const filterOptions: IFilterOption[] = [
-    {
+    { 
       key: "requestDetails.requestType",
-      label: "Request Type",
+      label: "סוג הבקשה",
+      name: "requestDetails.requestType",
       type: "select",
-      options: [
-        { value: "מזון", label: "Food" },
-        { value: "לוגיסטיקה", label: "Logistics" },
-        { value: "בריאות", label: "Health" },
-        { value: "ציוד", label: "Equipment" },
-        { value: "תמיכה משפחתית", label: "Family Support" },
-      ],
+      options: getAssistanceTypeOptions(),
+    },
+    {
+      key: "requestDetails.requestSubType",
+      label: "תת-סוג",
+      name: "requestDetails.requestSubType",
+      type: "multi-select",
+      dependsOn: "requestDetails.requestType",
+      getOptions: (selectedValues: Record<string, string>) => {
+        const selectedType = selectedValues["requestDetails.requestType"];
+        if (selectedType) {
+          return getSubTypeOptions(selectedType);
+        }
+        return [];
+      },
     },
     {
       key: "requesterDetails.requesterName",
-      label: "Requester Name",
+      label: "מי צריך עזרה",
+      name: "requesterDetails.requesterName",
       type: "text",
     },
   ];
@@ -39,23 +50,26 @@ const RequestsPage: React.FC = () => {
         data={assistanceRequests}
         columns={[
           {
-            label: "Name",
+            label: "שם הבקשה",
             render: (row) => row.requestDetails.requestName,
           },
           {
-            label: "Type",
-            render: (row) => row.requestDetails.requestType,
+            label: "סוג הבקשה",
+            render: (row) => getAssistanceTypeLabel(row.requestDetails.requestType),
           },
         ]}
-        searchField="requestDetails.requestName"
-        searchPlaceholder="Search request names..."
+        searchPlaceholder="חפש בכל השדות..."
         filterOptions={filterOptions}
         cardRenderer={cardRenderer}
         panelRenderer={(row) => [
-          { label: "Name", value: row.requestDetails.requestName },
-          { label: "Type", value: row.requestDetails.requestType },
-          { label: "Description", value: row.requestDetails.requestDescription || "No description available" },
-          { label: "Requester", value: row.requesterDetails.requesterName },
+          { label: "שם הבקשה", value: row.requestDetails.requestName || "" },
+          { label: "סוג הבקשה", value: getAssistanceTypeLabel(row.requestDetails.requestType) },
+          { label: "תת-סוג", value: row.requestDetails.requestSubType?.map(subType => getAssistanceSubTypeLabel(subType)).join(", ") || "לא צוין" },
+          { label: "תיאור הבקשה", value: row.requestDetails.requestDescription || "No description available" },
+          { label: "מי צריך עזרה", value: row.requesterDetails.requesterName || "" },
+          { label: "טלפון", value: row.requesterDetails.phone || "" },
+          { label: "עיר", value: row.requesterDetails.city || "" },
+          { label: "מחוז", value: row.requesterDetails.district || "" },
         ]}
         defaultViewMode="table"
         showViewToggle={true}

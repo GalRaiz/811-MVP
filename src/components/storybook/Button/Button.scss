@@ -17,7 +17,9 @@ $button-types: (
   transparent-on-light: (bg: transparent, color: $text-color, hover: $text-muted, border: transparent),
   transparent-on-dark: (bg: transparent, color: $text-inverse, hover: $text-muted, border: transparent),
   icon-only: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
-  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent)
+  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
+  clear: (bg: transparent, color: #6b7280, hover: #f3f4f6, border: transparent),
+  reset: (bg: transparent, color: $text-color, hover: $error-color, border: 1px solid $border-color)
 );
 
 $button-sizes: (

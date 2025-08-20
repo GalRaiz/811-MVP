@@ -12,8 +12,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'סיוע באוכל למשפחות מפונים בדירה זמנית בתל אביב',
-      requestType: 'מזון',
-      requestSubType: ['מנות חמות'],
+      requestType: 'food', // מזון
+      requestSubType: ['hot-meals'], // מנות חמות
       requestDescription:
         'משפחה מרחובות שביתם נפגע, עם 2 ילדים קטנים בדירה זמנית בת״א, מטבח קטן ואין להם זמן לבשל',
       needTransportation: false,
@@ -23,8 +23,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
       assignedTo: ['חמ״ל צפון'],
     },
   },
@@ -39,8 +39,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'עזרה בהובלת ציוד לדירה חדשה',
-      requestType: 'לוגיסטיקה',
-      requestSubType: ['הובלה'],
+      requestType: 'logistics', // לוגיסטיקה ושינוע
+      requestSubType: ['equipment-move'], // העברת ציוד
       requestDescription:
         'אישה מבוגרת שעוברת מדירתה בדימונה לדירה שכורה בבאר שבע, צריכה עזרה בהובלת רהיטים בסיסיים',
       needTransportation: true,
@@ -50,8 +50,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'in-progress',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
@@ -65,8 +65,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'ליווי קשישה לטיפול רפואי',
-      requestType: 'בריאות',
-      requestSubType: ['ליווי'],
+      requestType: 'transportation', // הסעות ותחבורה
+      requestSubType: ['medical-transport'], // הסעות רפואיות
       requestDescription:
         'קשישה בת 84 מרמת גן, זקוקה למתנדב שילווה אותה לבדיקות בבית החולים איכילוב',
       needTransportation: true,
@@ -76,8 +76,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
@@ -91,8 +91,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'תרומת בגדים לנוער בסיכון',
-      requestType: 'ציוד',
-      requestSubType: ['ביגוד'],
+      requestType: 'personal-equipment', // ציוד אישי
+      requestSubType: ['clothing'], // ביגוד
       requestDescription:
         'מרכז לנוער בסיכון ביפו מבקש תרומת בגדים במצב טוב – בעיקר חורף: מעילים, סוודרים, נעליים',
       needTransportation: false,
@@ -102,8 +102,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
@@ -117,8 +117,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'שמירה על ילדים בזמן שהאם בעבודה',
-      requestType: 'תמיכה משפחתית',
-      requestSubType: ['בייביסיטר'],
+      requestType: 'volunteers', // מתנדבים
+      requestSubType: ['social-volunteers'], // מתנדבים חברתיים
       requestDescription:
         'אמא חד הורית מהוד השרון מבקשת עזרה בשמירה על שני ילדים בגילאי 4 ו-7 בין השעות 15:00–18:00',
       needTransportation: false,
@@ -128,8 +128,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
@@ -143,8 +143,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'חבילות מזון לחיילים בודדים',
-      requestType: 'מזון',
-      requestSubType: ['חבילות'],
+      requestType: 'food', // מזון
+      requestSubType: ['food-packages'], // חבילות מזון
       requestDescription:
         'התארגנות מקומית ברעננה לאיסוף מוצרי מזון יבשים לחיילים בודדים המתגוררים באזור המרכז',
       needTransportation: false,
@@ -154,8 +154,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
@@ -169,8 +169,8 @@ export const assistanceRequests: IRequest[] = [
     },
     requestDetails: {
       requestName: 'תרומת מחשבים ללמידה מרחוק',
-      requestType: 'ציוד',
-      requestSubType: ['מחשבים'],
+      requestType: 'education-equipment', // ציוד למוסדות חינוך וקהילה
+      requestSubType: ['computers'], // מחשבים וטכנולוגיה
       requestDescription:
         'בית ספר בבת ים מבקש תרומת מחשבים ניידים לילדים שאין להם גישה למחשב ללמידה מרחוק',
       needTransportation: false,
@@ -180,8 +180,86 @@ export const assistanceRequests: IRequest[] = [
     },
     requestStatus: {
       requestStatus: 'completed',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
+    },
+  },
+  {
+    id: 8,
+    requesterDetails: {
+      requesterName: 'משפחה מנתניה',
+      phone: '050-0000007',
+      district: 'מרכז',
+      city: 'נתניה',
+      street: 'רחוב הרצל',
+    },
+    requestDetails: {
+      requestName: 'סיוע בדיור זמני למשפחה מפונה',
+      requestType: 'housing', // דיור ואירוח קהילתי
+      requestSubType: ['temporary-housing'], // דיור זמני
+      requestDescription:
+        'משפחה מנתניה שדירתם נפגעה, זקוקה לדיור זמני למשך שבועיים עד שיתקנו את הדירה',
+      needTransportation: false,
+      needVolunteers: false,
+      attachment: '',
+      requestImage: '',
+    },
+    requestStatus: {
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
+    },
+  },
+  {
+    id: 9,
+    requesterDetails: {
+      requesterName: 'קשיש מאשדוד',
+      phone: '050-0000008',
+      district: 'דרום',
+      city: 'אשדוד',
+      street: 'רחוב העצמאות',
+    },
+    requestDetails: {
+      requestName: 'תמיכה נפשית לקשיש במשבר',
+      requestType: 'mental-health', // בריאות הנפש
+      requestSubType: ['counseling'], // ייעוץ פסיכולוגי
+      requestDescription:
+        'קשיש מאשדוד שחווה אובדן של בן משפחה, זקוק לתמיכה נפשית וייעוץ פסיכולוגי',
+      needTransportation: false,
+      needVolunteers: true,
+      attachment: '',
+      requestImage: '',
+    },
+    requestStatus: {
+      requestStatus: 'in-progress',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
+    },
+  },
+  {
+    id: 10,
+    requesterDetails: {
+      requesterName: 'מרכז קהילתי בחיפה',
+      phone: '050-0000009',
+      district: 'חיפה',
+      city: 'חיפה',
+      street: 'רחוב בלפור',
+    },
+    requestDetails: {
+      requestName: 'תיקון מערכת החשמל במרכז הקהילתי',
+      requestType: 'maintenance', // תחזוקה ותשתיות
+      requestSubType: ['electrical'], // תיקונים חשמליים
+      requestDescription:
+        'מרכז קהילתי בחיפה עם בעיות במערכת החשמל, זקוק לתיקון דחוף כדי להמשיך לפעול',
+      needTransportation: false,
+      needVolunteers: false,
+      attachment: '',
+      requestImage: '',
+    },
+    requestStatus: {
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
 ];

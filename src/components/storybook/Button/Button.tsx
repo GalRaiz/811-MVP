@@ -13,7 +13,9 @@ type ButtonType =
   | "transparent-on-light"
   | "transparent-on-dark"
   | "icon-only"
-  | "close";
+  | "close"
+  | "clear"
+  | "reset";
 
 type ButtonSize = "small" | "medium" | "large";
 type IconPosition = "left" | "right";

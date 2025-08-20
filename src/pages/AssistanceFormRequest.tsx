@@ -3,7 +3,7 @@ import PageHeader from '../components/storybook/NavBar/PageHeade';
 import AssistanceFormContainer from '../components/requestsFormSteps/AssistanceFormContainer';
 import AssistanceFormFooter from '../components/requestsFormSteps/AssistanceFormFooter';
 import './AssistanceFormRequest.scss';
-import logo from '../assets/mate-logo-green.png';
+import logo from '../assets/mate-logo-white.png';
 
 const AssistanceForm: React.FC = () => {
   return (

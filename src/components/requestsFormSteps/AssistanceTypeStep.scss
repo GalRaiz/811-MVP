@@ -5,13 +5,23 @@
   margin: 0 auto;
   padding: $padding-large;
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $padding-large;
+    flex-wrap: wrap;
+    gap: $padding-normal;
+  }
+
   &__title {
     font-family: $header-font-family;
     font-size: $h2-font-size;
     font-weight: $header-font-weight;
     color: $text-color;
     text-align: center;
-    margin: 0 0 $padding-large 0;
+    margin: 0;
+    flex: 1;
   }
 
   &__grid {
@@ -78,6 +88,12 @@
 @media (max-width: 768px) {
   .assistance-type-step {
     padding: $padding-normal;
+
+    &__header {
+      flex-direction: column;
+      text-align: center;
+      gap: $padding-small;
+    }
 
     &__title {
       font-size: $h3-font-size;

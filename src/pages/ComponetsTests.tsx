@@ -1,12 +1,13 @@
 import Button from '../components/storybook/Button/Button'
 import { Icons } from '../components/storybook/icons/EmojiIcons'
 import PageHeader from '../components/storybook/NavBar/PageHeade';
-import logo from '../assets/mate-logo-green.png';
+import logo from '../assets/mate-logo-white.png';
 import Card from '../components/storybook/Card/Card';
 import Modal from '../components/storybook/Modal/Modal';
 import Table from '../components/storybook/Table/Table';
 import Tabs from '../components/storybook/Modal/Tabs';
 import { useState } from 'react';
+import FormFieldDemo from './FormFieldDemo';
 
 const ComponetsTests = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +20,7 @@ const ComponetsTests = () => {
   return (
   <>
     <PageHeader title='טופס בקשת סיוע' logo={logo} />
+    <FormFieldDemo />
     <div className='components-tests'>
         <Button btnText='פתח מודל' onClick={handleOpenModal} />
         <Card title='טופס בקשת סיוע' />

@@ -1,9 +1,10 @@
 import React from 'react';
-import { AssistanceSubType } from '../../../data/assistanceTypesData';
+import { IAssistanceSubType } from '../../../data/assistanceTypesData';
+import Button from '../../storybook/Button/Button';
 import './SubTypeSelector.scss';
 
 interface SubTypeSelectorProps {
-  subTypes: AssistanceSubType[];
+  subTypes: IAssistanceSubType[];
   onSelect: (subTypeId: string) => void;
   selectedSubType: string[];
 }
@@ -17,12 +18,27 @@ const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
     onSelect(subTypeId);
   };
 
+  const handleClearAll = () => {
+    // Clear all selected sub-types by calling onSelect for each selected item
+    selectedSubType.forEach(subTypeId => {
+      onSelect(subTypeId);
+    });
+  };
+
   return (
     <div className='sub-type-selector'>
       <div className='sub-type-selector__header'>
         <span className='sub-type-selector__counter'>
           נבחרו {selectedSubType.length} סוגים
         </span>
+        {selectedSubType.length > 0 && (
+          <Button
+            type="reset"
+            size="small"
+            btnText="נקה הכל"
+            onClick={handleClearAll}
+          />
+        )}
         {selectedSubType.length === 0 && (
           <span className='sub-type-selector__warning'>
             יש לבחור לפחות סוג אחד

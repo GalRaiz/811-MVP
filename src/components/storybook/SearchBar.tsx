@@ -24,9 +24,9 @@ const SearchBar: React.FC<ISearchBarProps> = ({
     if (placeholder) return placeholder;
     if (searchField) {
       const fieldName = searchField.split('.').pop() || searchField;
-      return `Search ${fieldName.toLowerCase()}...`;
+      return `חפש ב${fieldName.toLowerCase()}...`;
     }
-    return 'Search requests...';
+    return 'חפש בכל השדות...';
   };
 
   const handleClearSearch = () => {
@@ -36,16 +36,16 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   return (
     <div className="search-container">
       <div className="search-input-wrapper">
-        <svg className="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
-        </svg>
+        <div className="search-icon">
+          {Icons.search}
+        </div>
         <input
           type='text'
           value={searchQuery}
           onChange={e => onSearchChange(e.target.value)}
           placeholder={getPlaceholder()}
           className='search-bar'
+          dir="rtl"
         />
         {searchQuery && (
           <Button

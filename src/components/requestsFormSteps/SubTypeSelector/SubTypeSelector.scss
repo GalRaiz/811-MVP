@@ -87,6 +87,12 @@
 // Responsive design
 @media (max-width: 768px) {
   .sub-type-selector {
+    &__header {
+      flex-direction: column;
+      gap: $padding-small;
+      text-align: center;
+    }
+
     &__grid {
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: $padding-small;
