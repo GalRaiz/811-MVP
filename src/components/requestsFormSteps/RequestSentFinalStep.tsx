@@ -12,7 +12,7 @@ const RequestSentFinalStep: React.FC = () => {
 
   const handleGoHome = () => {
     dispatch(resetAll());
-    navigate('/');
+    navigate('/requesterHomePage');
   };
 
   return (

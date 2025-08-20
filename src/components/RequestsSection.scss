@@ -5,18 +5,45 @@
   border-radius: 12px;
   padding: $padding-large;
   box-shadow: $box-shadow;
+  position: relative;
+
+  .success-notification {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: #d4edda;
+    color: #155724;
+    padding: $padding-small $padding-normal;
+    border-radius: $border-radius;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 10;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
 
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: row-reverse;
     margin-bottom: $padding-normal;
 
     .header-content {
       h2 {
         font-size: $h4-font-size;
         font-weight: $header-font-weight;
-        margin: 0;
         color: $text-color;
       }
 
@@ -24,21 +51,6 @@
         font-size: 14px;
         color: $text-muted;
         margin-top: $padding-xs;
-      }
-    }
-
-    .see-all-btn {
-      background: $text-color;
-      color: $text-inverse;
-      border: none;
-      padding: $padding-small $padding-normal;
-      border-radius: $border-radius;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
-
-      &:hover {
-        background: $text-muted;
       }
     }
   }

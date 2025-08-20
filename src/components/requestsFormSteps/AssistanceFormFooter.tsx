@@ -26,22 +26,29 @@ const AssistanceFormFooter: React.FC = () => {
     if (formState.currentStep === 7) {
       // Submit the form data
       const newRequest: IRequest = {
-        requestName: formState.requestName,
-        requestType: formState.requestType,
-        requestSubType: formState.requestSubType,
-        requestDescription: formState.requestDescription,
-        requesterName: formState.requesterName,
-        requesterPhone: formState.requesterPhone,
-        district: formState.district,
-        city: formState.city,
-        street: formState.street,
-        needTransportation: formState.needTransportation,
-        needVolunteers: formState.needVolunteers,
-        attachment: formState.attachment,
-        requestStatus: 'pending',
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-        assignedTo: [],
+        id: Date.now(), // Generate unique ID
+        requesterDetails: {
+          requesterName: formState.requesterName,
+          phone: formState.requesterPhone,
+          district: formState.district,
+          city: formState.city,
+          street: formState.street,
+        },
+        requestDetails: {
+          requestName: formState.requestName,
+          requestType: formState.requestType,
+          requestSubType: formState.requestSubType,
+          requestDescription: formState.requestDescription,
+          needTransportation: formState.needTransportation,
+          needVolunteers: formState.needVolunteers,
+          attachment: formState.attachment,
+        },
+        requestStatus: {
+          requestStatus: 'pending',
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          assignedTo: [],
+        },
       };
 
       // Add the request to the store

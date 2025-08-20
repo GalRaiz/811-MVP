@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './HomePage.scss';
 import mateLogoGreen from '../assets/mate-logo-green.png';
 
-import Card from '../components/Card.tsx';
+import Card from '../components/storybook/Card/Card.tsx';
 
 const HomePage = () => {
   const navigate = useNavigate();

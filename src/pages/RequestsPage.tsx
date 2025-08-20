@@ -5,7 +5,7 @@ import './RequestsPage.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { IRequest } from '../store/types';
-import Modal from '../components/storybook/Modal';
+import Modal from '../components/storybook/Modal/Modal';
 
 const RequestsPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();

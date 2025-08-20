@@ -87,7 +87,7 @@ export const useAssistanceForm = () => {
         return (
           (formState.requesterName?.trim() || '') !== '' &&
           (formState.requesterPhone?.trim() || '') !== '' &&
-          (formState.requestName?.trim() || '') !== ''
+          (formState.requestName.trim() || '') !== ''
         );
       case 2:
         return (
@@ -104,7 +104,7 @@ export const useAssistanceForm = () => {
           formState.needVolunteers !== undefined
         );
       case 6:
-        return (formState.requestName?.trim() || '') !== '';
+        return (formState.requestName.trim() || '') !== '';
       case 7:
         return true; // Summary step - always valid for submission
       case 8:

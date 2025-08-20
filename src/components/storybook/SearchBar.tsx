@@ -15,7 +15,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       type='text'
       value={searchQuery}
       onChange={e => onSearchChange(e.target.value)}
-      placeholder='חיפוש בכל הבקשות...'
+      placeholder='חיפוש במערכת...'
       className='search-bar'
     />
   );

@@ -33,8 +33,8 @@ const Table: React.FC<TableProps> = ({ data }) => {
   const filteredData = data.filter((request: IRequest) => {
     const query = searchQuery.toLowerCase();
     return (
-      (request.requesterName ?? '').toLowerCase().includes(query) ||
-      (request.requestName ?? '').toLowerCase().includes(query)
+      (request.requestDetails.requestName ?? '').toLowerCase().includes(query) ||
+      (request.requestDetails.requestType ?? '').toLowerCase().includes(query)
     );
   });
 
@@ -63,8 +63,8 @@ const Table: React.FC<TableProps> = ({ data }) => {
                     className='table-row'
                     onClick={() => handleRowClick(request)}
                   >
-                    <td className='table-cell'>{request.requestName}</td>
-                    <td className='table-cell'>{request.requestType}</td>
+                    <td className='table-cell'>{request.requestDetails.requestName}</td>
+                    <td className='table-cell'>{request.requestDetails.requestType}</td>
                   </tr>
                 ))}
               </tbody>
@@ -77,26 +77,34 @@ const Table: React.FC<TableProps> = ({ data }) => {
             request={
               selectedRequest
                 ? {
-                    requestName: selectedRequest.requestName ?? '',
-                    requestType: selectedRequest.requestType ?? '',
-                    requestSubType: selectedRequest.requestSubType || [],
-                    requestStatus: selectedRequest.requestStatus ?? '',
-                    createdAt: selectedRequest.createdAt ?? 0,
-                    updatedAt: selectedRequest.updatedAt ?? 0,
-                    district: selectedRequest.district ?? '',
-                    city: selectedRequest.city ?? '',
-                    street: selectedRequest.street ?? '',
-                    requesterName: selectedRequest.requesterName ?? '',
-                    requesterPhone: selectedRequest.requesterPhone ?? '',
-                    needTransportation:
-                      selectedRequest.needTransportation ?? false,
-                    needVolunteers: selectedRequest.needVolunteers ?? false,
-                    description: selectedRequest.requestDescription ?? '',
-                    attachment: selectedRequest.attachment ?? '',
+                    id: selectedRequest.id ?? '',
+                    requesterDetails: {
+                      requesterName: selectedRequest.requesterDetails.requesterName ?? '',
+                      phone: selectedRequest.requesterDetails.phone ?? '',
+                      district: selectedRequest.requesterDetails.district ?? '',
+                      city: selectedRequest.requesterDetails.city ?? '',
+                      street: selectedRequest.requesterDetails.street ?? '',
+                    },
+                    requestDetails: {
+                      requestName: selectedRequest.requestDetails.requestName ?? '',
+                      requestType: selectedRequest.requestDetails.requestType ?? '',
+                      requestSubType: selectedRequest.requestDetails.requestSubType || [],
+                      requestDescription: selectedRequest.requestDetails.requestDescription ?? '',
+                      requestImage: selectedRequest.requestDetails.requestImage ?? '',
+                      needTransportation: selectedRequest.requestDetails.needTransportation ?? false,
+                      needVolunteers: selectedRequest.requestDetails.needVolunteers ?? false,
+                      attachment: selectedRequest.requestDetails.attachment ?? '',
+                    },
+                    requestStatus: {
+                      requestStatus: selectedRequest.requestStatus.requestStatus ?? "pending",
+                      createdAt: selectedRequest.requestStatus.createdAt ?? 0,
+                      updatedAt: selectedRequest.requestStatus.updatedAt ?? 0,
+                      assignedTo: selectedRequest.requestStatus.assignedTo ?? [],
+                    },
                   }
                 : undefined
             }
-            filterType='requestDetails ?? filterRequests'
+            filterType='details ?? filter'
             onFilterChange={() => {}}
           />
         </div>

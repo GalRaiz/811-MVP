@@ -1,22 +1,28 @@
 export interface IRequest {
-  requestName?: string;
-  requestStatus?: 'pending' | 'in-progress' | 'completed';
-  createdAt?: number;
-  updatedAt?: number;
-  district?: string;
-  city?: string;
-  street?: string | undefined;
-  requesterName: string;
-  requesterPhone?: string;
-  needTransportation?: boolean;
-  needVolunteers?: boolean;
-  attachment?: string | undefined;
-  id?: number | string;
-  requestType: string;
-  requestSubType?: string[];
-  requestDescription?: string;
-  requestImage?: string;
-  assignedTo?: string[];
+  id: number | string;
+  requesterDetails: {
+    requesterName: string;    
+    phone?: string;
+    district?: string;
+    city?: string;
+    street?: string;
+  };
+  requestDetails: {
+    requestName: string;
+    requestType: string;
+    requestSubType?: string[];
+    requestDescription?: string;
+    requestImage?: string;
+    needTransportation?: boolean;
+    needVolunteers?: boolean;
+    attachment?: string | undefined;
+  };
+  requestStatus: {
+    requestStatus?: 'pending' | 'in-progress' | 'completed';
+    createdAt?: number;
+    updatedAt?: number;
+    assignedTo?: string[];
+  };  
 }
 
 export interface IRequestsState {
@@ -29,7 +35,8 @@ export interface RootState {
 }
 
 export interface IUserData {
-  name: string;
-  email: string;
-  password: string;
+  userName: string;
+  userEmail: string;
+  userPassword: string;
+  userRole: string;
 }

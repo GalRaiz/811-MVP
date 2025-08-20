@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IRequestsState, IRequest } from './types';
+import { assistanceRequests } from '../data/requestsData';
 
 export const initialState: IRequestsState = {
   requestsData: [],
@@ -12,10 +13,9 @@ export const requestsSlice = createSlice({
   initialState,
   reducers: {
     setRequestsStart: state => {
-      state.loading = true;
+      state.requestsData = assistanceRequests;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setRequestsSuccess: (state, action: PayloadAction<any[]>) => {
+    setRequestsSuccess: (state, action: PayloadAction<IRequest[]>) => {
       state.requestsData = action.payload;
       state.loading = false;
     },
@@ -24,14 +24,10 @@ export const requestsSlice = createSlice({
       state.loading = false;
     },
     addRequest: (state, action: PayloadAction<IRequest>) => {
-      const newRequest = {
-        ...action.payload,
-        id: Date.now(), // Generate unique ID
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-        requestStatus: 'pending' as const,
-      };
-      state.requestsData.push(newRequest);
+      console.log('Adding new request to store:', action.payload);
+      state.requestsData.push(action.payload);
+      state.loading = false;
+      console.log('Updated requests in store:', state.requestsData);
     },
   },
 });

@@ -15,7 +15,7 @@ import {
 import { resetForm } from './store/assistanceFormSlice';
 import './App.scss';
 import RequestsPage from './pages/RequestsPage';
-import { assistanceRequets } from './data/requestsData';
+import { assistanceRequests } from './data/requestsData';
 import NotFoundPage from './pages/NotFoundPage';
 
 const App = () => {
@@ -29,7 +29,7 @@ const App = () => {
     dispatch(setRequestsStart());
     try {
       setTimeout(() => {
-        dispatch(setRequestsSuccess(assistanceRequets));
+        dispatch(setRequestsSuccess(assistanceRequests));
       }, 3000);
     } catch {
       dispatch(setRequestsFailure('Failed to load requests'));

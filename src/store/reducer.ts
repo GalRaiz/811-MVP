@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { assistanceRequets } from '../data/requestsData.ts';
+import { assistanceRequests } from '../data/requestsData.ts';
 
 const itemsSlice = createSlice({
   name: 'Requests',
-  initialState: assistanceRequets,
+  initialState: assistanceRequests,
   reducers: {
     setItems: (_state, action) => {
       return action.payload;

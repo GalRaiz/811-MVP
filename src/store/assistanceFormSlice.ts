@@ -9,7 +9,7 @@ interface AssistanceFormState {
 
   // IRequest fields - aligned with interface
   id?: number | string;
-  requestName?: string;
+  requestName: string;
   requestStatus?: 'pending' | 'in-progress' | 'completed';
   createdAt?: number;
   updatedAt?: number;

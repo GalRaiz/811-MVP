@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './RequestsSection.scss';
 import { IRequest, RootState } from '../store/types';
 import { useSelector } from 'react-redux';
@@ -7,11 +7,19 @@ import { useNavigate } from 'react-router-dom';
 
 const RequestsSection: React.FC = () => {
   const navigate = useNavigate();
-  const requests = useSelector(
-    (state: RootState) => state.requests.requestsData
-  );
-  const columns = ['סטאטוס', 'שם בקשה', 'שיוך'];
+  const requests = useSelector((state: RootState) => state.requests.requestsData);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   
+  // Show success message when requests count increases
+  useEffect(() => {
+    if (requests.length > 0) {
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000);
+    }
+  }, [requests.length]);
+  
+  const columns = ['סטאטוס', 'שם בקשה', 'שיוך'];
+
   const getStatusColor = (status?: string) => {
     switch (status) {
       case 'pending':
@@ -25,8 +33,17 @@ const RequestsSection: React.FC = () => {
     }
   };
 
+  // Remove the useEffect that resets data on every mount
+  // The data is already initialized in App.tsx
+
   return (
     <div className='requests-section'>
+      {showSuccessMessage && (
+        <div className='success-notification'>
+          <span>✓ בקשה חדשה נוספה בהצלחה!</span>
+        </div>
+      )}
+      
       <div className='section-header'>
         <div className='header-content'>
           <h2>בקשות</h2>
@@ -58,15 +75,15 @@ const RequestsSection: React.FC = () => {
                 <td className='cell status'>
                   <div
                     className={`status-dot ${getStatusColor(
-                      request.requestStatus
+                      request.requestStatus?.requestStatus
                     )}`}
                   ></div>
-                  <span>{request.requestStatus ?? 'לא ידוע'}</span>
+                  <span>{request.requestStatus?.requestStatus ?? "pending"}</span>
                 </td>
-                <td className='cell name'>{request.requestName ?? '—'}</td>
+                <td className='cell name'>{request.requestDetails?.requestName ?? 'בקשה חדשה'}</td>
                 <td className='cell assigned-to'>
-                  {request.assignedTo?.length
-                    ? request.assignedTo.join(', ')
+                  {request.requestStatus?.assignedTo?.length
+                    ? request.requestStatus.assignedTo.join(', ')
                     : 'לא משויך'}
                 </td>
               </tr>
