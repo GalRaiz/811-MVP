@@ -9,6 +9,7 @@ import Button from "../Button/Button";
 import { getNestedValue } from "../../../utils/getNestedValue";
 import { getAssistanceTypeLabel, getAssistanceSubTypeLabel } from "../../../utils/assistanceTypeUtils";
 import "./TableOrCards.scss";
+import { Icons } from "../icons/EmojiIcons";
 
 // Types
 export type ViewMode = "table" | "cards";
@@ -416,28 +417,14 @@ function TableOrCards<T extends { id: string | number }>({
           size="small"
           btnText="Table"
           onClick={() => handleViewModeChangeWithPanelClose("table")}
-          icon={
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="3" y1="9" x2="21" y2="9"></line>
-              <line x1="3" y1="15" x2="21" y2="15"></line>
-              <line x1="9" y1="3" x2="9" y2="21"></line>
-            </svg>
-          }
+          icon={Icons.box}
         />
         <Button
           type={viewMode === "cards" ? "primary" : "secondary"}
           size="small"
           btnText="Cards"
           onClick={() => handleViewModeChangeWithPanelClose("cards")}
-          icon={
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-          }
+          icon={Icons.calendar}
         />
       </div>
     );

@@ -157,6 +157,9 @@ const SidePanel: React.FC<ISidePanelProps> = ({
   const renderFilterInput = (filter: IFilterOption) => {
     const currentValue = filterValues[filter.key];
     const options = getFilterOptions(filter);
+    
+    // Check if this filter depends on another filter and if that dependency is not selected
+    const isDisabled: boolean = Boolean(filter.dependsOn && !filterValues[filter.dependsOn]?.trim());
 
     switch (filter.type) {
       case "text":
@@ -168,7 +171,8 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             placeholder={`חפש לפי: ${filter.label.toLowerCase()}...`}
             onChange={(e) => handleFilterChange(filter.key, e as string)}
             showClear={true}
-            icon={Icons.search} 
+            icon={Icons.search}
+            disabled={isDisabled}
           />
         );
 
@@ -186,11 +190,12 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             id={filter.key}
             type="multi-select"
             value={multiSelectValue}
-            placeholder={`בחר ${filter.label.toLowerCase()}...`}
+            placeholder={isDisabled ? "בחר תחילה סוג בקשה..." : `בחר ${filter.label.toLowerCase()}...`}
             onChange={(e) => handleMultiSelectChange(filter.key, e as string[])}
             options={options}
             hasDropdown={true}
             showClear={true}
+            disabled={isDisabled}
           />
         );
       }
@@ -202,11 +207,12 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             id={filter.key}
             type="select"
             value={currentValue || ""}
-            placeholder={`חפש לפי: ${filter.label.toLowerCase()}`}
+            placeholder={isDisabled ? "בחר תחילה סוג בקשה..." : `חפש לפי: ${filter.label.toLowerCase()}`}
             onChange={(e) => handleFilterChange(filter.key, e as string)}
             options={options}
             hasDropdown={true}
             showClear={true}
+            disabled={isDisabled}
           />
         );
     }
