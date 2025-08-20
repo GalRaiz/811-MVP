@@ -1,23 +1,33 @@
 export const Icons = {
-    box: "📦",
-    search: "🔍",
-    user: "👤",
-    settings: "⚙️",
-    home: "🏠",
-    message: "💬",
-    calendar: "📅",
-    star: "⭐",
-    check: "✅",
-    warning: "⚠️",
-    info: "ℹ️",
-    lock: "🔒",
-    unlock: "🔓",
-    edit: "✏️",
-    delete: "🗑️",
-    add: "➕",
-    remove: "➖",
-    email: "✉️",
-    phone: "📞",
-    location: "📍",
-    filter: "🧐",
-  };
+  // General / Objects
+  box: "📦",
+  calendar: "📅",
+  email: "✉️",
+  phone: "📞",
+  location: "📍",
+  star: "⭐",
+  check: "✅",
+
+  // User / Account
+  user: "👤",
+  lock: "🔒",
+  unlock: "🔓",
+
+  // Actions
+  add: "➕",
+  remove: "➖",
+  edit: "✏️",
+  delete: "🗑️",
+  filter: "🧐",
+  close: "❌",
+
+  // Navigation / UI
+  search: "🔍",
+  home: "🏠",
+  settings: "⚙️",
+  message: "💬",
+
+  // Warnings / Info
+  warning: "⚠️",
+  info: "ℹ️",
+};

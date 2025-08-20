@@ -1,7 +1,20 @@
 import { FC, ReactNode } from "react";
 import "./Button.scss";
 
-type ButtonType = "primary" | "secondary" | "tertiary" | "transparent-on-light" | "transparent-on-dark" | "icon-only" | "close";
+type ButtonType =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "alert"
+  | "success"
+  | "warning"
+  | "cancel"
+  | "info"
+  | "transparent-on-light"
+  | "transparent-on-dark"
+  | "icon-only"
+  | "close";
+
 type ButtonSize = "small" | "medium" | "large";
 type IconPosition = "left" | "right";
 
@@ -11,7 +24,7 @@ export interface ButtonProps {
   btnText?: string;
   onClick?: () => void;
   isDisabled?: boolean;
-  icon?: ReactNode;
+  icon?: ReactNode; 
   iconPosition?: IconPosition;
   fullWidth?: boolean;
 }
@@ -36,7 +49,7 @@ const Button: FC<ButtonProps> = ({
   ]
     .filter(Boolean)
     .join(" ");
-  
+
   return (
     <button className={classNames} onClick={onClick} disabled={isDisabled}>
       {icon && <span className="btn__icon">{icon}</span>}

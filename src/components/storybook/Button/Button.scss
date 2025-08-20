@@ -1,75 +1,29 @@
 @use "../../../styles/variables" as *;
-@use "sass:color";
 @use "sass:map";
+@use "sass:color";
 
 // ========================================
 // Maps
 // ========================================
 $button-types: (
-  primary: (
-    bg: $button-primary-bg,
-    color: $text-inverse,
-    hover: color.adjust($button-primary-bg, $lightness: -5%),
-    border: $border-color,
-    cursor: pointer,
-  ),
-  secondary: (
-    bg: $secondary-color, // נעים יותר לעין
-    color: $text-primary,
-    hover: color.adjust($secondary-color, $lightness: -5%),
-    border: $border-color,
-    cursor: pointer,
-  ),
-  tertiary: (
-    bg: $button-tertiary-bg,
-    color: $text-inverse,
-    hover: color.adjust($button-tertiary-bg, $lightness: -5%),
-    border: $border-color,
-    cursor: pointer,
-  ),
-  transparent-on-dark: (
-    bg: transparent,
-    color: $text-inverse,
-    hover: $text-muted,
-    border: transparent,
-    cursor: pointer,
-  ),
-  transparent-on-light: (
-    bg: transparent,
-    color: $text-color,
-    hover: $text-muted,
-    border: transparent,
-    cursor: pointer,
-  ),
-  icon-only: (
-    bg: #f3f4f6,
-    color: #6b7280,
-    hover: #e5e7eb,
-    border: transparent,
-    cursor: pointer,
-  ),
-  close: (
-    bg: #f3f4f6,
-    color: #6b7280,
-    hover: #e5e7eb,
-    border: transparent,
-    cursor: pointer,
-  ),
+  primary: (bg: $button-primary-bg, color: $text-inverse, hover: color.adjust($button-primary-bg, $lightness: -5%), border: $border-color),
+  secondary: (bg: $secondary-color, color: $text-primary, hover: color.adjust($secondary-color, $lightness: -5%), border: $border-color),
+  tertiary: (bg: $button-tertiary-bg, color: $text-inverse, hover: color.adjust($button-tertiary-bg, $lightness: -5%), border: $border-color),
+  alert: (bg: $error-color, color: $text-on-error, hover: color.adjust($error-color, $lightness: -10%), border: $border-color),
+  success: (bg: $highlight-color, color: $text-on-highlight, hover: color.adjust($highlight-color, $lightness: -10%), border: $border-color),
+  warning: (bg: $warning-color, color: $text-on-warning, hover: color.adjust($warning-color, $lightness: -10%), border: $border-color),
+  cancel: (bg: $secondary-color, color: $primary-color, hover: color.adjust($secondary-color, $lightness: -10%), border: $border-color),
+  info: (bg: $notification-color, color: $text-on-notification, hover: color.adjust($notification-color, $lightness: -10%), border: $border-color),
+  transparent-on-light: (bg: transparent, color: $text-color, hover: $text-muted, border: transparent),
+  transparent-on-dark: (bg: transparent, color: $text-inverse, hover: $text-muted, border: transparent),
+  icon-only: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
+  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent)
 );
 
 $button-sizes: (
-  small: (
-    padding: $padding-xs $padding-small,
-    font-size: 12px,
-  ),
-  medium: (
-    padding: $padding-normal $padding-medium,
-    font-size: 14px,
-  ),
-  large: (
-    padding: $padding-medium $padding-large,
-    font-size: 16px,
-  ),
+  small: (padding: $padding-xs $padding-small, font-size: 12px),
+  medium: (padding: $padding-normal $padding-medium, font-size: 14px),
+  large: (padding: $padding-medium $padding-large, font-size: 16px)
 );
 
 // ========================================
@@ -79,12 +33,12 @@ $button-sizes: (
   background-color: map.get($props, bg);
   color: map.get($props, color);
   border: 1px solid map.get($props, border);
-  cursor: map.get($props, cursor);
+  cursor: pointer;
   box-shadow: $box-shadow;
 
   &:hover:not(:disabled):not(.btn--disabled) {
     background-color: map.get($props, hover);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); // קצת עמוק יותר ב-hover
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
   }
 
   &:disabled,
@@ -132,18 +86,34 @@ $button-sizes: (
     width: 100%;
   }
 
-  // Icon
+  // Icon inside button
   &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    & + .btn__text {
+      margin-left: $padding-small;
+    }
+  }
+
+  // Icon on the right
+  &--icon-right {
+    flex-direction: row-reverse;
+
+    .btn__icon + .btn__text {
+      margin-left: 0;
+      margin-right: $padding-small;
+    }
+  }
+
+  // Text inside button
+  &__text {
     display: inline-flex;
     align-items: center;
   }
 
-  // Reverse icon order (icon right)
-  &--icon-right {
-    flex-direction: row-reverse;
-  }
-
-  // Icon-only button specific styles
+  // Icon-only button specific
   &--icon-only {
     width: 24px;
     height: 24px;
@@ -153,7 +123,7 @@ $button-sizes: (
     min-height: 24px;
   }
 
-  // Close button specific styles
+  // Close button specific
   &--close {
     width: 32px;
     height: 32px;

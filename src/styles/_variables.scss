@@ -5,9 +5,10 @@ $tertiary-color: #000000;
 $background-color: #ffffff;
 $text-color: #131212;
 $border-color: #849289;
-$highlight-color: #4caf50;
-$error-color: #d9534f;
-$notification-color: #5bc0de;
+$highlight-color: #a8e6a3;    
+$error-color: #f5a3a3;
+$warning-color: #fbd69f;      
+$notification-color: #9fd6f5; 
 
 // Typography
 $text-font-family-body: Arial;
@@ -38,6 +39,11 @@ $text-secondary: $secondary-color;
 $text-muted: #6c757d;
 $text-link: $primary-color;
 $text-inverse: #ffffff;
+// Text colors for pastel backgrounds
+$text-on-highlight: #3a593a; 
+$text-on-error: #6e3a3a;     
+$text-on-warning: #7a593a;   
+$text-on-notification: #3a5f7a; 
 
 // Border and Shadow
 $border-radius: 4px;
@@ -58,3 +64,9 @@ $button-primary-bg: $primary-color;
 $button-secondary-bg: $secondary-color;
 $button-tertiary-bg: $tertiary-color;
 $button-color: $text-inverse;
+$alert-color: $error-color;
+$success-color: $highlight-color;
+$warning-color: $warning-color;
+$cancel-color: $secondary-color;
+$info-color: $notification-color;
+$icon-size: 16px;

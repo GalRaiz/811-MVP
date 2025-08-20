@@ -22,8 +22,20 @@ const ComponetsTests = () => {
     <div className='components-tests'>
         <Button btnText='פתח מודל' onClick={handleOpenModal} />
         <Card title='טופס בקשת סיוע' />
+        <Button type='alert' btnText='Alert' icon={Icons.warning} />
+        <Button type='success' btnText='Success' icon={Icons.check} />
+        <Button type='info' btnText='Info' icon={Icons.info} />
+        <Button type='cancel' btnText='Cancel' icon={Icons.close} />
+        <Button type='warning' btnText='Warning' icon={Icons.warning} />
+        <br />
+        <Button type='transparent-on-light' btnText='Transparent on Light' icon={Icons.search} />
+        <Button type='transparent-on-dark' btnText='Transparent on Dark' icon={Icons.search} />
+        <br />
+        <Button type='icon-only' icon={Icons.search} />
+        <br />
         <Button iconPosition="right" btnText="Icon Right" icon={Icons.search} />
         <Button iconPosition="left" btnText="Icon Left" icon={Icons.search} />
+        <br />
         <Button iconPosition="right" btnText="open small modal" icon={Icons.search} />
         <Button iconPosition="right" btnText="open medium modal" icon={Icons.search} />
         <Button iconPosition="right" btnText="open large modal" icon={Icons.search} />
