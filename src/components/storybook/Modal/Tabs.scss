@@ -1,0 +1,53 @@
+@use "../../../styles/variables" as *;
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-small;
+}
+
+.tabs__header {
+  display: flex;
+}
+
+.tabs__btn {
+  flex: 1; 
+  text-align: center;
+  padding: $padding-small $padding-normal;
+  background: transparent;
+  border: 0;
+  color: $text-muted;
+  font-size: 1.05rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    color: $highlight-color;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &.is-active {
+    color: $primary-color;
+    font-weight: 700;
+
+    &::after {
+      content: "";
+      display: block;
+      height: 3px;
+      margin-top: $padding-small;
+      background: $highlight-color;
+      border-radius: 2px 2px 0 0;
+    }
+  }
+}
+
+.tabs__panel {
+  padding: $padding-normal;
+  color: $text-color;
+  line-height: 1.6;
+}

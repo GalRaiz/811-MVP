@@ -6,7 +6,6 @@ interface ICardProps {
   title: string;
   description?: string;
   clickHandler?: () => void;
-  type?: string;
 }
 
 const Card: FC<ICardProps> = ({

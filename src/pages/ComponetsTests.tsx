@@ -2,29 +2,62 @@ import Button from '../components/storybook/Button/Button'
 import { Icons } from '../components/storybook/icons/EmojiIcons'
 import PageHeader from '../components/storybook/NavBar/PageHeade';
 import logo from '../assets/mate-logo-green.png';
+import Card from '../components/storybook/Card/Card';
+import Modal from '../components/storybook/Modal/Modal';
+import Table from '../components/storybook/Table/Table';
+import Tabs from '../components/storybook/Modal/Tabs';
+import { useState } from 'react';
 
 const ComponetsTests = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
   return (
   <>
     <PageHeader title='טופס בקשת סיוע' logo={logo} />
     <div className='components-tests'>
-        <Button type="primary" btnText="Primary" />
-        <Button type="secondary" btnText="Secondary" />
-        <Button type="tertiary" btnText="Tertiary" />
-        <Button type="transparent-on-light" btnText="Transparent on Light" />
-        <Button type="transparent-on-dark" btnText="Transparent on Dark" />
-        <Button type="icon-only" icon={Icons.search} />
-        <Button type="close" icon={"X"} />
-        <Button size="small" btnText="Small" />
-        <Button size="medium" btnText="Medium" />
-        <Button size="large" btnText="Large" />
-        <Button fullWidth btnText="Full Width" type="primary" size="large" iconPosition='right' icon={Icons.search} />
-        <Button isDisabled btnText="Disabled" />
+        <Button btnText='פתח מודל' onClick={handleOpenModal} />
+        <Card title='טופס בקשת סיוע' />
         <Button iconPosition="right" btnText="Icon Right" icon={Icons.search} />
         <Button iconPosition="left" btnText="Icon Left" icon={Icons.search} />
+        <Button iconPosition="right" btnText="open small modal" icon={Icons.search} />
+        <Button iconPosition="right" btnText="open medium modal" icon={Icons.search} />
+        <Button iconPosition="right" btnText="open large modal" icon={Icons.search} />
+        <Button iconPosition="right" btnText="open full modal" icon={Icons.search} />
     </div>
-    </>
-  )
-}
+    <Modal isOpen={isModalOpen} onClose={handleCloseModal} title='טופס בקשת סיוע' size='medium'>
+      <Tabs tabs={[
+        {
+          label: 'טופס בקשת סיוע',
+          content: <Table data={[
+            {
+              id: 1,
+              name: 'טופס בקשת סיוע',
+              description: 'טופס בקשת סיוע',
+            },
+          ]} columns={[
+            {
+              label: 'שם',
+              render: (row) => row.name,
+            },
+            {
+              label: 'תיאור',
+              render: (row) => row.description,
+            },
+          ]} />
+        },
+        {
+          label: 'טופס בקשת סיוע',
+          content: <Table data={[]} columns={[]} />
+        },
+      ]} />
+    </Modal>
+  </>
+  );
+};
 
 export default ComponetsTests;
