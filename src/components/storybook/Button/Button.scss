@@ -11,30 +11,49 @@ $button-types: (
     color: $text-inverse,
     hover: color.adjust($button-primary-bg, $lightness: -5%),
     border: $border-color,
+    cursor: pointer,
   ),
   secondary: (
-    bg: $button-secondary-bg,
-    color: $text-color,
-    hover: color.adjust($button-secondary-bg, $lightness: -5%),
+    bg: $secondary-color, // נעים יותר לעין
+    color: $text-primary,
+    hover: color.adjust($secondary-color, $lightness: -5%),
     border: $border-color,
+    cursor: pointer,
   ),
   tertiary: (
-    bg: $text-color,
+    bg: $button-tertiary-bg,
     color: $text-inverse,
-    hover: $text-muted,
-    border: transparent,
+    hover: color.adjust($button-tertiary-bg, $lightness: -5%),
+    border: $border-color,
+    cursor: pointer,
   ),
   transparent-on-dark: (
     bg: transparent,
     color: $text-inverse,
     hover: $text-muted,
     border: transparent,
+    cursor: pointer,
   ),
   transparent-on-light: (
     bg: transparent,
     color: $text-color,
     hover: $text-muted,
     border: transparent,
+    cursor: pointer,
+  ),
+  icon-only: (
+    bg: #f3f4f6,
+    color: #6b7280,
+    hover: #e5e7eb,
+    border: transparent,
+    cursor: pointer,
+  ),
+  close: (
+    bg: #f3f4f6,
+    color: #6b7280,
+    hover: #e5e7eb,
+    border: transparent,
+    cursor: pointer,
   ),
 );
 
@@ -60,9 +79,12 @@ $button-sizes: (
   background-color: map.get($props, bg);
   color: map.get($props, color);
   border: 1px solid map.get($props, border);
+  cursor: map.get($props, cursor);
+  box-shadow: $box-shadow;
 
-  &:hover {
+  &:hover:not(:disabled):not(.btn--disabled) {
     background-color: map.get($props, hover);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); // קצת עמוק יותר ב-hover
   }
 
   &:disabled,
@@ -70,6 +92,7 @@ $button-sizes: (
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
+    box-shadow: none;
   }
 }
 
@@ -87,7 +110,6 @@ $button-sizes: (
   justify-content: center;
   border-radius: $border-radius;
   font-weight: 500;
-  cursor: pointer;
   gap: $padding-small;
   transition: all 0.2s ease;
 
@@ -119,5 +141,25 @@ $button-sizes: (
   // Reverse icon order (icon right)
   &--icon-right {
     flex-direction: row-reverse;
+  }
+
+  // Icon-only button specific styles
+  &--icon-only {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 50%;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  // Close button specific styles
+  &--close {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 6px;
+    min-width: 32px;
+    min-height: 32px;
   }
 }

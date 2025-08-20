@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AssistanceFormRequest from './pages/AssistanceFormRequest';
 import RequesterHomePage from './pages/RequesterHomePage';
 import Loader from './components/Loader';
 import '../src/styles/_variables.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store/store';
+import { useDispatch } from 'react-redux';
 import {
   setRequestsStart,
   setRequestsSuccess,
@@ -17,15 +16,15 @@ import './App.scss';
 import RequestsPage from './pages/RequestsPage';
 import { assistanceRequests } from './data/requestsData';
 import NotFoundPage from './pages/NotFoundPage';
+import ComponetsTests from './pages/ComponetsTests';
 
 const App = () => {
   const dispatch = useDispatch();
-  const loading = useSelector((state: RootState) => state.requests.loading);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Reset form on page refresh
     dispatch(resetForm());
-
     dispatch(setRequestsStart());
     try {
       setTimeout(() => {
@@ -34,11 +33,12 @@ const App = () => {
     } catch {
       dispatch(setRequestsFailure('Failed to load requests'));
     }
+    setIsLoading(false);
   }, [dispatch]);
 
   return (
     <div>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>
@@ -47,6 +47,7 @@ const App = () => {
           </header> */}
 
           <Routes>
+            <Route path='/components' element={<ComponetsTests />} />
             <Route path='/' element={<HomePage />} />
             <Route path='/requesterHomePage' element={<RequesterHomePage />} />
             <Route

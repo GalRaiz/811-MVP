@@ -1,32 +1,106 @@
+.table-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .table-layout {
   display: flex;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.panel-open {
+    margin-right: 420px;
+  }
 }
 
 .table-wrapper {
-  flex-grow: 1;
-  padding: 16px;
+  flex: 1;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .custom-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
-}
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
 
-.table-header {
-  background-color: #f4f4f4;
-  padding: 16px;
-}
+  .table-header {
+    background-color: #f9fafb;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
 
-.table-row {
-  cursor: pointer;
-}
+  .table-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f3f4f6;
 
-.table-row:hover {
-  background-color: #f0f0f0;
-}
+    &:hover {
+      background-color: #f9fafb;
+    }
 
-.table-cell {
-  padding: 8px 16px;
-  border-bottom: 1px solid #ddd;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .table-cell {
+    padding: 16px 20px;
+    color: #111827;
+    vertical-align: top;
+
+    &:first-child {
+      font-weight: 500;
+    }
+  }
+
+  .empty-state-row {
+    .empty-state-cell {
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: none;
+
+      .empty-state-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 400px;
+        margin: 0 auto;
+
+        .no-results-message {
+          margin-top: 20px;
+
+          p {
+            margin: 8px 0;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+
+            &:first-child {
+              color: #374151;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
 }

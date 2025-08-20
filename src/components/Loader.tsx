@@ -21,9 +21,10 @@ const Loader: React.FC = () => {
 
   return (
     <div className='loader-container'>
-      <p className='loader-text'>{randomSentence}</p>
-      <img src={mateLogoGreen} className='loader-logo' alt='logo' />
-    </div>
+  <div className='loader-progress' />
+  <img src={mateLogoGreen} className='loader-logo' alt='logo' />
+  <p className='loader-text'>{randomSentence}</p>
+</div>
   );
 };
 

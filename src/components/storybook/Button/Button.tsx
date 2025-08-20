@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import "./Button.scss";
 
-type ButtonType = "primary" | "secondary" | "tertiary" | "transparent-on-light" | "transparent-on-dark";
+type ButtonType = "primary" | "secondary" | "tertiary" | "transparent-on-light" | "transparent-on-dark" | "icon-only" | "close";
 type ButtonSize = "small" | "medium" | "large";
 type IconPosition = "left" | "right";
 

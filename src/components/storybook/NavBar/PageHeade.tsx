@@ -1,17 +1,17 @@
 import React from 'react';
-import './FormHeader.scss';
+import './PageHeader.scss';
 
-interface FormHeaderProps {
+interface PageHeaderProps {
   title: string;
-  logo: string;
+  logo?: string;
 }
 
-const FormHeader: React.FC<FormHeaderProps> = ({ title, logo }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, logo }) => {
   return (
     <header className='assistance-form-header'>
       <div className='assistance-form-header__content'>
         <div className='assistance-form-header__logo'>
-          <img src={logo} alt='logo' className='nav-bar__logo' />
+          {logo && <img src={logo} alt='logo' className='nav-bar__logo' />}
           <span className='assistance-form-header__logo-text' />
         </div>
         <h1 className='assistance-form-header__title'>{title}</h1>
@@ -20,4 +20,4 @@ const FormHeader: React.FC<FormHeaderProps> = ({ title, logo }) => {
   );
 };
 
-export default FormHeader;
+export default PageHeader;
