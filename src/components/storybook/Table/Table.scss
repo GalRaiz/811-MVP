@@ -1,63 +1,123 @@
 @use '../../../styles/variables' as *;
 
-.table-container {
+// Main block: table
+.table {
   position: relative;
   width: 100%;
   height: 100%;
   padding: $padding-small;
   overflow: hidden;
   grid-column: 1;
-}
-
-.table-layout {
   display: flex;
-  height: 100%;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
-  max-width: 100%;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 
-  // Only apply panel-open styles when not in grid layout
-  &:not([data-grid-layout="true"]) {
-    &.panel-open {
-      margin-right: 420px;
+  // Element: layout
+  &__layout {
+    display: flex;
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    max-width: 100%;
+
+    // Only apply panel-open styles when not in grid layout
+    &:not([data-grid-layout="true"]) {
+      &.table__layout--panel-open {
+        margin-right: 420px;
+      }
     }
   }
-}
 
-.table-wrapper {
-  flex: 1;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  // Element: wrapper
+  &__wrapper {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 0; // Important for flex child to shrink
+  }
 
-.custom-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  // Element: content (table element)
+  &__content {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-  .table-header {
-    background-color: #f9fafb;
+    thead {
+      flex-shrink: 0;
+      background-color: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+      
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+
+    tbody {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 0; // Important for flex child to shrink
+      
+      // Custom scrollbar styling
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+        
+        &:hover {
+          background: #94a3b8;
+        }
+      }
+      
+      &::-webkit-scrollbar-corner {
+        background: #f1f5f9;
+      }
+      
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+  }
+
+  // Element: header
+  &__header {
     padding: 16px 20px;
     text-align: left;
     font-weight: 600;
     color: #374151;
-    border-bottom: 1px solid #e5e7eb;
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    position: sticky;
-    top: 0;
-    z-index: 10;
   }
 
-  .table-row {
+  // Element: row
+  &__row {
     cursor: pointer;
     transition: all 0.2s ease;
     border-bottom: 1px solid #f3f4f6;
@@ -69,9 +129,19 @@
     &:last-child {
       border-bottom: none;
     }
+
+    // Modifier: empty state
+    &--empty {
+      cursor: default;
+      
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
-  .table-cell {
+  // Element: cell
+  &__cell {
     padding: 16px 20px;
     color: #111827;
     vertical-align: top;
@@ -79,37 +149,39 @@
     &:first-child {
       font-weight: 500;
     }
-  }
 
-  .empty-state-row {
-    .empty-state-cell {
+    // Modifier: empty state
+    &--empty {
       padding: 60px 20px;
       text-align: center;
       border-bottom: none;
+    }
+  }
 
-      .empty-state-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        max-width: 400px;
-        margin: 0 auto;
+  // Element: empty container
+  &__empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 
-        .no-results-message {
-          margin-top: 20px;
+  // Element: no results message
+  &__no-results {
+    margin-top: 20px;
+    max-width: 400px;
 
-          p {
-            margin: 8px 0;
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.5;
+    p {
+      margin: 8px 0;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.5;
 
-            &:first-child {
-              color: #374151;
-              font-weight: 500;
-            }
-          }
-        }
+      &:first-child {
+        color: #374151;
+        font-weight: 500;
       }
     }
   }

@@ -411,20 +411,20 @@ function TableOrCards<T extends { id: string | number }>({
     if (!showViewToggle) return null;
 
     return (
-      <div className="view-toggle">
+      <div className="table-or-cards__view-toggle">
         <Button
           type={viewMode === "table" ? "primary" : "secondary"}
-          size="small"
+          size="medium"
           btnText="Table"
           onClick={() => handleViewModeChangeWithPanelClose("table")}
-          icon={Icons.box}
+          icon={Icons.calendar}
         />
         <Button
           type={viewMode === "cards" ? "primary" : "secondary"}
-          size="small"
+          size="medium"
           btnText="Cards"
           onClick={() => handleViewModeChangeWithPanelClose("cards")}
-          icon={Icons.calendar}
+          icon={Icons.box}
         />
       </div>
     );
@@ -434,13 +434,12 @@ function TableOrCards<T extends { id: string | number }>({
     console.log('Rendering table with filteredData:', {
       totalData: data.length,
       filteredDataLength: filteredData.length,
-      filteredData: filteredData.slice(0, 3) // Show first 3 items for debugging
     });
     
     return (
-      <div className={`table-view-container ${isTableFilterPanelOpen ? "panel-open" : ""}`}>
-        <div className="table-content">
-          <div className="table-search-section">
+      <div className={`table-or-cards__table-view ${isTableFilterPanelOpen ? "table-or-cards__table-view--panel-open" : ""}`}>
+        <div className="table-or-cards__table-content">
+          <div className="table-or-cards__table-search">
             <SearchBar 
               searchQuery={searchQuery} 
               onSearchChange={setSearchQuery}
@@ -476,10 +475,10 @@ function TableOrCards<T extends { id: string | number }>({
   };
 
   const renderCards = () => (
-    <div className={`cards-layout ${isCardFilterPanelOpen ? "panel-open" : ""}`}>
-      <div className="cards-content">
-        <div className="cards-wrapper">
-          <div className="cards-search-section">
+    <div className={`table-or-cards__cards-layout ${isCardFilterPanelOpen ? "table-or-cards__cards-layout--panel-open" : ""}`}>
+      <div className="table-or-cards__cards-content">
+        <div className="table-or-cards__cards-wrapper">
+          <div className="table-or-cards__cards-search">
             <SearchBar 
               searchQuery={searchQuery} 
               onSearchChange={setSearchQuery}
@@ -489,25 +488,27 @@ function TableOrCards<T extends { id: string | number }>({
               placeholder={searchPlaceholder}
             />
           </div>
-          <div className="cards-grid">
+          <div className="table-or-cards__cards-grid">
             {filteredData.length > 0 ? (
               filteredData.map(item => (
                 <Card
                   key={item.id}
                   title={cardRenderer.title(item)}
                   description={cardRenderer.description?.(item)}
-                  imageUrl={cardRenderer.imageUrl?.(item)}
-                  clickHandler={() => handleItemClick(item)}
+                  onPrimaryClick={() => handleItemClick(item)}
+                  onSecondaryClick={() => handleItemClick(item)}
+                  buttns={{
+                    btnTextSecondary: "פרטים נוספים",
+                    btnTextPrimary: "שייך משימה",
+                    onPrimaryClick: () => handleItemClick(item),
+                    onSecondaryClick: () => handleItemClick(item),
+                  }}
                 />
               ))
             ) : (
-              <div className="empty-state-cards">
-                <EmptyState />
-                {hasActiveFilters && (
-                  <div className="no-results-message">
-                    <p>No results found with current search and filters.</p>
-                    <p>Try adjusting your search or filters to see all results.</p>
-                  </div>
+              <div className="table-or-cards__cards-empty">
+                  {hasActiveFilters && (
+                <EmptyState title="לא נמצאו תוצאות" subtitle="נסה לשנות את הסינון כדי לראות את כל התוצאות." />
                 )}
               </div>
             )}
@@ -526,8 +527,8 @@ function TableOrCards<T extends { id: string | number }>({
   );
 
   return (
-    <div className="table-or-cards-container">
-      <div className="controls-section">
+    <div className="table-or-cards">
+      <div className="table-or-cards__controls">
         {renderViewToggle()}
       </div>
 
@@ -540,11 +541,11 @@ function TableOrCards<T extends { id: string | number }>({
           title="Request Details"
           size="medium"
         >
-          <div className="modal-details">
+          <div className="table-or-cards__modal-details">
             {panelRenderer(selectedItem).map((item, idx) => (
-              <div key={idx} className="detail-item">
-                <div className="detail-label">{item.label}</div>
-                <div className="detail-value">{item.value}</div>
+              <div key={idx} className="table-or-cards__modal-item">
+                <div className="table-or-cards__modal-label">{item.label}</div>
+                <div className="table-or-cards__modal-value">{item.value}</div>
               </div>
             ))}
           </div>

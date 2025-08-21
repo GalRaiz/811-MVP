@@ -222,8 +222,8 @@ const SidePanel: React.FC<ISidePanelProps> = ({
     switch (mode) {
       case "filter":
         return (
-          <div className="side-panel-section filter-section">
-            <div className="filter-header">
+          <div className="side-panel__section side-panel__section--filter">
+            <div className="side-panel__filter-header">
               <h3>Filter Requests</h3>
               {filterOptions.length > 0 && (
                 <Button
@@ -236,7 +236,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             </div>
             {filterOptions.length > 0 ? (
               filterOptions.map((filter) => (
-                <div key={filter.key} className="filter-item">
+                <div key={filter.key} className="side-panel__filter-item">
                   <label>{filter.label}</label>
                   {renderFilterInput(filter)}
                 </div>
@@ -249,13 +249,13 @@ const SidePanel: React.FC<ISidePanelProps> = ({
 
       case "details":
         return (
-          <div className="side-panel-section">
+          <div className="side-panel__section">
             <h3>Request Details</h3>
             {detailsData && Array.isArray(detailsData) && detailsData.length > 0 ? (
               detailsData.map((item, idx) => (
-                <div key={idx} className="detail-item">
-                  <div className="detail-label">{item.label}</div>
-                  <div className="detail-value">{item.value}</div>
+                <div key={idx} className="side-panel__detail-item">
+                  <div className="side-panel__detail-label">{item.label}</div>
+                  <div className="side-panel__detail-value">{item.value}</div>
                 </div>
               ))
             ) : (
@@ -271,8 +271,8 @@ const SidePanel: React.FC<ISidePanelProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className={`side-panel ${isOpen ? "open" : ""}`}>
-      <div className="side-panel-header">
+    <div className={`side-panel ${isOpen ? "side-panel--open" : ""}`}>
+      <div className="side-panel__header">
         <h3>{mode === "filter" ? "Filter Requests" : "Request Details"}</h3>
         <Button
           type="close"

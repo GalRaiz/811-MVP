@@ -6,9 +6,9 @@
 // Maps
 // ========================================
 $button-types: (
-  primary: (bg: $button-primary-bg, color: $text-inverse, hover: color.adjust($button-primary-bg, $lightness: -5%), border: $border-color),
-  secondary: (bg: $secondary-color, color: $text-primary, hover: color.adjust($secondary-color, $lightness: -5%), border: $border-color),
-  tertiary: (bg: $button-tertiary-bg, color: $text-inverse, hover: color.adjust($button-tertiary-bg, $lightness: -5%), border: $border-color),
+  primary: (bg: $button-primary-bg, color: $text-inverse, hover: color.adjust($button-primary-bg, $lightness: 5%), border: $border-color),
+  secondary: (bg: $secondary-color, color: $text-primary, hover: color.adjust($secondary-color, $lightness: -5%), border: transparent),
+  tertiary: (bg: $button-tertiary-bg, color: $text-inverse, hover: color.adjust($button-tertiary-bg, $lightness: 15%), border: $border-color),
   alert: (bg: $error-color, color: $text-on-error, hover: color.adjust($error-color, $lightness: -10%), border: $border-color),
   success: (bg: $highlight-color, color: $text-on-highlight, hover: color.adjust($highlight-color, $lightness: -10%), border: $border-color),
   warning: (bg: $warning-color, color: $text-on-warning, hover: color.adjust($warning-color, $lightness: -10%), border: $border-color),
@@ -17,9 +17,7 @@ $button-types: (
   transparent-on-light: (bg: transparent, color: $text-color, hover: $text-muted, border: transparent),
   transparent-on-dark: (bg: transparent, color: $text-inverse, hover: $text-muted, border: transparent),
   icon-only: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
-  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
-  clear: (bg: transparent, color: #6b7280, hover: #f3f4f6, border: transparent),
-  reset: (bg: transparent, color: $text-color, hover: $error-color, border: 1px solid $border-color)
+  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent)
 );
 
 $button-sizes: (

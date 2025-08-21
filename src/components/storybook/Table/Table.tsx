@@ -206,7 +206,7 @@ function Table<T extends { id: string | number }>({
   }) || searchQuery.trim() !== '';
 
   return (
-    <div className="table-container">
+    <div className="table">
       {!disableInternalFiltering && (
         <SearchBar 
           searchQuery={searchQuery} 
@@ -218,15 +218,15 @@ function Table<T extends { id: string | number }>({
         />
       )}
       <div 
-        className={`table-layout ${!disableInternalFiltering && isPanelOpen ? "panel-open" : ""}`}
+        className={`table__layout ${!disableInternalFiltering && isPanelOpen ? "table__layout--panel-open" : ""}`}
         data-grid-layout={disableInternalFiltering ? "true" : "false"}
       >
-        <div className="table-wrapper">
-          <table className="custom-table">
+        <div className="table__wrapper">
+          <table className="table__content">
             <thead>
               <tr>
                 {columns.map((col) => (
-                  <th key={col.label} className="table-header">
+                  <th key={col.label} className="table__header">
                     {col.label}
                   </th>
                 ))}
@@ -235,21 +235,21 @@ function Table<T extends { id: string | number }>({
             <tbody>
               {filteredData.length > 0 ? (
                 filteredData.map((row) => (
-                  <tr key={row.id} className="table-row" onClick={() => handleRowClick(row)}>
+                  <tr key={row.id} className="table__row" onClick={() => handleRowClick(row)}>
                     {columns.map((col, idx) => (
-                      <td key={idx} className="table-cell">
+                      <td key={idx} className="table__cell">
                         {col.render(row)}
                       </td>
                     ))}
                   </tr>
                 ))
               ) : (
-                <tr className="empty-state-row">
-                  <td colSpan={columns.length} className="empty-state-cell">
-                    <div className="empty-state-container">
+                <tr className="table__row table__row--empty">
+                  <td colSpan={columns.length} className="table__cell table__cell--empty">
+                    <div className="table__empty-container">
                       <EmptyState />
                       {hasActiveFilters && (
-                        <div className="no-results-message">
+                        <div className="table__no-results">
                           <p>No results found with current search and filters.</p>
                           <p>Try adjusting your search or filters to see all results.</p>
                         </div>

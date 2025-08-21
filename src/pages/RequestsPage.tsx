@@ -53,6 +53,7 @@ const RequestsPage: React.FC = () => {
             label: "שם הבקשה",
             render: (row) => row.requestDetails.requestName,
           },
+          {label: "מספר סידורי-id", render: (row) => row.id},
           {
             label: "סוג הבקשה",
             render: (row) => getAssistanceTypeLabel(row.requestDetails.requestType),

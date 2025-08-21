@@ -1,13 +1,18 @@
-import mateLogoGreen from '../assets/mate-logo-green.png';
+import noResults from '../assets/readingDog.png';
 import './EmptyState.scss';
 
-function EmptyState() {
+interface EmptyStateProps {
+  title?: string;
+  subtitle?: string;
+}
+
+function EmptyState({ title, subtitle }: EmptyStateProps) {
   return (
-    <>
-      <h2 className='header'>EmptyState</h2>
-      <h3 className='text'>Sorry, we didn't find what you want</h3>
-      <img src={mateLogoGreen} className='emptyState-app-logo' alt='logo' />
-    </>
+    <div className="empty-state">
+      <img src={noResults} className='empty-state__logo' alt='logo' />
+      <h2 className='empty-state__title'>{title || 'Empty State'}</h2>
+      <p className='empty-state__text'>{subtitle || 'Sorry, we didn\'t find what you want'}</p>
+    </div>
   );
 }
 

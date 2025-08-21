@@ -1,4 +1,5 @@
-.search-container {
+// Main block: search-bar
+.search-bar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,70 +7,74 @@
   margin-bottom: 20px;
   padding: 0 20px;
   width: 100%;
-}
 
-.search-input-wrapper {
-  position: relative;
-  flex: 1;
-  max-width: 500px;
-  min-width: 300px;
-  display: flex;
-  align-items: center;
-
-  .search-icon {
-    position: absolute;
-    right: 12px; // Position on the right for RTL
-    top: 50%;
-    transform: translateY(-50%);
-    color: #9ca3af;
-    pointer-events: none;
-    z-index: 1;
-    font-size: 16px;
+  // Element: input wrapper
+  &__input-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+    min-width: 300px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
+
+    // Element: icon
+    .search-bar__icon {
+      position: absolute;
+      right: 12px; // Position on the right for RTL
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      pointer-events: none;
+      z-index: 1;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+
+    // Element: button (clear button)
+    .btn {
+      position: absolute;
+      left: 8px; // Position on the left for RTL
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
   }
 
-  .btn {
-    position: absolute;
-    left: 8px; // Position on the left for RTL
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
+  // Element: input field
+  &__input {
+    width: 100%;
+    height: 44px;
+    padding: 12px 40px 12px 48px; // Right padding for icon, left padding for clear button
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    background-color: #ffffff;
+    color: #111827;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+    text-align: right; // RTL text alignment
+    direction: rtl; // RTL direction
+
+    &::placeholder {
+      color: #9ca3af;
+      text-align: right; // RTL placeholder alignment
+    }
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &:hover {
+      border-color: #9ca3af;
+    }
+
+    // Transition for smooth interactions
+    transition: all 0.2s ease-in-out;
   }
-}
-
-.search-bar {
-  width: 100%;
-  height: 44px;
-  padding: 12px 40px 12px 48px; // Right padding for icon, left padding for clear button
-  font-size: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  outline: none;
-  background-color: #ffffff;
-  color: #111827;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  box-sizing: border-box;
-  text-align: right; // RTL text alignment
-  direction: rtl; // RTL direction
-
-  &::placeholder {
-    color: #9ca3af;
-    text-align: right; // RTL placeholder alignment
-  }
-
-  &:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-
-  &:hover {
-    border-color: #9ca3af;
-  }
-
-  // Transition for smooth interactions
-  transition: all 0.2s ease-in-out;
 }

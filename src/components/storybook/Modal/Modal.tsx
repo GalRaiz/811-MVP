@@ -29,13 +29,13 @@ const Modal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal" onClick={onClose}>
       <div
-        className={`modal-card modal-${size}`}
+        className={`modal__card modal__card--${size}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal-header">
-          {title && <h2 className="modal-title">{title}</h2>}
+        <div className="modal__header">
+          {title && <h2 className="modal__title">{title}</h2>}
           {showCloseButton && (
             <Button
               type="close"
@@ -54,7 +54,7 @@ const Modal = ({
         {tabs && tabs.length > 0 ? (
           <Tabs tabs={tabs} defaultIndex={activeTab} />
         ) : (
-          <div className="modal-content">{children}</div>
+          <div className="modal__content">{children}</div>
         )}
       </div>
     </div>
