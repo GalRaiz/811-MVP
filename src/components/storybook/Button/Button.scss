@@ -1,29 +1,98 @@
-@use "../../../styles/variables" as *;
-@use "sass:map";
-@use "sass:color";
+@use '../../../styles/variables' as *;
+@use 'sass:map';
+@use 'sass:color';
 
 // ========================================
 // Maps
 // ========================================
 $button-types: (
-  primary: (bg: $button-primary-bg, color: $text-inverse, hover: color.adjust($button-primary-bg, $lightness: 5%), border: $border-color),
-  secondary: (bg: $secondary-color, color: $text-primary, hover: color.adjust($secondary-color, $lightness: -5%), border: transparent),
-  tertiary: (bg: $button-tertiary-bg, color: $text-inverse, hover: color.adjust($button-tertiary-bg, $lightness: 15%), border: $border-color),
-  alert: (bg: $error-color, color: $text-on-error, hover: color.adjust($error-color, $lightness: -10%), border: $border-color),
-  success: (bg: $highlight-color, color: $text-on-highlight, hover: color.adjust($highlight-color, $lightness: -10%), border: $border-color),
-  warning: (bg: $warning-color, color: $text-on-warning, hover: color.adjust($warning-color, $lightness: -10%), border: $border-color),
-  cancel: (bg: $secondary-color, color: $primary-color, hover: color.adjust($secondary-color, $lightness: -10%), border: $border-color),
-  info: (bg: $notification-color, color: $text-on-notification, hover: color.adjust($notification-color, $lightness: -10%), border: $border-color),
-  transparent-on-light: (bg: transparent, color: $text-color, hover: $text-muted, border: transparent),
-  transparent-on-dark: (bg: transparent, color: $text-inverse, hover: $text-muted, border: transparent),
-  icon-only: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent),
-  close: (bg: #f3f4f6, color: #6b7280, hover: #e5e7eb, border: transparent)
+  primary: (
+    bg: $button-primary-bg,
+    color: $text-inverse,
+    hover: color.adjust($button-primary-bg, $lightness: 5%),
+    border: $border-color,
+  ),
+  secondary: (
+    bg: $secondary-color,
+    color: $text-primary,
+    hover: color.adjust($secondary-color, $lightness: -5%),
+    border: transparent,
+  ),
+  tertiary: (
+    bg: $button-tertiary-bg,
+    color: $text-inverse,
+    hover: color.adjust($button-tertiary-bg, $lightness: 15%),
+    border: $border-color,
+  ),
+  alert: (
+    bg: $error-color,
+    color: $text-on-error,
+    hover: color.adjust($error-color, $lightness: -10%),
+    border: $border-color,
+  ),
+  success: (
+    bg: $highlight-color,
+    color: $text-on-highlight,
+    hover: color.adjust($highlight-color, $lightness: -10%),
+    border: $border-color,
+  ),
+  warning: (
+    bg: $warning-color,
+    color: $text-on-warning,
+    hover: color.adjust($warning-color, $lightness: -10%),
+    border: $border-color,
+  ),
+  cancel: (
+    bg: $secondary-color,
+    color: $primary-color,
+    hover: color.adjust($secondary-color, $lightness: -10%),
+    border: $border-color,
+  ),
+  info: (
+    bg: $notification-color,
+    color: $text-on-notification,
+    hover: color.adjust($notification-color, $lightness: -10%),
+    border: $border-color,
+  ),
+  transparent-on-light: (
+    bg: transparent,
+    color: $text-color,
+    hover: $text-muted,
+    border: transparent,
+  ),
+  transparent-on-dark: (
+    bg: transparent,
+    color: $text-inverse,
+    hover: $text-muted,
+    border: transparent,
+  ),
+  icon-only: (
+    bg: #f3f4f6,
+    color: #6b7280,
+    hover: #e5e7eb,
+    border: transparent,
+  ),
+  close: (
+    bg: #f3f4f6,
+    color: #6b7280,
+    hover: #e5e7eb,
+    border: transparent,
+  ),
 );
 
 $button-sizes: (
-  small: (padding: $padding-xs $padding-small, font-size: 12px),
-  medium: (padding: $padding-normal $padding-medium, font-size: 14px),
-  large: (padding: $padding-medium $padding-large, font-size: 16px)
+  small: (
+    padding: $padding-xs $padding-small,
+    font-size: 12px,
+  ),
+  medium: (
+    padding: $padding-normal $padding-medium,
+    font-size: 14px,
+  ),
+  large: (
+    padding: $padding-medium $padding-large,
+    font-size: 16px,
+  ),
 );
 
 // ========================================
@@ -38,7 +107,7 @@ $button-sizes: (
 
   &:hover:not(:disabled):not(.btn--disabled) {
     background-color: map.get($props, hover);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
 
   &:disabled,

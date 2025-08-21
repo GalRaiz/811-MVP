@@ -12,7 +12,16 @@ export interface FormFieldProps {
   id: string;
   label?: string;
   placeholder?: string;
-  type: 'text' | 'tel' | 'number' | 'textarea' | 'select' | 'multi-select' | 'date' | 'checkbox' | 'radio';
+  type:
+    | 'text'
+    | 'tel'
+    | 'number'
+    | 'textarea'
+    | 'select'
+    | 'multi-select'
+    | 'date'
+    | 'checkbox'
+    | 'radio';
   value: string | number | boolean | string[];
   onChange: (value: string | number | boolean | string[]) => void;
   options?: FormFieldOption[];
@@ -60,7 +69,10 @@ const FormField: React.FC<FormFieldProps> = ({
   // Handle click outside dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -77,11 +89,6 @@ const FormField: React.FC<FormFieldProps> = ({
   // Update selected options when value changes
   useEffect(() => {
     if (type === 'multi-select' && Array.isArray(value)) {
-      console.log('FormField useEffect - updating selectedOptions:', { 
-        id, 
-        oldSelectedOptions: selectedOptions, 
-        newValue: value 
-      });
       setSelectedOptions(value);
     }
   }, [value, type, id, selectedOptions]);
@@ -97,7 +104,7 @@ const FormField: React.FC<FormFieldProps> = ({
       const newSelectedOptions = selectedOptions.includes(optionValue)
         ? selectedOptions.filter(opt => opt !== optionValue)
         : [...selectedOptions, optionValue];
-      
+
       setSelectedOptions(newSelectedOptions);
       onChange(newSelectedOptions);
     }
@@ -136,23 +143,22 @@ const FormField: React.FC<FormFieldProps> = ({
     if (typeof showClear === 'function') {
       return true;
     }
-    
+
     // If showClear is false, don't show the button
     if (showClear === false) {
       return false;
     }
-    
+
     // Default behavior: show clear button when there's content
-    return !disabled && (
-      (type === 'text' || type === 'tel' || type === 'number' || type === 'textarea') && 
-      String(value).trim() !== ''
-    ) || (
-      type === 'select' && 
-      String(value).trim() !== ''
-    ) || (
-      type === 'multi-select' && 
-      Array.isArray(value) && 
-      value.length > 0
+    return (
+      (!disabled &&
+        (type === 'text' ||
+          type === 'tel' ||
+          type === 'number' ||
+          type === 'textarea') &&
+        String(value).trim() !== '') ||
+      (type === 'select' && String(value).trim() !== '') ||
+      (type === 'multi-select' && Array.isArray(value) && value.length > 0)
     );
   })();
 
@@ -181,17 +187,13 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'tel':
         return (
           <div className="form-field__input-container">
-            {icon && (
-              <div className="form-field__icon">
-                {icon}
-              </div>
-            )}
+            {icon && <div className="form-field__icon">{icon}</div>}
             <input
               {...baseInputProps}
               type={type}
               value={value as string}
               placeholder={placeholder}
-              onChange={(e) => handleInputChange(e.target.value)}
+              onChange={e => handleInputChange(e.target.value)}
             />
             {shouldShowClear && (
               <Button
@@ -208,11 +210,7 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'number':
         return (
           <div className="form-field__input-container">
-            {icon && (
-              <div className="form-field__icon">
-                {icon}
-              </div>
-            )}
+            {icon && <div className="form-field__icon">{icon}</div>}
             <input
               {...baseInputProps}
               type="number"
@@ -221,7 +219,7 @@ const FormField: React.FC<FormFieldProps> = ({
               min={min}
               max={max}
               step={step}
-              onChange={(e) => handleInputChange(Number(e.target.value))}
+              onChange={e => handleInputChange(Number(e.target.value))}
             />
             {shouldShowClear && (
               <Button
@@ -238,18 +236,14 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'textarea':
         return (
           <div className="form-field__input-container">
-            {icon && (
-              <div className="form-field__icon">
-                {icon}
-              </div>
-            )}
+            {icon && <div className="form-field__icon">{icon}</div>}
             <textarea
               {...baseInputProps}
               value={value as string}
               placeholder={placeholder}
               rows={rows}
               cols={cols}
-              onChange={(e) => handleInputChange(e.target.value)}
+              onChange={e => handleInputChange(e.target.value)}
             />
             {shouldShowClear && (
               <Button
@@ -266,16 +260,12 @@ const FormField: React.FC<FormFieldProps> = ({
       case 'date':
         return (
           <div className="form-field__input-container">
-            {icon && (
-              <div className="form-field__icon">
-                {icon}
-              </div>
-            )}
+            {icon && <div className="form-field__icon">{icon}</div>}
             <input
               {...baseInputProps}
               type="date"
               value={value as string}
-              onChange={(e) => handleInputChange(e.target.value)}
+              onChange={e => handleInputChange(e.target.value)}
             />
             {shouldShowClear && (
               <Button
@@ -295,14 +285,14 @@ const FormField: React.FC<FormFieldProps> = ({
             {...baseInputProps}
             type="checkbox"
             checked={value as boolean}
-            onChange={(e) => handleInputChange(e.target.checked)}
+            onChange={e => handleInputChange(e.target.checked)}
           />
         );
 
       case 'radio':
         return (
           <div className="form-field__radio-group">
-            {options.map((option) => (
+            {options.map(option => (
               <label key={option.value} className="form-field__radio-option">
                 <input
                   type="radio"
@@ -310,7 +300,7 @@ const FormField: React.FC<FormFieldProps> = ({
                   value={option.value}
                   checked={value === option.value}
                   disabled={disabled || option.disabled}
-                  onChange={(e) => handleInputChange(e.target.value)}
+                  onChange={e => handleInputChange(e.target.value)}
                   className="form-field__radio-input"
                 />
                 <span className="form-field__radio-label">{option.label}</span>
@@ -327,7 +317,11 @@ const FormField: React.FC<FormFieldProps> = ({
                 <Button
                   type="secondary"
                   size="medium"
-                  btnText={options.find(opt => opt.value === value)?.label || placeholder || 'בחר אפשרות'}
+                  btnText={
+                    options.find(opt => opt.value === value)?.label ||
+                    placeholder ||
+                    'בחר אפשרות'
+                  }
                   onClick={toggleDropdown}
                   isDisabled={disabled}
                   icon="▼"
@@ -336,10 +330,14 @@ const FormField: React.FC<FormFieldProps> = ({
                 />
                 {isDropdownOpen && (
                   <div className="form-field__dropdown-menu">
-                    {options.map((option) => (
+                    {options.map(option => (
                       <Button
                         key={option.value}
-                        type={value === option.value ? "primary" : "transparent-on-light"}
+                        type={
+                          value === option.value
+                            ? 'primary'
+                            : 'transparent-on-light'
+                        }
                         size="small"
                         btnText={option.label}
                         onClick={() => handleSelectChange(option.value)}
@@ -367,15 +365,19 @@ const FormField: React.FC<FormFieldProps> = ({
             <select
               {...baseInputProps}
               value={value as string}
-              onChange={(e) => handleInputChange(e.target.value)}
+              onChange={e => handleInputChange(e.target.value)}
             >
               {placeholder && (
                 <option value="" disabled>
                   {placeholder}
                 </option>
               )}
-              {options.map((option) => (
-                <option key={option.value} value={option.value} disabled={option.disabled}>
+              {options.map(option => (
+                <option
+                  key={option.value}
+                  value={option.value}
+                  disabled={option.disabled}
+                >
                   {option.label}
                 </option>
               ))}
@@ -399,9 +401,11 @@ const FormField: React.FC<FormFieldProps> = ({
               <Button
                 type="secondary"
                 size="medium"
-                btnText={selectedOptions.length > 0
-                  ? `${selectedOptions.length} נבחרו`
-                  : placeholder || 'בחר אפשרויות'}
+                btnText={
+                  selectedOptions.length > 0
+                    ? `${selectedOptions.length} נבחרו`
+                    : placeholder || 'בחר אפשרויות'
+                }
                 onClick={toggleDropdown}
                 isDisabled={disabled}
                 icon="▼"
@@ -410,8 +414,11 @@ const FormField: React.FC<FormFieldProps> = ({
               />
               {isDropdownOpen && (
                 <div className="form-field__multi-select-menu">
-                  {options.map((option) => (
-                    <label key={option.value} className="form-field__multi-select-item">
+                  {options.map(option => (
+                    <label
+                      key={option.value}
+                      className="form-field__multi-select-item"
+                    >
                       <input
                         type="checkbox"
                         checked={selectedOptions.includes(option.value)}
@@ -419,7 +426,9 @@ const FormField: React.FC<FormFieldProps> = ({
                         disabled={option.disabled}
                         className="form-field__multi-select-checkbox"
                       />
-                      <span className="form-field__multi-select-label">{option.label}</span>
+                      <span className="form-field__multi-select-label">
+                        {option.label}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -450,9 +459,7 @@ const FormField: React.FC<FormFieldProps> = ({
           {required && <span className="form-field__required">*</span>}
         </label>
       )}
-      <div className="form-field__input-wrapper">
-        {renderInput()}
-      </div>
+      <div className="form-field__input-wrapper">{renderInput()}</div>
     </div>
   );
 };

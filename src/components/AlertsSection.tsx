@@ -37,29 +37,29 @@ const AlertsSection: React.FC = () => {
   };
 
   return (
-    <div className='alerts-section'>
-      <div className='section-header'>
+    <div className="alerts-section">
+      <div className="section-header">
         <h2>התראות מערכת</h2>
       </div>
 
-      <div className='alerts-list'>
+      <div className="alerts-list">
         {alerts.map(alert => (
-          <div key={alert.id} className='alert-item'>
-            <div className='alert-icon'>{getAlertIcon(alert.type)}</div>
+          <div key={alert.id} className="alert-item">
+            <div className="alert-icon">{getAlertIcon(alert.type)}</div>
 
-            <div className='alert-content'>
-              <div className='alert-header'>
+            <div className="alert-content">
+              <div className="alert-header">
                 <h3>{alert.title}</h3>
                 {alert.requestName && (
-                  <span className='request-name'>{alert.requestName}</span>
+                  <span className="request-name">{alert.requestName}</span>
                 )}
               </div>
 
-              <p className='alert-description'>{alert.description}</p>
+              <p className="alert-description">{alert.description}</p>
 
               {alert.actionText && (
                 <Button
-                  type='tertiary'
+                  type="tertiary"
                   btnText={alert.actionText}
                   onClick={() => {}}
                   icon={alert.icon}

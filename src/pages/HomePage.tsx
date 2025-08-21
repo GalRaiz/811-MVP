@@ -29,30 +29,29 @@ const HomePage = () => {
   };
 
   return (
-    <div className='main-container'>
-      <div className='header'>
+    <div className="main-container">
+      <div className="header">
         <Link
-          className='App-link'
-          to='https://300.org.il/'
-          target='_blank'
-          rel='noopener noreferrer'
+          className="App-link"
+          to="https://300.org.il/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           מטה החמ״לים הארצי עמוד תדמית
         </Link>
       </div>
-      <div className='content'>
-        <div className='content-title'>
+      <div className="content">
+        <div className="content-title">
           ברוכים הבאים למערכת 811 של מטה החמ״לים הארצי
         </div>
-        <div className='content-subtitle'>איך נוכל לעזור היום?</div>
-        <div className='card-container'>
+        <div className="content-subtitle">איך נוכל לעזור היום?</div>
+        <div className="card-container">
           {cards.map((card, index) => (
             <Card
               key={index}
               title={card.title}
-              imageUrl={card.imageUrl}
               description={card.description}
-              clickHandler={() => clickHandler(card.title)}
+              onClick={() => clickHandler(card.title)}
             />
           ))}
         </div>

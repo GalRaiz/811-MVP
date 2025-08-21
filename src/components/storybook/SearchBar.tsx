@@ -36,15 +36,13 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   return (
     <div className="search-bar">
       <div className="search-bar__input-wrapper">
-        <div className="search-bar__icon">
-          {Icons.search}
-        </div>
+        <div className="search-bar__icon">{Icons.search}</div>
         <input
-          type='text'
+          type="text"
           value={searchQuery}
           onChange={e => onSearchChange(e.target.value)}
           placeholder={getPlaceholder()}
-          className='search-bar__input'
+          className="search-bar__input"
           dir="rtl"
         />
         {searchQuery && (
@@ -57,9 +55,9 @@ const SearchBar: React.FC<ISearchBarProps> = ({
         )}
       </div>
       {showFilterButton && (
-        <Button 
-          onClick={onFilterClick} 
-          size="small" 
+        <Button
+          onClick={onFilterClick}
+          size="small"
           type="secondary"
           btnText="Filter"
           icon={Icons.filter}

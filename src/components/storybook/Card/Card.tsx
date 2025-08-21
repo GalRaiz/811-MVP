@@ -2,9 +2,11 @@ import { FC } from 'react';
 import './Card.scss';
 import { Icons } from '../icons/EmojiIcons';
 import Button from '../Button/Button';
+import { ButtonProps } from '../Button/Button';
 
 interface ICardProps {
   // imageUrl?: string;
+  onClick?: () => void;
   distance?: string; // לדוגמה: "1.5 ק״מ מאזורך"
   title: string;
   date?: string; // לדוגמה: "22.07"
@@ -13,29 +15,20 @@ interface ICardProps {
     icon?: string;
   }; // לדוגמה: "לוגיסטיקה ושינוע"
   description?: string;
-  buttns?: {
-    btnTextSecondary?: string;
-    btnTextPrimary?: string;
-    onPrimaryClick?: () => void;
-    onSecondaryClick?: () => void;
-  };
-  onPrimaryClick?: () => void;
-  onSecondaryClick?: () => void;
+  buttons?: ButtonProps[];
 }
 
 const Card: FC<ICardProps> = ({
-  
   distance,
   title,
   date,
   category,
   description,
-  onPrimaryClick,
-  onSecondaryClick,
-  buttns,
+  buttons,
+  onClick,
 }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={onClick}>
       {/* {imageUrl && <img src={imageUrl} alt={title} className="card__image" />} */}
 
       <div className="card__content">
@@ -64,10 +57,17 @@ const Card: FC<ICardProps> = ({
         </div>
       </div>
 
-      {buttns && (
+      {buttons && (
         <div className="card__footer">
-          <Button type="secondary" size="small" btnText={buttns?.btnTextSecondary} onClick={onSecondaryClick} />
-          <Button type="primary" size="small" btnText={buttns?.btnTextPrimary} onClick={onPrimaryClick} />
+          {buttons.map((button: ButtonProps, index: number) => (
+            <Button
+              key={index}
+              type={button.type}
+              size="small"
+              btnText={button.btnText}
+              onClick={button.onClick}
+            />
+          ))}
         </div>
       )}
     </div>

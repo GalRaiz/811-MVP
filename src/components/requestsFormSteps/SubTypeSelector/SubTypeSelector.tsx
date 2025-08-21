@@ -26,9 +26,9 @@ const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
   };
 
   return (
-    <div className='sub-type-selector'>
-      <div className='sub-type-selector__header'>
-        <span className='sub-type-selector__counter'>
+    <div className="sub-type-selector">
+      <div className="sub-type-selector__header">
+        <span className="sub-type-selector__counter">
           נבחרו {selectedSubType.length} סוגים
         </span>
         {selectedSubType.length > 0 && (
@@ -40,13 +40,13 @@ const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
           />
         )}
         {selectedSubType.length === 0 && (
-          <span className='sub-type-selector__warning'>
+          <span className="sub-type-selector__warning">
             יש לבחור לפחות סוג אחד
           </span>
         )}
       </div>
 
-      <div className='sub-type-selector__grid'>
+      <div className="sub-type-selector__grid">
         {subTypes.map(subType => (
           <button
             key={subType.id}
@@ -56,18 +56,18 @@ const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
                 : ''
             }`}
             onClick={() => handleSubTypeSelect(subType.id)}
-            type='button'
+            type="button"
           >
             {subType.icon && (
-              <div className='sub-type-selector__option-icon'>
+              <div className="sub-type-selector__option-icon">
                 {subType.icon}
               </div>
             )}
-            <span className='sub-type-selector__option-label'>
+            <span className="sub-type-selector__option-label">
               {subType.label}
             </span>
             {selectedSubType.includes(subType.id) && (
-              <div className='sub-type-selector__option-check'>✓</div>
+              <div className="sub-type-selector__option-check">✓</div>
             )}
           </button>
         ))}

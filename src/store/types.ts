@@ -1,9 +1,12 @@
-import { IAssistanceSubType, IAssistanceType } from "../data/assistanceTypesData";
+import {
+  IAssistanceSubType,
+  IAssistanceType,
+} from '../data/assistanceTypesData';
 
 export interface IRequest {
   id: number | string;
   requesterDetails: {
-    requesterName: string;    
+    requesterName: string;
     phone?: string;
     district?: string;
     city?: string;
@@ -11,8 +14,8 @@ export interface IRequest {
   };
   requestDetails: {
     requestName: string;
-    requestType: IAssistanceType["label"];
-    requestSubType?: IAssistanceSubType["label"][];
+    requestType: IAssistanceType['label'];
+    requestSubType?: IAssistanceSubType['label'][];
     requestDescription?: string;
     requestImage?: string;
     needTransportation?: boolean;
@@ -24,7 +27,7 @@ export interface IRequest {
     createdAt?: number;
     updatedAt?: number;
     assignedTo?: string[];
-  };  
+  };
 }
 
 export interface IRequestsState {
@@ -42,4 +45,3 @@ export interface IUserData {
   userPassword: string;
   userRole: string;
 }
-

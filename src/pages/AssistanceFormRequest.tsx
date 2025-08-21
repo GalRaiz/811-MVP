@@ -7,9 +7,9 @@ import logo from '../assets/mate-logo-white.png';
 
 const AssistanceForm: React.FC = () => {
   return (
-    <div className='assistance-request-page'>
-      <PageHeader title='טופס בקשת סיוע' logo={logo} />
-      <main className='assistance-request-page__main'>
+    <div className="assistance-request-page">
+      <PageHeader title="טופס בקשת סיוע" logo={logo} />
+      <main className="assistance-request-page__main">
         <AssistanceFormContainer />
       </main>
       <AssistanceFormFooter />

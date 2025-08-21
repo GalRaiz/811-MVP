@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import "./SideNavBar.scss";
-import Button, { ButtonProps } from "../Button/Button";
+import React, { useState } from 'react';
+import './SideNavBar.scss';
+import Button, { ButtonProps } from '../Button/Button';
+import { Icons } from '../icons/EmojiIcons';
 
 interface NavBarProps {
   logo?: React.ReactNode;
@@ -14,29 +15,32 @@ const NavBar: React.FC<NavBarProps> = ({ logo, title, buttons }) => {
   const toggleNav = () => setIsOpen(!isOpen);
 
   return (
-    <nav className={`nav-bar ${isOpen ? "open" : "closed"}`}>
+    <nav className={`nav-bar ${isOpen ? 'open' : 'closed'}`}>
       <div className="nav-header">
         <button className="toggle-btn" onClick={toggleNav}>
-          {isOpen ? "Close" : "Open"}
+          {isOpen ? Icons.close : Icons.add}
         </button>
       </div>
-
-      <div className="nav-top">
-        {logo && <div className="nav-logo">{logo}</div>}
-        {title && <h1 className="nav-title">{title}</h1>}
-      </div>
-      <div className="nav-buttons">
-        {buttons?.map((button, index) => (
-          <div key={index} className="nav-action">
-            <Button
-              type="transparent-on-dark"
-              btnText={button.btnText}
-              onClick={button.onClick}
-              icon={button.icon}
-            />
+      {isOpen && (
+        <div className="nav-content">
+          <div className="nav-content__header">
+            {logo && <div className="nav-content__header__logo">{logo}</div>}
+            {title && <h1 className="nav-content__header__title">{title}</h1>}
           </div>
-        ))}
-      </div>
+          <div className="nav-content__buttons">
+            {buttons?.map((button, index) => (
+              <div key={index} className="nav-content__buttons__item">
+                <Button
+                  type="transparent-on-dark"
+                  btnText={button.btnText}
+                  onClick={button.onClick}
+                  icon={button.icon}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

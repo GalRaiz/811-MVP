@@ -679,5 +679,4 @@ export const assistanceRequests: IRequest[] = [
       updatedAt: 1755701331911,
     },
   },
-
 ];

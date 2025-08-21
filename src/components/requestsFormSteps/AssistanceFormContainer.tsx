@@ -35,7 +35,7 @@ const AssistanceFormContainer: React.FC = () => {
     }
   };
 
-  return <div className='assistance-form-container'>{renderCurrentStep()}</div>;
+  return <div className="assistance-form-container">{renderCurrentStep()}</div>;
 };
 
 export default AssistanceFormContainer;

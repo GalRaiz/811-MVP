@@ -14,17 +14,19 @@ const AssistanceForm: React.FC = () => {
   };
 
   return (
-    <div className='assistance-form'>
-      <h2 className='assistance-form__title'>מי צריך עזרה?</h2>
+    <div className="assistance-form">
+      <h2 className="assistance-form__title">מי צריך עזרה?</h2>
 
-      <div className='assistance-form__fields'>
+      <div className="assistance-form__fields">
         <FormField
           id="requesterName"
           label="שם מקבל הסיוע"
           placeholder="שם מלא"
           type="text"
           value={formState.requesterName || ''}
-          onChange={(value) => handleFieldChange('requesterName', value as string)}
+          onChange={value =>
+            handleFieldChange('requesterName', value as string)
+          }
         />
 
         <FormField
@@ -33,7 +35,9 @@ const AssistanceForm: React.FC = () => {
           placeholder="מספר טלפון"
           type="tel"
           value={formState.requesterPhone || ''}
-          onChange={(value) => handleFieldChange('requesterPhone', value as string)}
+          onChange={value =>
+            handleFieldChange('requesterPhone', value as string)
+          }
         />
 
         <FormField
@@ -42,11 +46,11 @@ const AssistanceForm: React.FC = () => {
           placeholder="תיאור קצר של הבקשה"
           type="text"
           value={formState.requestName || ''}
-          onChange={(value) => handleFieldChange('requestName', value as string)}
+          onChange={value => handleFieldChange('requestName', value as string)}
         />
       </div>
 
-      <div className='assistance-form__instructions'>
+      <div className="assistance-form__instructions">
         <p>
           כתבו שם שמייצג את מי שצריך את העזרה. זה יכול להיות "ישראל ישראלי" או
           "קבוצת דיירי רח' הארזים". אנחנו רק רוצים לדעת למי בדיוק להפנות את

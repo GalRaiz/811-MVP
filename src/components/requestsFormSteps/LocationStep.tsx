@@ -23,17 +23,17 @@ const LocationStep: React.FC = () => {
   ];
 
   return (
-    <div className='location-step'>
-      <h2 className='location-step__title'>לאיפה להגיע?</h2>
+    <div className="location-step">
+      <h2 className="location-step__title">לאיפה להגיע?</h2>
 
-      <div className='location-step__fields'>
+      <div className="location-step__fields">
         <FormField
           id="district"
           label="מחוז"
           placeholder="בחר מחוז"
           type="select"
           value={formState.district || ''}
-          onChange={(value) => handleFieldChange('district', value as string)}
+          onChange={value => handleFieldChange('district', value as string)}
           options={districtOptions}
           hasDropdown={true}
         />
@@ -44,7 +44,7 @@ const LocationStep: React.FC = () => {
           placeholder="שם העיר"
           type="text"
           value={formState.city || ''}
-          onChange={(value) => handleFieldChange('city', value as string)}
+          onChange={value => handleFieldChange('city', value as string)}
         />
 
         <FormField
@@ -53,11 +53,11 @@ const LocationStep: React.FC = () => {
           placeholder="שם הרחוב"
           type="text"
           value={formState.street || ''}
-          onChange={(value) => handleFieldChange('street', value as string)}
+          onChange={value => handleFieldChange('street', value as string)}
         />
       </div>
 
-      <div className='location-step__instructions'>
+      <div className="location-step__instructions">
         <p>
           אנחנו עובדים עם מחוזות פיקוד העורף. מיקום מדויק מאפשר לנו לשייך את
           הבקשה לחמ"ל הקרוב.

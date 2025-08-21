@@ -22,7 +22,10 @@ const FormFieldDemo: React.FC = () => {
 
   const assistanceTypeOptions = getAssistanceTypeOptions();
 
-  const handleChange = (field: string, value: string | number | boolean | string[]) => {
+  const handleChange = (
+    field: string,
+    value: string | number | boolean | string[]
+  ) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
@@ -39,14 +42,14 @@ const FormFieldDemo: React.FC = () => {
       <div className="form-field-demo__content">
         <div className="form-field-demo__section">
           <h2>שדות טקסט עם אייקונים</h2>
-          
+
           <FormField
             id="search-field"
             label="חיפוש"
             placeholder="חפש כאן..."
             type="text"
             value={formData.searchText}
-            onChange={(value) => handleChange('searchText', value as string)}
+            onChange={value => handleChange('searchText', value as string)}
             icon={Icons.search}
             required
           />
@@ -57,7 +60,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="your@email.com"
             type="text"
             value={formData.emailText}
-            onChange={(value) => handleChange('emailText', value as string)}
+            onChange={value => handleChange('emailText', value as string)}
             icon={Icons.email}
           />
 
@@ -67,7 +70,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="050-0000000"
             type="tel"
             value={formData.phoneText}
-            onChange={(value) => handleChange('phoneText', value as string)}
+            onChange={value => handleChange('phoneText', value as string)}
             icon={Icons.phone}
           />
 
@@ -77,7 +80,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="הכנס טקסט כאן..."
             type="text"
             value={formData.text}
-            onChange={(value) => handleChange('text', value as string)}
+            onChange={value => handleChange('text', value as string)}
             required
           />
 
@@ -87,7 +90,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="050-0000000"
             type="tel"
             value={formData.tel}
-            onChange={(value) => handleChange('tel', value as string)}
+            onChange={value => handleChange('tel', value as string)}
           />
 
           <FormField
@@ -96,7 +99,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="הכנס מספר"
             type="number"
             value={formData.number}
-            onChange={(value) => handleChange('number', value as number)}
+            onChange={value => handleChange('number', value as number)}
             min={0}
             max={100}
             step={1}
@@ -105,28 +108,28 @@ const FormFieldDemo: React.FC = () => {
 
         <div className="form-field-demo__section">
           <h2>שדות ארוכים</h2>
-          
+
           <FormField
             id="textarea-field"
             label="תיאור"
             placeholder="הכנס תיאור מפורט..."
             type="textarea"
             value={formData.textarea}
-            onChange={(value) => handleChange('textarea', value as string)}
+            onChange={value => handleChange('textarea', value as string)}
             rows={4}
           />
         </div>
 
         <div className="form-field-demo__section">
           <h2>שדות בחירה</h2>
-          
+
           <FormField
             id="select-field"
             label="בחר סוג עזרה"
             placeholder="בחר סוג עזרה..."
             type="select"
             value={formData.select}
-            onChange={(value) => handleChange('select', value as string)}
+            onChange={value => handleChange('select', value as string)}
             options={assistanceTypeOptions}
             hasDropdown={true}
           />
@@ -137,7 +140,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="בחר סוגי עזרה..."
             type="multi-select"
             value={formData.multiSelect}
-            onChange={(value) => handleChange('multiSelect', value as string[])}
+            onChange={value => handleChange('multiSelect', value as string[])}
             options={assistanceTypeOptions}
           />
 
@@ -147,7 +150,7 @@ const FormFieldDemo: React.FC = () => {
             placeholder="בחר סוג עזרה..."
             type="select"
             value={formData.select}
-            onChange={(value) => handleChange('select', value as string)}
+            onChange={value => handleChange('select', value as string)}
             options={assistanceTypeOptions}
             hasDropdown={false}
           />
@@ -155,25 +158,25 @@ const FormFieldDemo: React.FC = () => {
 
         <div className="form-field-demo__section">
           <h2>שדות תאריך</h2>
-          
+
           <FormField
             id="date-field"
             label="תאריך"
             type="date"
             value={formData.date}
-            onChange={(value) => handleChange('date', value as string)}
+            onChange={value => handleChange('date', value as string)}
           />
         </div>
 
         <div className="form-field-demo__section">
           <h2>שדות בוליאניים</h2>
-          
+
           <FormField
             id="checkbox-field"
             label="אני מסכים לתנאים"
             type="checkbox"
             value={formData.checkbox}
-            onChange={(value) => handleChange('checkbox', value as boolean)}
+            onChange={value => handleChange('checkbox', value as boolean)}
           />
 
           <FormField
@@ -181,7 +184,7 @@ const FormFieldDemo: React.FC = () => {
             label="בחר מגדר"
             type="radio"
             value={formData.radio}
-            onChange={(value) => handleChange('radio', value as string)}
+            onChange={value => handleChange('radio', value as string)}
             options={[
               { value: 'male', label: 'זכר' },
               { value: 'female', label: 'נקבה' },
@@ -192,7 +195,7 @@ const FormFieldDemo: React.FC = () => {
 
         <div className="form-field-demo__section">
           <h2>שדות מושבתים</h2>
-          
+
           <FormField
             id="disabled-text"
             label="שדה מושבת"

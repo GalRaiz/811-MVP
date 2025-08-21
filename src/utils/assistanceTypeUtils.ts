@@ -1,16 +1,24 @@
-import { assistanceTypes, IAssistanceType, IAssistanceSubType } from '../data/assistanceTypesData';
+import {
+  assistanceTypes,
+  IAssistanceType,
+  IAssistanceSubType,
+} from '../data/assistanceTypesData';
 
 /**
  * Get assistance type by ID
  */
-export const getAssistanceTypeById = (id: string): IAssistanceType | undefined => {
+export const getAssistanceTypeById = (
+  id: string
+): IAssistanceType | undefined => {
   return assistanceTypes.find(type => type.id === id);
 };
 
 /**
  * Get assistance sub-type by ID
  */
-export const getAssistanceSubTypeById = (subTypeId: string): IAssistanceSubType | undefined => {
+export const getAssistanceSubTypeById = (
+  subTypeId: string
+): IAssistanceSubType | undefined => {
   for (const type of assistanceTypes) {
     const subType = type.subTypes.find(sub => sub.id === subTypeId);
     if (subType) return subType;
@@ -49,11 +57,13 @@ export const getAssistanceTypeOptions = () => {
  * Get all assistance sub-type options for filters
  */
 export const getAssistanceSubTypeOptions = () => {
-  return assistanceTypes.map(type => type.subTypes.map(subType => ({
-    value: subType.id,
-    label: subType.label,
-    icon: subType.icon,
-  })));
+  return assistanceTypes.map(type =>
+    type.subTypes.map(subType => ({
+      value: subType.id,
+      label: subType.label,
+      icon: subType.icon,
+    }))
+  );
 };
 
 /**
@@ -61,19 +71,22 @@ export const getAssistanceSubTypeOptions = () => {
  */
 export const getSubTypeOptions = (typeId: string) => {
   const type = getAssistanceTypeById(typeId);
-  return type?.subTypes.map(subType => ({
-    value: subType.id,
-    label: subType.label,
-    icon: subType.icon,
-  })) || [];
+  return (
+    type?.subTypes.map(subType => ({
+      value: subType.id,
+      label: subType.label,
+      icon: subType.icon,
+    })) || []
+  );
 };
 
 /**
  * Get all sub-type options across all types
  */
 export const getAllSubTypeOptions = () => {
-  const allSubTypes: Array<{ value: string; label: string; icon?: string }> = [];
-  
+  const allSubTypes: Array<{ value: string; label: string; icon?: string }> =
+    [];
+
   assistanceTypes.forEach(type => {
     type.subTypes.forEach(subType => {
       allSubTypes.push({
@@ -83,6 +96,6 @@ export const getAllSubTypeOptions = () => {
       });
     });
   });
-  
+
   return allSubTypes;
 };

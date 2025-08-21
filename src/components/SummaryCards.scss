@@ -6,7 +6,7 @@
   gap: $padding-large;
   margin-top: $padding-large;
 
-  .summary-card {
+  &__card {
     background-color: $background-color;
     border-radius: $border-radius;
     padding: $padding-large;
@@ -18,59 +18,24 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    &.new {
-      .new-request-btn {
-        width: 100%;
-        height: 100%;
-        background: none;
-        border: 2px dashed $border-color;
-        border-radius: $border-radius;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: $padding-normal;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        color: $text-color;
-
-        &:hover {
-          border-color: $primary-color;
-          background-color: rgba($primary-color, 0.1);
-        }
-
-        .icon {
-          font-size: 32px;
-          font-weight: bold;
-          color: $primary-color;
-        }
-
-        .title {
-          font-size: 16px;
-          font-weight: 500;
-          text-align: center;
-        }
-      }
-    }
-
-    .card-header {
+    &__card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: $padding-normal;
-
-      .icon {
-        font-size: 24px;
-      }
-
-      .count {
-        font-size: 32px;
-        font-weight: bold;
-        color: $text-color;
-      }
     }
 
-    .title {
+    &__card__icon {
+      font-size: 24px;
+    }
+
+    &__count {
+      font-size: 32px;
+      font-weight: bold;
+      color: $text-color;
+    }
+
+    &__title {
       font-size: 16px;
       font-weight: 500;
       color: $text-color;
@@ -80,7 +45,6 @@
   }
 }
 
-// Responsive design
 @media (max-width: 1200px) {
   .summary-cards {
     grid-template-columns: repeat(2, 1fr);

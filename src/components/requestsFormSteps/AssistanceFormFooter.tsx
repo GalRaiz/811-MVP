@@ -9,7 +9,8 @@ import './AssistanceFormFooter.scss';
 import Button from '../storybook/Button/Button';
 
 const AssistanceFormFooter: React.FC = () => {
-  const { formState, goToPreviousStep, goToNextStep, isFormValid } = useAssistanceForm();
+  const { formState, goToPreviousStep, goToNextStep, isFormValid } =
+    useAssistanceForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -80,16 +81,22 @@ const AssistanceFormFooter: React.FC = () => {
         {formState.currentStep > 1 ? (
           <Button
             type="primary"
-            icon={<span className="assistance-form-footer__button-arrow">→</span>}
+            icon={
+              <span className="assistance-form-footer__button-arrow">→</span>
+            }
             btnText="השלב הקודם"
             onClick={handlePrevious}
           />
         ) : (
-          <Button type="secondary" btnText="חזור לדף הבית" onClick={handleGoHome} />
+          <Button
+            type="secondary"
+            btnText="חזור לדף הבית"
+            onClick={handleGoHome}
+          />
         )}
 
         <div className="assistance-form-footer__progress">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((step) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8].map(step => (
             <div
               key={step}
               className={`assistance-form-footer__progress-bar ${getProgressBarClass(step)}`}
@@ -102,11 +109,7 @@ const AssistanceFormFooter: React.FC = () => {
           size="medium"
           onClick={handleNext}
           isDisabled={!isFormValid()}
-          btnText={
-            formState.currentStep === 7
-              ? 'שמירה ושליחה'
-              : 'השלב הבא '
-          }
+          btnText={formState.currentStep === 7 ? 'שמירה ושליחה' : 'השלב הבא '}
           icon={
             <span className="assistance-form-footer__button-arrow">
               {formState.currentStep === 7 ? '✓' : '←'}

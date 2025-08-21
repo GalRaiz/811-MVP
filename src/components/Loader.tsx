@@ -20,11 +20,11 @@ const Loader: React.FC = () => {
     sentences[Math.floor(Math.random() * sentences.length)];
 
   return (
-    <div className='loader-container'>
-  <div className='loader-progress' />
-  <img src={mateLogoGreen} className='loader-logo' alt='logo' />
-  <p className='loader-text'>{randomSentence}</p>
-</div>
+    <div className="loader-container">
+      <div className="loader-progress" />
+      <img src={mateLogoGreen} className="loader-logo" alt="logo" />
+      <p className="loader-text">{randomSentence}</p>
+    </div>
   );
 };
 

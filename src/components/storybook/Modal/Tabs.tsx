@@ -1,5 +1,5 @@
-import React, { useId, useState, ReactNode, KeyboardEvent } from "react";
-import "./Tabs.scss";
+import React, { useId, useState, ReactNode, KeyboardEvent } from 'react';
+import './Tabs.scss';
 
 export interface Tab {
   label: string;
@@ -14,7 +14,12 @@ interface TabsProps {
   className?: string;
 }
 
-const Tabs: React.FC<TabsProps> = ({ tabs, defaultIndex = 0, onChange, className }) => {
+const Tabs: React.FC<TabsProps> = ({
+  tabs,
+  defaultIndex = 0,
+  onChange,
+  className,
+}) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const baseId = useId();
 
@@ -24,9 +29,9 @@ const Tabs: React.FC<TabsProps> = ({ tabs, defaultIndex = 0, onChange, className
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     e.preventDefault();
-    const dir = e.key === "ArrowRight" ? 1 : -1;
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
     let next = (activeIndex + dir + tabs.length) % tabs.length;
     while (tabs[next]?.disabled) {
       next = (next + dir + tabs.length) % tabs.length;
@@ -37,13 +42,13 @@ const Tabs: React.FC<TabsProps> = ({ tabs, defaultIndex = 0, onChange, className
   };
 
   return (
-    <div className={`tabs ${className ?? ""}`}>
+    <div className={`tabs ${className ?? ''}`}>
       <div className="tabs__header" role="tablist" onKeyDown={onKeyDown}>
         {tabs.map((tab, i) => (
           <button
             key={i}
             id={`${baseId}-tab-${i}`}
-            className={`tabs__btn ${i === activeIndex ? "is-active" : ""}`}
+            className={`tabs__btn ${i === activeIndex ? 'is-active' : ''}`}
             role="tab"
             aria-selected={i === activeIndex}
             aria-controls={`${baseId}-panel-${i}`}

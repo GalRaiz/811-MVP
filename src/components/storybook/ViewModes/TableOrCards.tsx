@@ -1,27 +1,32 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
-import Table, { Column } from "../Table/Table";
-import SidePanel from "../SidePanel/SidePanel";
-import SearchBar from "../SearchBar";
-import EmptyState from "../../EmptyState";
-import Modal from "../Modal/Modal";
-import Card from "../Card/Card";
-import Button from "../Button/Button";
-import { getNestedValue } from "../../../utils/getNestedValue";
-import { getAssistanceTypeLabel, getAssistanceSubTypeLabel } from "../../../utils/assistanceTypeUtils";
-import "./TableOrCards.scss";
-import { Icons } from "../icons/EmojiIcons";
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import Table, { Column } from '../Table/Table';
+import SidePanel from '../SidePanel/SidePanel';
+import SearchBar from '../SearchBar';
+import EmptyState from '../../EmptyState';
+import Modal from '../Modal/Modal';
+import Card from '../Card/Card';
+import Button from '../Button/Button';
+import { getNestedValue } from '../../../utils/getNestedValue';
+import {
+  getAssistanceTypeLabel,
+  getAssistanceSubTypeLabel,
+} from '../../../utils/assistanceTypeUtils';
+import './TableOrCards.scss';
+import { Icons } from '../icons/EmojiIcons';
 
 // Types
-export type ViewMode = "table" | "cards";
+export type ViewMode = 'table' | 'cards';
 
 export interface IFilterOption {
   key: string;
   label: string;
   name: string;
-  type?: "select" | "text" | "multi-select";
+  type?: 'select' | 'text' | 'multi-select';
   options?: { value: string; label: string }[];
   dependsOn?: string; // key of the filter this depends on
-  getOptions?: (selectedValues: Record<string, string>) => { value: string; label: string }[]; // dynamic options based on other filters
+  getOptions?: (
+    selectedValues: Record<string, string>
+  ) => { value: string; label: string }[]; // dynamic options based on other filters
 }
 
 export interface IDetailItem {
@@ -56,10 +61,12 @@ const useSearchAndFilter = <T extends { id: string | number }>(
   filterOptions: IFilterOption[] = [],
   onFilterChange?: (filters: Record<string, string>) => void
 ) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [filters, setFilters] = useState<Record<string, string>>({});
-  const [debouncedFilters, setDebouncedFilters] = useState<Record<string, string>>({});
+  const [debouncedFilters, setDebouncedFilters] = useState<
+    Record<string, string>
+  >({});
 
   // Debounce search query
   useEffect(() => {
@@ -82,25 +89,28 @@ const useSearchAndFilter = <T extends { id: string | number }>(
     onFilterChange?.(debouncedFilters);
   }, [debouncedFilters, onFilterChange]);
 
-  const handleFilterChange = useCallback((filterChange: { key: string; value: string }) => {
-    setFilters(prev => ({ ...prev, [filterChange.key]: filterChange.value }));
-  }, []);
+  const handleFilterChange = useCallback(
+    (filterChange: { key: string; value: string }) => {
+      setFilters(prev => ({ ...prev, [filterChange.key]: filterChange.value }));
+    },
+    []
+  );
 
   const handleClearFilters = useCallback(() => {
     setFilters({});
     setDebouncedFilters({});
-    setSearchQuery("");
-    setDebouncedSearchQuery("");
+    setSearchQuery('');
+    setDebouncedSearchQuery('');
     onFilterChange?.({});
   }, [onFilterChange]);
 
   const filteredData = useMemo(() => {
-    console.log('Filtering data:', { 
-      totalData: data.length, 
-      debouncedFilters, 
-      debouncedSearchQuery
+    console.log('Filtering data:', {
+      totalData: data.length,
+      debouncedFilters,
+      debouncedSearchQuery,
     });
-    
+
     const result = data.filter(row => {
       // Search filtering
       const query = debouncedSearchQuery.toLowerCase();
@@ -108,141 +118,198 @@ const useSearchAndFilter = <T extends { id: string | number }>(
 
       if (query && searchField) {
         // Search on specific field
-        const fieldValue = getNestedValue(row as Record<string, unknown>, searchField);
+        const fieldValue = getNestedValue(
+          row as Record<string, unknown>,
+          searchField
+        );
         matchesSearch = String(fieldValue).toLowerCase().includes(query);
       } else if (query) {
         // Search on all values if no specific field - enhanced to search nested objects and displayed labels
         const searchInObject = (obj: unknown): boolean => {
           if (obj === null || obj === undefined) return false;
-          
+
           if (typeof obj === 'string') {
             return obj.toLowerCase().includes(query);
           }
-          
+
           if (typeof obj === 'number') {
             return String(obj).toLowerCase().includes(query);
           }
-          
+
           if (Array.isArray(obj)) {
             return obj.some(item => searchInObject(item));
           }
-          
+
           if (typeof obj === 'object') {
-            return Object.values(obj as Record<string, unknown>).some(value => searchInObject(value));
+            return Object.values(obj as Record<string, unknown>).some(value =>
+              searchInObject(value)
+            );
           }
-          
+
           return false;
         };
-        
+
         // Search in the raw data
         const matchesRawData = searchInObject(row);
-        
+
         // Also search in displayed labels for specific fields
         let matchesDisplayedLabels = false;
-        
+
         // Search in displayed labels for IRequest type
         if ('requestDetails' in row && row.requestDetails) {
           const requestDetails = row.requestDetails as Record<string, unknown>;
-          
+
           // Search in request type label
           if (requestDetails.requestType) {
-            const typeLabel = getAssistanceTypeLabel(requestDetails.requestType as string);
+            const typeLabel = getAssistanceTypeLabel(
+              requestDetails.requestType as string
+            );
             if (typeLabel && typeLabel.toLowerCase().includes(query)) {
               matchesDisplayedLabels = true;
             }
           }
-          
+
           // Search in request sub-type labels
-          if (requestDetails.requestSubType && Array.isArray(requestDetails.requestSubType)) {
-            const subTypeLabels = (requestDetails.requestSubType as string[]).map((subType: string) => 
-              getAssistanceSubTypeLabel(subType)
-            ).join(' ');
+          if (
+            requestDetails.requestSubType &&
+            Array.isArray(requestDetails.requestSubType)
+          ) {
+            const subTypeLabels = (requestDetails.requestSubType as string[])
+              .map((subType: string) => getAssistanceSubTypeLabel(subType))
+              .join(' ');
             if (subTypeLabels.toLowerCase().includes(query)) {
               matchesDisplayedLabels = true;
             }
           }
         }
-        
+
         // Search in request status label
         if ('requestStatus' in row && row.requestStatus) {
           const requestStatus = row.requestStatus as Record<string, unknown>;
           if (requestStatus.requestStatus) {
             const statusLabels: Record<string, string> = {
-              'pending': 'ממתין',
+              pending: 'ממתין',
               'in-progress': 'בטיפול',
-              'completed': 'הושלם',
-              'cancelled': 'בוטל'
+              completed: 'הושלם',
+              cancelled: 'בוטל',
             };
-            const statusLabel = statusLabels[requestStatus.requestStatus as string];
+            const statusLabel =
+              statusLabels[requestStatus.requestStatus as string];
             if (statusLabel && statusLabel.toLowerCase().includes(query)) {
               matchesDisplayedLabels = true;
             }
           }
         }
-        
+
         matchesSearch = matchesRawData || matchesDisplayedLabels;
       }
 
       // Filter filtering
-      const matchesFilters = Object.entries(debouncedFilters).every(([key, value]) => {
-        if (!value) return true;
-        
-        // Find the filter option to get the name field for filtering
-        const filterOption = filterOptions.find(opt => opt.key === key);
-        if (filterOption && filterOption.name) {
-          // Get the actual field value from the data
-          const fieldValue = getNestedValue(row as Record<string, unknown>, filterOption.name);
-          
-          // For multi-select filters, check if any of the selected values match
-          if (filterOption.type === "multi-select") {
-            const selectedValues = value.split(',').map(v => v.trim()).filter(v => v);
-            if (Array.isArray(fieldValue)) {
-              // If field value is an array, check if any selected value is in the array
-              const matches = selectedValues.some(selectedValue => 
-                fieldValue.some(item => String(item) === selectedValue)
-              );
-              console.log('Multi-select filter:', { key, selectedValues, fieldValue, matches });
+      const matchesFilters = Object.entries(debouncedFilters).every(
+        ([key, value]) => {
+          if (!value) return true;
+
+          // Find the filter option to get the name field for filtering
+          const filterOption = filterOptions.find(opt => opt.key === key);
+          if (filterOption && filterOption.name) {
+            // Get the actual field value from the data
+            const fieldValue = getNestedValue(
+              row as Record<string, unknown>,
+              filterOption.name
+            );
+
+            // For multi-select filters, check if any of the selected values match
+            if (filterOption.type === 'multi-select') {
+              const selectedValues = value
+                .split(',')
+                .map(v => v.trim())
+                .filter(v => v);
+              if (Array.isArray(fieldValue)) {
+                // If field value is an array, check if any selected value is in the array
+                const matches = selectedValues.some(selectedValue =>
+                  fieldValue.some(item => String(item) === selectedValue)
+                );
+                console.log('Multi-select filter:', {
+                  key,
+                  selectedValues,
+                  fieldValue,
+                  matches,
+                });
+                return matches;
+              } else {
+                // If field value is a single value, check if it matches any selected value
+                const matches = selectedValues.some(
+                  selectedValue => String(fieldValue) === selectedValue
+                );
+                console.log('Multi-select filter (single):', {
+                  key,
+                  selectedValues,
+                  fieldValue,
+                  matches,
+                });
+                return matches;
+              }
+            }
+            // For select filters, we need to match the value exactly
+            else if (filterOption.type === 'select') {
+              const matches = String(fieldValue) === value;
+              console.log('Select filter:', {
+                key,
+                value,
+                fieldValue,
+                matches,
+              });
               return matches;
             } else {
-              // If field value is a single value, check if it matches any selected value
-              const matches = selectedValues.some(selectedValue => String(fieldValue) === selectedValue);
-              console.log('Multi-select filter (single):', { key, selectedValues, fieldValue, matches });
+              // For text filters, use contains matching
+              const matches = String(fieldValue)
+                .toLowerCase()
+                .includes(value.toLowerCase());
+              console.log('Text filter:', { key, value, fieldValue, matches });
               return matches;
             }
-          }
-          // For select filters, we need to match the value exactly
-          else if (filterOption.type === "select") {
-            const matches = String(fieldValue) === value;
-            console.log('Select filter:', { key, value, fieldValue, matches });
-            return matches;
           } else {
-            // For text filters, use contains matching
-            const matches = String(fieldValue).toLowerCase().includes(value.toLowerCase());
-            console.log('Text filter:', { key, value, fieldValue, matches });
+            // Fallback to original behavior if no name field is specified
+            const fieldValue = getNestedValue(
+              row as Record<string, unknown>,
+              key
+            );
+            const matches = String(fieldValue)
+              .toLowerCase()
+              .includes(value.toLowerCase());
+            console.log('Fallback filter:', {
+              key,
+              value,
+              fieldValue,
+              matches,
+            });
             return matches;
           }
-        } else {
-          // Fallback to original behavior if no name field is specified
-          const fieldValue = getNestedValue(row as Record<string, unknown>, key);
-          const matches = String(fieldValue).toLowerCase().includes(value.toLowerCase());
-          console.log('Fallback filter:', { key, value, fieldValue, matches });
-          return matches;
         }
-      });
+      );
 
       return matchesSearch && matchesFilters;
     });
-    
-    console.log('Filter result:', { 
-      totalData: data.length, 
-      filteredCount: result.length
+
+    console.log('Filter result:', {
+      totalData: data.length,
+      filteredCount: result.length,
     });
-    
+
     return result;
-  }, [data, debouncedSearchQuery, searchField, debouncedFilters, filterOptions]);
+  }, [
+    data,
+    debouncedSearchQuery,
+    searchField,
+    debouncedFilters,
+    filterOptions,
+  ]);
 
   const hasActiveFilters = useMemo(() => {
-    return Object.values(debouncedFilters).some(v => v.trim() !== '') || debouncedSearchQuery.trim() !== '';
+    return (
+      Object.values(debouncedFilters).some(v => v.trim() !== '') ||
+      debouncedSearchQuery.trim() !== ''
+    );
   }, [debouncedFilters, debouncedSearchQuery]);
 
   return {
@@ -255,13 +322,19 @@ const useSearchAndFilter = <T extends { id: string | number }>(
   };
 };
 
-const useViewMode = (defaultViewMode: ViewMode = "table", onViewModeChange?: (mode: ViewMode) => void) => {
+const useViewMode = (
+  defaultViewMode: ViewMode = 'table',
+  onViewModeChange?: (mode: ViewMode) => void
+) => {
   const [viewMode, setViewMode] = useState<ViewMode>(defaultViewMode);
 
-  const handleViewModeChange = useCallback((mode: ViewMode) => {
-    setViewMode(mode);
-    onViewModeChange?.(mode);
-  }, [onViewModeChange]);
+  const handleViewModeChange = useCallback(
+    (mode: ViewMode) => {
+      setViewMode(mode);
+      onViewModeChange?.(mode);
+    },
+    [onViewModeChange]
+  );
 
   return {
     viewMode,
@@ -337,7 +410,7 @@ function TableOrCards<T extends { id: string | number }>({
   panelRenderer,
   searchField,
   searchPlaceholder,
-  defaultViewMode = "table",
+  defaultViewMode = 'table',
   cardRenderer,
   showViewToggle = true,
   onViewModeChange,
@@ -351,27 +424,39 @@ function TableOrCards<T extends { id: string | number }>({
     hasActiveFilters,
   } = useSearchAndFilter(data, searchField, filterOptions, onFilterChange);
 
-  const { viewMode, handleViewModeChange } = useViewMode(defaultViewMode, onViewModeChange);
+  const { viewMode, handleViewModeChange } = useViewMode(
+    defaultViewMode,
+    onViewModeChange
+  );
 
-  const { selectedItem, isModalOpen, handleItemClick, handleCloseModal } = useModal<T>();
+  const { selectedItem, isModalOpen, handleItemClick, handleCloseModal } =
+    useModal<T>();
 
-  const { isCardFilterPanelOpen, handleCardFilterButtonClick, handleCloseCardFilterPanel } = useCardFilterPanel();
-  const { isTableFilterPanelOpen, setIsTableFilterPanelOpen } = useTableFilterPanel();
+  const {
+    isCardFilterPanelOpen,
+    handleCardFilterButtonClick,
+    handleCloseCardFilterPanel,
+  } = useCardFilterPanel();
+  const { isTableFilterPanelOpen, setIsTableFilterPanelOpen } =
+    useTableFilterPanel();
 
   // State for selected row and panel mode
   const [selectedRow, setSelectedRow] = useState<T | null>(null);
-  const [panelMode, setPanelMode] = useState<"filter" | "details">("filter");
+  const [panelMode, setPanelMode] = useState<'filter' | 'details'>('filter');
 
   // Handle row click from table
-  const handleTableRowClick = useCallback((row: T) => {
-    setSelectedRow(row);
-    setPanelMode("details");
-    setIsTableFilterPanelOpen(true);
-  }, [setIsTableFilterPanelOpen]);
+  const handleTableRowClick = useCallback(
+    (row: T) => {
+      setSelectedRow(row);
+      setPanelMode('details');
+      setIsTableFilterPanelOpen(true);
+    },
+    [setIsTableFilterPanelOpen]
+  );
 
   // Handle filter button click
   const handleTableFilterButtonClickWithMode = useCallback(() => {
-    setPanelMode("filter");
+    setPanelMode('filter');
     setIsTableFilterPanelOpen(true);
   }, [setIsTableFilterPanelOpen]);
 
@@ -382,30 +467,42 @@ function TableOrCards<T extends { id: string | number }>({
   }, [setIsTableFilterPanelOpen]);
 
   // Close filter panels when switching views
-  const handleViewModeChangeWithPanelClose = useCallback((mode: ViewMode) => {
-    // Close any open filter panels when switching views
-    if (isCardFilterPanelOpen) {
-      handleCloseCardFilterPanel();
-    }
-    if (isTableFilterPanelOpen) {
-      handleCloseTableFilterPanelWithReset();
-    }
-    handleViewModeChange(mode);
-  }, [handleViewModeChange, isCardFilterPanelOpen, handleCloseCardFilterPanel, isTableFilterPanelOpen, handleCloseTableFilterPanelWithReset]);
+  const handleViewModeChangeWithPanelClose = useCallback(
+    (mode: ViewMode) => {
+      // Close any open filter panels when switching views
+      if (isCardFilterPanelOpen) {
+        handleCloseCardFilterPanel();
+      }
+      if (isTableFilterPanelOpen) {
+        handleCloseTableFilterPanelWithReset();
+      }
+      handleViewModeChange(mode);
+    },
+    [
+      handleViewModeChange,
+      isCardFilterPanelOpen,
+      handleCloseCardFilterPanel,
+      isTableFilterPanelOpen,
+      handleCloseTableFilterPanelWithReset,
+    ]
+  );
 
   // Adapter function to convert the filter change format for Table component
-  const handleTableFilterChange = useCallback((filters: Record<string, string | string[]>) => {
-    // Convert array values to strings for compatibility
-    const stringFilters: Record<string, string> = {};
-    Object.entries(filters).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        stringFilters[key] = value.join(',');
-      } else {
-        stringFilters[key] = value;
-      }
-    });
-    onFilterChange?.(stringFilters);
-  }, [onFilterChange]);
+  const handleTableFilterChange = useCallback(
+    (filters: Record<string, string | string[]>) => {
+      // Convert array values to strings for compatibility
+      const stringFilters: Record<string, string> = {};
+      Object.entries(filters).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          stringFilters[key] = value.join(',');
+        } else {
+          stringFilters[key] = value;
+        }
+      });
+      onFilterChange?.(stringFilters);
+    },
+    [onFilterChange]
+  );
 
   const renderViewToggle = () => {
     if (!showViewToggle) return null;
@@ -413,17 +510,17 @@ function TableOrCards<T extends { id: string | number }>({
     return (
       <div className="table-or-cards__view-toggle">
         <Button
-          type={viewMode === "table" ? "primary" : "secondary"}
+          type={viewMode === 'table' ? 'primary' : 'secondary'}
           size="medium"
           btnText="Table"
-          onClick={() => handleViewModeChangeWithPanelClose("table")}
+          onClick={() => handleViewModeChangeWithPanelClose('table')}
           icon={Icons.calendar}
         />
         <Button
-          type={viewMode === "cards" ? "primary" : "secondary"}
+          type={viewMode === 'cards' ? 'primary' : 'secondary'}
           size="medium"
           btnText="Cards"
-          onClick={() => handleViewModeChangeWithPanelClose("cards")}
+          onClick={() => handleViewModeChangeWithPanelClose('cards')}
           icon={Icons.box}
         />
       </div>
@@ -435,13 +532,15 @@ function TableOrCards<T extends { id: string | number }>({
       totalData: data.length,
       filteredDataLength: filteredData.length,
     });
-    
+
     return (
-      <div className={`table-or-cards__table-view ${isTableFilterPanelOpen ? "table-or-cards__table-view--panel-open" : ""}`}>
+      <div
+        className={`table-or-cards__table-view ${isTableFilterPanelOpen ? 'table-or-cards__table-view--panel-open' : ''}`}
+      >
         <div className="table-or-cards__table-content">
           <div className="table-or-cards__table-search">
-            <SearchBar 
-              searchQuery={searchQuery} 
+            <SearchBar
+              searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               showFilterButton={filterOptions.length > 0}
               onFilterClick={handleTableFilterButtonClickWithMode}
@@ -468,19 +567,23 @@ function TableOrCards<T extends { id: string | number }>({
           filterOptions={filterOptions}
           onFilterChange={handleFilterChange}
           onClearFilters={handleClearFilters}
-          detailsData={selectedRow && panelRenderer ? panelRenderer(selectedRow) : []}
+          detailsData={
+            selectedRow && panelRenderer ? panelRenderer(selectedRow) : []
+          }
         />
       </div>
     );
   };
 
   const renderCards = () => (
-    <div className={`table-or-cards__cards-layout ${isCardFilterPanelOpen ? "table-or-cards__cards-layout--panel-open" : ""}`}>
+    <div
+      className={`table-or-cards__cards-layout ${isCardFilterPanelOpen ? 'table-or-cards__cards-layout--panel-open' : ''}`}
+    >
       <div className="table-or-cards__cards-content">
         <div className="table-or-cards__cards-wrapper">
           <div className="table-or-cards__cards-search">
-            <SearchBar 
-              searchQuery={searchQuery} 
+            <SearchBar
+              searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
               showFilterButton={filterOptions.length > 0}
               onFilterClick={handleCardFilterButtonClick}
@@ -495,20 +598,25 @@ function TableOrCards<T extends { id: string | number }>({
                   key={item.id}
                   title={cardRenderer.title(item)}
                   description={cardRenderer.description?.(item)}
-                  onPrimaryClick={() => handleItemClick(item)}
-                  onSecondaryClick={() => handleItemClick(item)}
-                  buttns={{
-                    btnTextSecondary: "פרטים נוספים",
-                    btnTextPrimary: "שייך משימה",
-                    onPrimaryClick: () => handleItemClick(item),
-                    onSecondaryClick: () => handleItemClick(item),
-                  }}
+                  buttons={[
+                    {
+                      btnText: 'פרטים נוספים',
+                      onClick: () => handleItemClick(item),
+                    },
+                    {
+                      btnText: 'שייך משימה',
+                      onClick: () => alert('טרם ממומש: שייך משימה'),
+                    },
+                  ]}
                 />
               ))
             ) : (
               <div className="table-or-cards__cards-empty">
-                  {hasActiveFilters && (
-                <EmptyState title="לא נמצאו תוצאות" subtitle="נסה לשנות את הסינון כדי לראות את כל התוצאות." />
+                {hasActiveFilters && (
+                  <EmptyState
+                    title="לא נמצאו תוצאות"
+                    subtitle="נסה לשנות את הסינון כדי לראות את כל התוצאות."
+                  />
                 )}
               </div>
             )}
@@ -528,14 +636,12 @@ function TableOrCards<T extends { id: string | number }>({
 
   return (
     <div className="table-or-cards">
-      <div className="table-or-cards__controls">
-        {renderViewToggle()}
-      </div>
+      <div className="table-or-cards__controls">{renderViewToggle()}</div>
 
-      {viewMode === "table" ? renderTable() : renderCards()}
+      {viewMode === 'table' ? renderTable() : renderCards()}
 
       {selectedItem && panelRenderer && isModalOpen && (
-        <Modal 
+        <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           title="Request Details"

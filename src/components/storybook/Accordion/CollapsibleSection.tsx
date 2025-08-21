@@ -26,13 +26,13 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   }, [children]);
 
   return (
-    <div className='collapsible-section'>
+    <div className="collapsible-section">
       <button
-        className='collapsible-section__header'
+        className="collapsible-section__header"
         onClick={() => setIsOpen(!isOpen)}
-        type='button'
+        type="button"
       >
-        <span className='collapsible-section__title'>{title}</span>
+        <span className="collapsible-section__title">{title}</span>
         <span
           className={`collapsible-section__arrow ${isOpen ? 'collapsible-section__arrow--open' : ''}`}
         >
@@ -40,7 +40,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         </span>
       </button>
       <div
-        className='collapsible-section__content'
+        className="collapsible-section__content"
         style={{
           height: isOpen ? `${contentHeight}px` : '0px',
           overflow: 'hidden',

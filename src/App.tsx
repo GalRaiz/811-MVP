@@ -47,17 +47,17 @@ const App = () => {
           </header> */}
 
           <Routes>
-            <Route path='/components' element={<ComponetsTests />} />
-            <Route path='/' element={<HomePage />} />
-            <Route path='/requesterHomePage' element={<RequesterHomePage />} />
+            <Route path="/components" element={<ComponetsTests />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/requesterHomePage" element={<RequesterHomePage />} />
             <Route
-              path='/AssistanceFormRequest'
+              path="/AssistanceFormRequest"
               element={<AssistanceFormRequest />}
             />
-            <Route path='/RequestsPage' element={<RequestsPage />} />
+            <Route path="/RequestsPage" element={<RequestsPage />} />
 
             {/* 404 Page */}
-            <Route path='*' element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </>
       )}

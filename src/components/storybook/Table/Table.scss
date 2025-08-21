@@ -27,7 +27,7 @@
     max-width: 100%;
 
     // Only apply panel-open styles when not in grid layout
-    &:not([data-grid-layout="true"]) {
+    &:not([data-grid-layout='true']) {
       &.table__layout--panel-open {
         margin-right: 420px;
       }
@@ -48,7 +48,8 @@
   &__content {
     width: 100%;
     border-collapse: collapse;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 14px;
     line-height: 1.5;
     height: 100%;
@@ -59,7 +60,7 @@
       flex-shrink: 0;
       background-color: #f9fafb;
       border-bottom: 1px solid #e5e7eb;
-      
+
       tr {
         display: table;
         width: 100%;
@@ -72,31 +73,31 @@
       overflow-y: auto;
       overflow-x: hidden;
       min-height: 0; // Important for flex child to shrink
-      
+
       // Custom scrollbar styling
       &::-webkit-scrollbar {
         width: 8px;
       }
-      
+
       &::-webkit-scrollbar-track {
         background: #f1f5f9;
         border-radius: 4px;
       }
-      
+
       &::-webkit-scrollbar-thumb {
         background: #cbd5e1;
         border-radius: 4px;
         transition: background 0.2s ease;
-        
+
         &:hover {
           background: #94a3b8;
         }
       }
-      
+
       &::-webkit-scrollbar-corner {
         background: #f1f5f9;
       }
-      
+
       tr {
         display: table;
         width: 100%;
@@ -133,7 +134,7 @@
     // Modifier: empty state
     &--empty {
       cursor: default;
-      
+
       &:hover {
         background-color: transparent;
       }

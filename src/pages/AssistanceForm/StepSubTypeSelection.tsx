@@ -21,8 +21,8 @@ const StepSubTypeSelection: React.FC = () => {
 
   if (!assistanceTypeData) {
     return (
-      <div className='step-sub-type-selection'>
-        <div className='step-sub-type-selection__error'>
+      <div className="step-sub-type-selection">
+        <div className="step-sub-type-selection__error">
           <p>לא נמצא סוג סיוע נבחר</p>
         </div>
       </div>
@@ -30,19 +30,19 @@ const StepSubTypeSelection: React.FC = () => {
   }
 
   return (
-    <div className='step-sub-type-selection'>
-      <h2 className='step-sub-type-selection__title'>
+    <div className="step-sub-type-selection">
+      <h2 className="step-sub-type-selection__title">
         איזה סוג סיוע בדיוק דרוש?
       </h2>
 
-      <div className='step-sub-type-selection__main-type'>
-        <div className='step-sub-type-selection__main-type-icon'>
+      <div className="step-sub-type-selection__main-type">
+        <div className="step-sub-type-selection__main-type-icon">
           {assistanceTypeData.icon}
         </div>
-        <span className='step-sub-type-selection__main-type-label'>
+        <span className="step-sub-type-selection__main-type-label">
           {assistanceTypeData.label}
         </span>
-        <span className='step-sub-type-selection__main-type-subtitle'>
+        <span className="step-sub-type-selection__main-type-subtitle">
           בחר את הסוגים הספציפיים הנדרשים
         </span>
       </div>
@@ -53,7 +53,7 @@ const StepSubTypeSelection: React.FC = () => {
         selectedSubType={formState.requestSubType || []}
       />
 
-      <div className='step-sub-type-selection__instructions'>
+      <div className="step-sub-type-selection__instructions">
         <p>
           בחר את הסוג הספציפי של הסיוע הנדרש כדי שנוכל להפנות את הבקשה לגורם
           המתאים ביותר.

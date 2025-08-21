@@ -1,4 +1,4 @@
-@use "../../../styles/variables.scss" as *;
+@use '../../../styles/variables.scss' as *;
 
 // Main block: table-or-cards
 .table-or-cards {
@@ -43,7 +43,7 @@
       .table-or-cards__cards-content {
         flex: 1;
       }
-      
+
       .side-panel {
         width: 320px !important;
         min-width: 320px;
@@ -89,7 +89,7 @@
       .table-or-cards__table-content {
         flex: 1;
       }
-      
+
       .side-panel {
         width: 320px !important;
         min-width: 320px;
