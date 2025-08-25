@@ -7,12 +7,17 @@ interface NavBarProps {
   logo?: React.ReactNode;
   title?: string;
   buttons?: ButtonProps[];
+  onToggle?: (isOpen: boolean) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ logo, title, buttons }) => {
+const NavBar: React.FC<NavBarProps> = ({ logo, title, buttons, onToggle }) => {
   const [isOpen, setIsOpen] = useState(true);
 
-  const toggleNav = () => setIsOpen(!isOpen);
+  const toggleNav = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+    onToggle?.(newState);
+  };
 
   return (
     <nav className={`nav-bar ${isOpen ? 'open' : 'closed'}`}>
@@ -35,6 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo, title, buttons }) => {
                   btnText={button.btnText}
                   onClick={button.onClick}
                   icon={button.icon}
+                  fullWidth={true}
                 />
               </div>
             ))}

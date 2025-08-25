@@ -12,7 +12,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, logo }) => {
       <div className="assistance-form-header__content">
         <div className="assistance-form-header__logo">
           {logo && <img src={logo} alt="logo" className="nav-bar__logo" />}
-          <span className="assistance-form-header__logo-text" />
         </div>
         <h1 className="assistance-form-header__title">{title}</h1>
       </div>

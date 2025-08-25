@@ -3,90 +3,125 @@
 .alerts-section {
   background-color: $background-color;
   border-radius: $border-radius;
-  padding: $padding-large;
+  padding: $padding-medium;
   box-shadow: $box-shadow;
-
-  .section-header {
-    margin-bottom: $padding-large;
-
-    h2 {
-      font-family: $header-font-family;
-      font-size: $h2-font-size;
-      font-weight: $header-font-weight;
-      color: $text-color;
-      margin: 0;
-      text-align: right;
-    }
+  
+  &__header {
+    padding: $padding-small;
   }
 
-  .alerts-list {
+  &__title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $padding-small;
+    direction: rtl;
+  }
+
+  &__bell-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__bell {
+    font-size: 24px;
+    color: $primary-color;
+  }
+
+  &__notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: $error-color;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__title {
+    font-family: $header-font-family;
+    font-size: $h2-font-size;
+    font-weight: $header-font-weight;
+    color: $text-color;
+    text-align: right;
+    margin: 0;
+  }
+
+  &__alerts-list {
     display: flex;
     flex-direction: column;
     gap: $padding-medium;
+  }
 
-    .alert-item {
-      display: flex;
-      gap: $padding-normal;
-      padding: $padding-normal;
-      background-color: rgba($border-color, 0.1);
-      border-radius: $border-radius;
-      border-left: 3px solid $primary-color;
+  &__alert-item {
+    display: flex;
+    gap: $padding-normal;
+    padding: $padding-normal;
+    background-color: rgba($border-color, 0.1);
+    border-radius: $border-radius;
+    border-left: 3px solid $primary-color;
+  }
 
-      .alert-icon {
-        font-size: 20px;
-        display: flex;
-        align-items: flex-start;
-        padding-top: 2px;
-      }
+  &__alert-icon {
+    font-size: 20px;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 2px;
+  }
 
-      .alert-content {
-        flex: 1;
+  &__alert-content {
+    flex: 1;
+  }
 
-        .alert-header {
-          display: flex;
-          flex-direction: column;
-          gap: $padding-xs;
-          margin-bottom: $padding-small;
+  &__alert-header {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-xs;
+  }
 
-          h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: $text-color;
-            margin: 0;
-            text-align: right;
-          }
+  &__alert-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: $text-color;
+    text-align: right;
+  }
 
-          .request-name {
-            font-size: 14px;
-            color: $primary-color;
-            font-weight: 500;
-            text-align: right;
-          }
-        }
+  &__request-name {
+    font-size: 14px;
+    color: $primary-color;
+    font-weight: 500;
+    text-align: right;
+  }
 
-        .alert-description {
-          font-size: 14px;
-          color: $text-muted;
-          margin: 0 0 $padding-normal 0;
-          line-height: 1.4;
-          text-align: right;
-        }
+  &__alert-description {
+    font-size: 14px;
+    color: $text-muted;
+    line-height: 1.4;
+    text-align: right;
+  }
 
-        .alert-action-btn {
-          background-color: $primary-color;
-          color: $text-inverse;
-          border: none;
-          padding: $padding-small $padding-normal;
-          border-radius: $border-radius;
-          cursor: pointer;
-          font-size: 14px;
-          transition: all 0.2s ease;
+  &__alert-action-btn {
+    background-color: $primary-color;
+    color: $text-inverse;
+    border: none;
+    padding: $padding-small $padding-normal;
+    border-radius: $border-radius;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
 
-          &:hover {
-            background-color: ($primary-color, 10%);
-          }
-        }
-      }
+    &:hover {
+      background-color: ($primary-color, 10%);
     }
   }
 }

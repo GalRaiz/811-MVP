@@ -1,16 +1,13 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import Table, { Column } from '../Table/Table';
 import SidePanel from '../SidePanel/SidePanel';
-import SearchBar from '../SearchBar';
-import EmptyState from '../../EmptyState';
+import SearchBar from '../FormField/SearchBar';
+import EmptyState from '../EmptyState/EmptyState';
 import Modal from '../Modal/Modal';
 import Card from '../Card/Card';
 import Button from '../Button/Button';
 import { getNestedValue } from '../../../utils/getNestedValue';
-import {
-  getAssistanceTypeLabel,
-  getAssistanceSubTypeLabel,
-} from '../../../utils/assistanceTypeUtils';
+
 import './TableOrCards.scss';
 import { Icons } from '../icons/EmojiIcons';
 
@@ -161,10 +158,8 @@ const useSearchAndFilter = <T extends { id: string | number }>(
 
           // Search in request type label
           if (requestDetails.requestType) {
-            const typeLabel = getAssistanceTypeLabel(
-              requestDetails.requestType as string
-            );
-            if (typeLabel && typeLabel.toLowerCase().includes(query)) {
+            const requestType = requestDetails.requestType as Record<string, unknown>;
+            if (requestType.label && String(requestType.label).toLowerCase().includes(query)) {
               matchesDisplayedLabels = true;
             }
           }
@@ -174,8 +169,9 @@ const useSearchAndFilter = <T extends { id: string | number }>(
             requestDetails.requestSubType &&
             Array.isArray(requestDetails.requestSubType)
           ) {
-            const subTypeLabels = (requestDetails.requestSubType as string[])
-              .map((subType: string) => getAssistanceSubTypeLabel(subType))
+            const subTypeLabels = (requestDetails.requestSubType as Record<string, unknown>[])
+              .map((subType: Record<string, unknown>) => subType.label)
+              .filter(label => label)
               .join(' ');
             if (subTypeLabels.toLowerCase().includes(query)) {
               matchesDisplayedLabels = true;
@@ -227,7 +223,13 @@ const useSearchAndFilter = <T extends { id: string | number }>(
               if (Array.isArray(fieldValue)) {
                 // If field value is an array, check if any selected value is in the array
                 const matches = selectedValues.some(selectedValue =>
-                  fieldValue.some(item => String(item) === selectedValue)
+                  fieldValue.some(item => {
+                    // Handle object items (like requestSubType which contains objects with id, label, name)
+                    if (item && typeof item === 'object' && 'id' in item) {
+                      return item.id === selectedValue;
+                    }
+                    return String(item) === selectedValue;
+                  })
                 );
                 console.log('Multi-select filter:', {
                   key,
@@ -238,9 +240,13 @@ const useSearchAndFilter = <T extends { id: string | number }>(
                 return matches;
               } else {
                 // If field value is a single value, check if it matches any selected value
-                const matches = selectedValues.some(
-                  selectedValue => String(fieldValue) === selectedValue
-                );
+                const matches = selectedValues.some(selectedValue => {
+                  // Handle object field value
+                  if (fieldValue && typeof fieldValue === 'object' && 'id' in fieldValue) {
+                    return fieldValue.id === selectedValue;
+                  }
+                  return String(fieldValue) === selectedValue;
+                });
                 console.log('Multi-select filter (single):', {
                   key,
                   selectedValues,
@@ -252,7 +258,15 @@ const useSearchAndFilter = <T extends { id: string | number }>(
             }
             // For select filters, we need to match the value exactly
             else if (filterOption.type === 'select') {
-              const matches = String(fieldValue) === value;
+              let matches = false;
+              
+              // Handle object fields (like requestType which is an object with id, label, name)
+              if (fieldValue && typeof fieldValue === 'object' && 'id' in fieldValue) {
+                matches = fieldValue.id === value;
+              } else {
+                matches = String(fieldValue) === value;
+              }
+              
               console.log('Select filter:', {
                 key,
                 value,
@@ -602,6 +616,8 @@ function TableOrCards<T extends { id: string | number }>({
                     {
                       btnText: 'פרטים נוספים',
                       onClick: () => handleItemClick(item),
+                      icon: Icons.info,
+                      type: 'secondary',
                     },
                     {
                       btnText: 'שייך משימה',

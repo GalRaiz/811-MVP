@@ -1,21 +1,43 @@
-import {
-  IAssistanceSubType,
-  IAssistanceType,
-} from '../data/assistanceTypesData';
+// Simplified interfaces that match our current usage pattern
+export interface ISimpleDistrict {
+  id: string;
+  label: string;
+  name: string;
+}
+
+export interface ISimpleCity {
+  id: string;
+  label: string;
+  name: string;
+}
+
+export interface ISimpleAssistanceType {
+  id: string;
+  label: string;
+  name: string;
+  icon: string;
+}
+
+export interface ISimpleAssistanceSubType {
+  id: string;
+  label: string;
+  name: string;
+  icon?: string;
+}
 
 export interface IRequest {
   id: number | string;
   requesterDetails: {
     requesterName: string;
     phone?: string;
-    district?: string;
-    city?: string;
+    district?: ISimpleDistrict;
+    city?: ISimpleCity;
     street?: string;
   };
   requestDetails: {
     requestName: string;
-    requestType: IAssistanceType['label'];
-    requestSubType?: IAssistanceSubType['label'][];
+    requestType: ISimpleAssistanceType;
+    requestSubType?: ISimpleAssistanceSubType[];
     requestDescription?: string;
     requestImage?: string;
     needTransportation?: boolean;

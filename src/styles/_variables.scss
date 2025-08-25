@@ -1,14 +1,22 @@
+@use 'sass:color';
+
 // Color Palette
 $primary-color: #0f3d2e;
-$secondary-color: #bac4b9;
+$secondary-color: #c2d6c7;
 $tertiary-color: #000000;
 $background-color: #ffffff;
 $text-color: #131212;
-$border-color: #849289;
+$border-color: #e5e7eb;
 $highlight-color: #a8e6a3;
 $error-color: #f5a3a3;
 $warning-color: #fbd69f;
 $notification-color: #9fd6f5;
+$success-color: #d4edda;
+$warning-color: #fbd69f;
+$error-color: #f5a3a3;
+$info-color: #9fd6f5;
+$header-background-gray: #f4f7f4;
+$progress-bar-color: #e0e0e0;
 
 // Typography
 $text-font-family-body: Arial;
@@ -47,7 +55,8 @@ $text-on-notification: #3a5f7a;
 
 // Border and Shadow
 $border-radius: 4px;
-$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$border-line: 2px solid $border-color;
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
 // Spacing
 $padding-xs: 4px;
@@ -63,6 +72,8 @@ $button-border-radius: $border-radius;
 $button-primary-bg: $primary-color;
 $button-secondary-bg: $secondary-color;
 $button-tertiary-bg: $tertiary-color;
+$button-selected-bg: color.adjust($header-background-gray, $lightness: -10%);
+$button-unselected-bg: $header-background-gray;
 $button-color: $text-inverse;
 $alert-color: $error-color;
 $success-color: $highlight-color;

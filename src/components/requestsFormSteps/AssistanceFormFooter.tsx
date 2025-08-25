@@ -5,9 +5,16 @@ import { resetAll } from '../../store/assistanceFormSlice';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { addRequest } from '../../store/requestsSlice';
 import { IRequest } from '../../store/types';
+import { getTotalSteps, isFinalStep } from './stepConfig';
 import './AssistanceFormFooter.scss';
 import Button from '../storybook/Button/Button';
 
+/**
+ * AssistanceFormFooter - Navigation and progress indicator for the form
+ *
+ * This component provides navigation controls and progress indication
+ * for the multi-step assistance form.
+ */
 const AssistanceFormFooter: React.FC = () => {
   const { formState, goToPreviousStep, goToNextStep, isFormValid } =
     useAssistanceForm();
@@ -31,14 +38,22 @@ const AssistanceFormFooter: React.FC = () => {
         requesterDetails: {
           requesterName: formState.requesterName,
           phone: formState.requesterPhone,
-          district: formState.district,
+          district: formState.district?.label ? {
+            id: formState.district.id,
+            label: formState.district.label,
+            name: formState.district.name,
+          } : undefined,
           city: formState.city,
           street: formState.street,
         },
         requestDetails: {
           requestName: formState.requestName,
           requestType: formState.requestType,
-          requestSubType: formState.requestSubType,
+          requestSubType: formState.requestSubType?.map(subType => ({
+            id: subType.id,
+            label: subType.label,
+            name: subType.name,
+          })),
           requestDescription: formState.requestDescription,
           needTransportation: formState.needTransportation,
           needVolunteers: formState.needVolunteers,
@@ -69,10 +84,12 @@ const AssistanceFormFooter: React.FC = () => {
     }
   };
 
-  // Don't show footer on the final step (step 8)
-  if (formState.currentStep === 8) {
+  // Don't show footer on the final step
+  if (isFinalStep(formState.currentStep)) {
     return null;
   }
+
+  const totalSteps = getTotalSteps();
 
   return (
     <footer className="assistance-form-footer">
@@ -96,7 +113,7 @@ const AssistanceFormFooter: React.FC = () => {
         )}
 
         <div className="assistance-form-footer__progress">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map(step => (
+          {Array.from({ length: totalSteps }, (_, i) => i + 1).map(step => (
             <div
               key={step}
               className={`assistance-form-footer__progress-bar ${getProgressBarClass(step)}`}

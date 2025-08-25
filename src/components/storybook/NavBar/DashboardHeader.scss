@@ -1,8 +1,8 @@
 @use '../../../styles/variables' as *;
 
 .dashboard-header {
-  margin-bottom: $padding-large;
-
+  padding: $padding-small;
+  
   .header-content {
     .page-title {
       font-family: $header-font-family;

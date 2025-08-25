@@ -1,4 +1,4 @@
-@use '../styles/variables' as *;
+@use '../../../styles/variables' as *;
 
 // Main block: empty-state
 .empty-state {
@@ -7,29 +7,24 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px 20px;
 
-  // Element: logo
   &__logo {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 20px;
+    width: 200px;
+    height: 200px;
     opacity: 0.6;
   }
 
-  // Element: title
   &__title {
     font-size: 18px;
     font-weight: 600;
-    color: #374151;
-    margin: 0 0 8px 0;
+    color: $primary-color;
+    margin: 0;
   }
 
-  // Element: text
   &__text {
     font-size: 14px;
-    color: #6b7280;
-    margin: 0;
+    color: $text-muted;
     line-height: 1.5;
+    margin: 0;
   }
 }

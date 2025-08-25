@@ -1,41 +1,55 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
-import AssistanceForm from './AssistanceForm';
-import LocationStep from './LocationStep';
-import AssistanceTypeStep from './AssistanceTypeStep';
-import StepSubTypeSelection from '../../pages/AssistanceForm/StepSubTypeSelection';
-import FinalDetailsStep from './FinalDetailsStep';
-import AssistanceFormFinalStep from './AssistanceFormFinalStep';
-import FormSummaryStep from './FormSummaryStep';
-import RequestSentFinalStep from './RequestSentFinalStep';
+import StepWrapper from './StepWrapper';
+import { getStepConfig } from './stepConfig';
+import './StepWrapper.scss';
+import './AssistanceFormContainer.scss';
 
+/**
+ * AssistanceFormContainer - Main container for the multi-step assistance form
+ *
+ * This component uses the StepWrapper for consistent layout and styling,
+ * and the step configuration for maintainable step management.
+ *
+ * SOLID Principles Applied:
+ * - Single Responsibility: Container only handles step rendering and navigation
+ * - Open/Closed: Easy to add new steps via configuration
+ * - Liskov Substitution: All steps use the same StepWrapper interface
+ * - Interface Segregation: StepWrapper provides only what steps need
+ * - Dependency Inversion: Depends on abstractions (StepConfig) not concrete implementations
+ */
 const AssistanceFormContainer: React.FC = () => {
   const { formState } = useAssistanceForm();
 
-  const renderCurrentStep = () => {
-    switch (formState.currentStep) {
-      case 1:
-        return <AssistanceForm />;
-      case 2:
-        return <LocationStep />;
-      case 3:
-        return <AssistanceTypeStep />;
-      case 4:
-        return <StepSubTypeSelection />;
-      case 5:
-        return <FinalDetailsStep />;
-      case 6:
-        return <AssistanceFormFinalStep />;
-      case 7:
-        return <FormSummaryStep />;
-      case 8:
-        return <RequestSentFinalStep />;
-      default:
-        return <AssistanceForm />;
-    }
-  };
+  // Get current step configuration
+  const currentStepConfig = getStepConfig(formState.currentStep);
 
-  return <div className="assistance-form-container">{renderCurrentStep()}</div>;
+  // If no step config found, show error or fallback
+  if (!currentStepConfig) {
+    return (
+      <div className="assistance-form-container">
+        <StepWrapper title="שגיאה">
+          <p>מצטערים, אירעה שגיאה בטעינת השלב הנוכחי.</p>
+        </StepWrapper>
+      </div>
+    );
+  }
+
+  // Render the current step component
+  const StepComponent = currentStepConfig.component;
+
+  return (
+    <div className="assistance-form-container">
+      <StepWrapper
+        title={currentStepConfig.title || 'שלב לא ידוע'}
+        instructions={currentStepConfig.instructions}
+        className={currentStepConfig.className}
+        isLoading={formState.isLoading}
+      >
+        <StepComponent />
+      </StepWrapper>
+    </div>
+  );
 };
 
 export default AssistanceFormContainer;

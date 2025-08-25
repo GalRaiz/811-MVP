@@ -1,9 +1,4 @@
-export interface IAssistanceSubType {
-  id: string;
-  label: string; // Hebrew
-  name: string; // English
-  icon?: string;
-}
+
 
 export interface IAssistanceType {
   id: string;
@@ -11,6 +6,12 @@ export interface IAssistanceType {
   name: string; // English
   icon: string;
   subTypes: IAssistanceSubType[];
+}
+export interface IAssistanceSubType {
+  id: string;
+  label: string; // Hebrew
+  name: string; // English
+  icon?: string;
 }
 
 export const assistanceTypes: IAssistanceType[] = [

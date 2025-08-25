@@ -78,11 +78,23 @@ $button-types: (
     hover: #e5e7eb,
     border: transparent,
   ),
+  unselected: (
+    bg: $button-unselected-bg,
+    color: $text-primary,
+    hover: color.adjust($button-unselected-bg, $lightness: -5%),
+    border: transparent,
+  ),
+  selected: (
+    bg: $button-selected-bg,
+    color: $text-primary,
+    hover: color.adjust($button-unselected-bg, $lightness: -5%),
+    border: $border-line,
+  ),
 );
 
 $button-sizes: (
   small: (
-    padding: $padding-xs $padding-small,
+    padding: $padding-small $padding-normal,
     font-size: 12px,
   ),
   medium: (

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Loader.scss';
-import mateLogoGreen from '../assets/mate-logo-green.png';
+import mateLogoGreen from '../../../assets/mate-logo-green.png';
 
 const sentences = [
   'מחפשים לך יד תומכת...',

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import {
   updateField,
+  updateCity,
+  updateDistrict,
   setCurrentStep,
   setLoading,
   setError,
@@ -26,13 +28,19 @@ export const useAssistanceForm = () => {
       | 'requesterName'
       | 'requesterPhone'
       | 'requestName'
-      | 'district'
-      | 'city'
       | 'street'
       | 'requestDescription',
     value: string
   ) => {
     dispatch(updateField({ field, value }));
+  };
+
+  const updateDistrictField = (district: { id: string; name: string; label: string }) => {
+    dispatch(updateDistrict(district));
+  };
+
+  const updateCityField = (city: { id: string; name: string; label: string }) => {
+    dispatch(updateCity(city));
   };
 
   const navigateToStep = (step: number) => {
@@ -91,11 +99,11 @@ export const useAssistanceForm = () => {
         );
       case 2:
         return (
-          (formState.district?.trim() || '') !== '' &&
-          (formState.city?.trim() || '') !== ''
+          (formState.district?.name?.trim() || '') !== '' &&
+          (formState.city?.name?.trim() || '') !== ''
         );
       case 3:
-        return (formState.requestType?.trim() || '') !== '';
+        return (formState.requestType?.label?.trim() || '') !== '';
       case 4:
         return (formState.requestSubType?.length || 0) > 0;
       case 5:
@@ -133,6 +141,8 @@ export const useAssistanceForm = () => {
   return {
     formState,
     updateFormField,
+    updateDistrictField,
+    updateCityField,
     navigateToStep,
     goToNextStep,
     goToPreviousStep,

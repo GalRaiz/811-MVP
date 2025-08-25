@@ -7,6 +7,8 @@ export const Icons = {
   location: '📍',
   star: '⭐',
   check: '✅',
+  heart: '❤️',
+  greenHeart: '💚',
 
   // User / Account
   user: '👤',
@@ -29,6 +31,7 @@ export const Icons = {
   home: '🏠',
   settings: '⚙️',
   message: '💬',
+  bell: '🔔',
 
   // Warnings / Info
   warning: '⚠️',

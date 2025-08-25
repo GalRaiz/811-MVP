@@ -5,7 +5,7 @@ import TableOrCards, {
 import './RequestsPage.scss';
 import { assistanceRequests } from '../data/requestsData';
 import { IRequest } from '../store/types';
-import PageHeader from '../components/storybook/NavBar/PageHeade';
+import PageHeader from '../components/storybook/NavBar/PageHeader';
 import {
   getAssistanceTypeOptions,
   getAssistanceTypeLabel,
@@ -65,7 +65,7 @@ const RequestsPage: React.FC = () => {
           {
             label: 'סוג הבקשה',
             render: row =>
-              getAssistanceTypeLabel(row.requestDetails.requestType),
+              getAssistanceTypeLabel(row.requestDetails.requestType.label),
           },
         ]}
         searchPlaceholder="חפש בכל השדות..."
@@ -75,13 +75,13 @@ const RequestsPage: React.FC = () => {
           { label: 'שם הבקשה', value: row.requestDetails.requestName || '' },
           {
             label: 'סוג הבקשה',
-            value: getAssistanceTypeLabel(row.requestDetails.requestType),
+            value: getAssistanceTypeLabel(row.requestDetails.requestType.label),
           },
           {
             label: 'תת-סוג',
             value:
               row.requestDetails.requestSubType
-                ?.map(subType => getAssistanceSubTypeLabel(subType))
+                ?.map(subType => getAssistanceSubTypeLabel(subType.label))
                 .join(', ') || 'לא צוין',
           },
           {
@@ -95,8 +95,8 @@ const RequestsPage: React.FC = () => {
             value: row.requesterDetails.requesterName || '',
           },
           { label: 'טלפון', value: row.requesterDetails.phone || '' },
-          { label: 'עיר', value: row.requesterDetails.city || '' },
-          { label: 'מחוז', value: row.requesterDetails.district || '' },
+          { label: 'עיר', value: row.requesterDetails.city?.label || '' },
+          { label: 'מחוז', value: row.requesterDetails.district?.label || '' },
         ]}
         defaultViewMode="table"
         showViewToggle={true}

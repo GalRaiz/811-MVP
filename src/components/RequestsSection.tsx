@@ -3,6 +3,7 @@ import './RequestsSection.scss';
 import { IRequest } from '../store/types';
 import Button from './storybook/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { getStatusLabel, getStatusColor } from '../utils/statusUtils';
 
 interface RequestsSectionProps {
   data: IRequest[];
@@ -10,7 +11,7 @@ interface RequestsSectionProps {
 
 const RequestsSection: React.FC<RequestsSectionProps> = ({ data }) => {
   const navigate = useNavigate();
-  const requests = data;
+  const requests = data.slice(0, 10); // Show only first 10 items
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Show success message when requests count increases
@@ -23,31 +24,19 @@ const RequestsSection: React.FC<RequestsSectionProps> = ({ data }) => {
 
   const columns = ['סטאטוס', 'שם בקשה', 'שיוך'];
 
-  const getStatusColor = (status?: string) => {
-    switch (status) {
-      case 'pending':
-        return 'yellow';
-      case 'in-progress':
-        return 'green';
-      case 'completed':
-        return 'grey';
-      default:
-        return 'grey';
-    }
-  };
+  // Remove the old getStatusColor function since we're using the utility now
 
   return (
     <div className="requests-section">
       {showSuccessMessage && (
-        <div className="success-notification">
+        <div className="requests-section__success-notification">
           <span>✓ בקשה חדשה נוספה בהצלחה!</span>
         </div>
       )}
 
-      <div className="section-header">
-        <div className="header-content">
-          <h2>בקשות</h2>
-          <p className="subtitle">בקשות סיוע אחרונות שהוספת למערכת</p>
+      <div className="requests-section__header">
+        <div className="requests-section__header-content">
+          <h2 className="requests-section__title">בקשות</h2>
         </div>
         <Button
           type="tertiary"
@@ -58,34 +47,34 @@ const RequestsSection: React.FC<RequestsSectionProps> = ({ data }) => {
         />
       </div>
 
-      <div className="requests-table-wrapper">
-        <table className="requests-table">
-          <thead>
-            <tr>
+      <div className="requests-section__table-wrapper">
+        <table className="requests-section__table">
+          <thead className="requests-section__table-header">
+            <tr className="requests-section__table-row">
               {columns.map(col => (
-                <th key={col} className="table-header">
+                <th key={col} className="requests-section__table-cell">
                   {col}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="requests-section__table-body">
             {requests.map((request: IRequest) => (
-              <tr key={request.id} className="table-row">
-                <td className="cell status">
+              <tr key={request.id} className="requests-section__table-row">
+                <td className="requests-section__table-cell requests-section__table-cell--status">
                   <div
-                    className={`status-dot ${getStatusColor(
+                    className={`requests-section__status-dot requests-section__status-dot--${getStatusColor(
                       request.requestStatus?.requestStatus
                     )}`}
                   ></div>
-                  <span>
-                    {request.requestStatus?.requestStatus ?? 'pending'}
+                  <span className="requests-section__status-text">
+                    {getStatusLabel(request.requestStatus?.requestStatus)}
                   </span>
                 </td>
-                <td className="cell name">
+                <td className="requests-section__table-cell requests-section__table-cell--name">
                   {request.requestDetails?.requestName ?? 'בקשה חדשה'}
                 </td>
-                <td className="cell assigned-to">
+                <td className="requests-section__table-cell requests-section__table-cell--assigned">
                   {request.requestStatus?.assignedTo?.length
                     ? request.requestStatus.assignedTo.join(', ')
                     : 'לא משויך'}
@@ -95,7 +84,16 @@ const RequestsSection: React.FC<RequestsSectionProps> = ({ data }) => {
           </tbody>
         </table>
         {requests.length === 0 && (
-          <div className="empty-state">אין בקשות להצגה כרגע</div>
+          <div className="requests-section__empty-state">
+            אין בקשות להצגה כרגע
+          </div>
+        )}
+        {data.length > 10 && (
+          <div className="requests-section__table-footer">
+            <span className="requests-section__showing-note">
+              מציג 10 מתוך {data.length} בקשות
+            </span>
+          </div>
         )}
       </div>
     </div>

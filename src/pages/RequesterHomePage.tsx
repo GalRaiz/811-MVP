@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import './RequesterHomePage.scss';
 import DashboardHeader from '../components/storybook/NavBar/DashboardHeader';
 import RequestsSection from '../components/RequestsSection';
 import AlertsSection from '../components/AlertsSection';
-import SummaryCards from '../components/SummaryCards';
+import SummaryCards from '../components/storybook/Card/SummaryCards';
 import SideNavBar from '../components/storybook/NavBar/SideNavBar';
 import logo from '../assets/mate-logo-white.png';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { Icons } from '../components/storybook/icons/EmojiIcons';
 
 const RequesterHomePage: React.FC = () => {
   const navigate = useNavigate();
+  const [isNavOpen, setIsNavOpen] = useState(true);
 
   const summaryCards = useMemo(() => {
     const openCount = assistanceRequests.filter(
@@ -60,8 +61,9 @@ const RequesterHomePage: React.FC = () => {
             { btnText: 'בקשות', onClick: () => navigate('/RequestsPage') },
             { btnText: 'הפרופיל שלי', onClick: () => navigate('/ProfilePage') },
           ]}
+          onToggle={isOpen => setIsNavOpen(isOpen)}
         />
-        <div className="main-content">
+        <div className={`main-content ${!isNavOpen ? 'nav-closed' : ''}`}>
           <DashboardHeader
             title="מרכז בקרה"
             breadcrumb={[{ label: 'דף הבית' }, { label: 'מרכז בקרה' }]}
@@ -74,16 +76,16 @@ const RequesterHomePage: React.FC = () => {
 
             <div className="right-column">
               <AlertsSection />
+              <SummaryCards
+                data={summaryCardsData}
+                button={{
+                  btnText: 'פתיחת בקשה חדשה',
+                  onClick: () => navigate('/AssistanceFormRequest'),
+                  icon: Icons.add,
+                }}
+              />
             </div>
           </div>
-          <SummaryCards
-            data={summaryCardsData}
-            button={{
-              btnText: 'פתיחת בקשה חדשה',
-              onClick: () => navigate('/AssistanceFormRequest'),
-              icon: Icons.add,
-            }}
-          />
         </div>
       </div>
     </div>

@@ -1,4 +1,51 @@
 import { IRequest } from '../store/types';
+import { assistanceTypes } from './assistanceTypesData';
+import { locationsFormMock } from './formsData/locationsFormMock';
+
+// Helper functions to get proper objects from the data
+const getAssistanceType = (typeId: string) => {
+  const type = assistanceTypes.find(type => type.id === typeId);
+  if (!type) return null;
+  return {
+    id: type.id,
+    label: type.label,
+    name: type.name,
+    icon: type.icon,
+  };
+};
+
+const getAssistanceSubType = (typeId: string, subTypeId: string) => {
+  const type = assistanceTypes.find(type => type.id === typeId);
+  const subType = type?.subTypes.find(subType => subType.id === subTypeId);
+  if (!subType) return null;
+  return {
+    id: subType.id,
+    label: subType.label,
+    name: subType.name,
+    icon: subType.icon,
+  };
+};
+
+const getDistrict = (districtId: string) => {
+  const district = locationsFormMock.find(district => district.id === districtId);
+  if (!district) return null;
+  return {
+    id: district.id,
+    label: district.label,
+    name: district.name,
+  };
+};
+
+const getCity = (districtId: string, cityId: string) => {
+  const district = locationsFormMock.find(district => district.id === districtId);
+  const city = district?.cities.find(city => city.id === cityId);
+  if (!city) return null;
+  return {
+    id: city.id,
+    label: city.label,
+    name: city.name,
+  };
+};
 
 export const assistanceRequests: IRequest[] = [
   {
@@ -6,14 +53,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'משפחה מרחובות',
       phone: '050-0000000',
-      district: 'תל אביב',
-      city: 'תל אביב',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!,
       street: 'רחוב לא ידוע',
     },
     requestDetails: {
       requestName: 'סיוע באוכל למשפחות מפונים בדירה זמנית בתל אביב',
-      requestType: 'food', // מזון
-      requestSubType: ['hot-meals'], // מנות חמות
+      requestType: getAssistanceType('food')!,
+      requestSubType: [
+        getAssistanceSubType('food', 'hot-meals')!,
+        getAssistanceSubType('food', 'baby-food')!,
+      ],
       requestDescription:
         'משפחה מרחובות שביתם נפגע, עם 2 ילדים קטנים בדירה זמנית בת״א, מטבח קטן ואין להם זמן לבשל',
       needTransportation: false,
@@ -33,14 +83,18 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'אישה מבוגרת מדימונה',
       phone: '050-0000001',
-      district: 'דרום',
-      city: 'באר שבע',
+      district: getDistrict('south')!,
+      city: getCity('south', 'beer-sheva')!,
       street: 'רחוב ראשי',
     },
     requestDetails: {
       requestName: 'עזרה בהובלת ציוד לדירה חדשה',
-      requestType: 'logistics', // לוגיסטיקה ושינוע
-      requestSubType: ['equipment-move'], // העברת ציוד
+      requestType: getAssistanceType('logistics')!,
+      requestSubType: [
+        getAssistanceSubType('logistics', 'equipment-move')!,
+        getAssistanceSubType('logistics', 'furniture-move')!,
+        getAssistanceSubType('logistics', 'packaging')!,
+      ],
       requestDescription:
         'אישה מבוגרת שעוברת מדירתה בדימונה לדירה שכורה בבאר שבע, צריכה עזרה בהובלת רהיטים בסיסיים',
       needTransportation: true,
@@ -59,14 +113,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'קשישה מרמת גן',
       phone: '050-0000002',
-      district: 'מרכז',
-      city: 'רמת גן',
+      district: getDistrict('center')!,
+      city: getCity('center', 'ramat-gan')!,
       street: 'רחוב ביאליק',
     },
     requestDetails: {
       requestName: 'ליווי קשישה לטיפול רפואי',
-      requestType: 'transportation',
-      requestSubType: ['medical-transport'],
+      requestType: getAssistanceType('transportation')!,
+      requestSubType: [
+        getAssistanceSubType('transportation', 'medical-transport')!,
+        getAssistanceSubType('transportation', 'public-transport')!,
+      ],
       requestDescription:
         'קשישה בת 84 מרמת גן, זקוקה למתנדב שילווה אותה לבדיקות בבית החולים איכילוב',
       needTransportation: true,
@@ -85,14 +142,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'מרכז לנוער בסיכון ביפו',
       phone: '050-0000003',
-      district: 'תל אביב',
-      city: 'יפו',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!, // Using tel-aviv for Yafo
       street: 'רחוב שדרות ירושלים',
     },
     requestDetails: {
       requestName: 'תרומת בגדים לנוער בסיכון',
-      requestType: 'personal-equipment',
-      requestSubType: ['clothing'],
+      requestType: getAssistanceType('personal-equipment')!,
+      requestSubType: [
+        getAssistanceSubType('personal-equipment', 'clothing')!,
+        getAssistanceSubType('personal-equipment', 'hygiene')!,
+      ],
       requestDescription:
         'מרכז לנוער בסיכון ביפו מבקש תרומת בגדים במצב טוב – בעיקר חורף: מעילים, סוודרים, נעליים',
       needTransportation: false,
@@ -101,7 +161,7 @@ export const assistanceRequests: IRequest[] = [
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'pending',
+      requestStatus: 'completed',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
     },
@@ -111,14 +171,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'אמא חד הורית מהוד השרון',
       phone: '050-0000004',
-      district: 'מרכז',
-      city: 'הוד השרון',
+      district: getDistrict('center')!,
+      city: getCity('center', 'petah-tikva')!, // Using petah-tikva as closest match
       street: 'רחוב הרצל',
     },
     requestDetails: {
       requestName: 'שמירה על ילדים בזמן שהאם בעבודה',
-      requestType: 'volunteers',
-      requestSubType: ['social-volunteers'],
+      requestType: getAssistanceType('volunteers')!,
+      requestSubType: [
+        getAssistanceSubType('volunteers', 'social-volunteers')!,
+        getAssistanceSubType('volunteers', 'medical-volunteers')!,
+      ],
       requestDescription:
         'אמא חד הורית מהוד השרון מבקשת עזרה בשמירה על שני ילדים בגילאי 4 ו-7 בין השעות 15:00–18:00',
       needTransportation: false,
@@ -137,14 +200,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'התארגנות מקומית ברעננה',
       phone: '050-0000005',
-      district: 'מרכז',
-      city: 'רעננה',
+      district: getDistrict('center')!,
+      city: getCity('center', 'rehovot')!, // Using rehovot as closest match
       street: 'רחוב אחוזה',
     },
     requestDetails: {
       requestName: 'חבילות מזון לחיילים בודדים',
-      requestType: 'food',
-      requestSubType: ['food-packages'],
+      requestType: getAssistanceType('food')!,
+      requestSubType: [
+        getAssistanceSubType('food', 'food-packages')!,
+        getAssistanceSubType('food', 'dietary-restrictions')!,
+      ],
       requestDescription:
         'התארגנות מקומית ברעננה לאיסוף מוצרי מזון יבשים לחיילים בודדים המתגוררים באזור המרכז',
       needTransportation: false,
@@ -163,14 +229,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'בית ספר בבת ים',
       phone: '050-0000006',
-      district: 'מרכז',
-      city: 'בת ים',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'bat-yam')!,
       street: 'רחוב העצמאות',
     },
     requestDetails: {
       requestName: 'תרומת מחשבים ללמידה מרחוק',
-      requestType: 'education-equipment',
-      requestSubType: ['computers'],
+      requestType: getAssistanceType('education-equipment')!,
+      requestSubType: [
+        getAssistanceSubType('education-equipment', 'computers')!,
+        getAssistanceSubType('education-equipment', 'books')!,
+      ],
       requestDescription:
         'בית ספר בבת ים מבקש תרומת מחשבים ניידים לילדים שאין להם גישה למחשב ללמידה מרחוק',
       needTransportation: false,
@@ -189,14 +258,17 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'משפחה מנתניה',
       phone: '050-0000007',
-      district: 'מרכז',
-      city: 'נתניה',
+      district: getDistrict('center')!,
+      city: getCity('center', 'petah-tikva')!, // Using petah-tikva as closest match
       street: 'רחוב הרצל',
     },
     requestDetails: {
       requestName: 'סיוע בדיור זמני למשפחה מפונה',
-      requestType: 'housing',
-      requestSubType: ['temporary-housing'],
+      requestType: getAssistanceType('housing')!,
+      requestSubType: [
+        getAssistanceSubType('housing', 'temporary-housing')!,
+        getAssistanceSubType('housing', 'hotel-accommodation')!,
+      ],
       requestDescription:
         'משפחה מנתניה שדירתם נפגעה, זקוקה לדיור זמני למשך שבועיים עד שיתקנו את הדירה',
       needTransportation: false,
@@ -213,25 +285,28 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 9,
     requesterDetails: {
-      requesterName: 'קשיש מאשדוד',
+      requesterName: 'משפחה מאשדוד',
       phone: '050-0000008',
-      district: 'דרום',
-      city: 'אשדוד',
-      street: 'רחוב העצמאות',
+      district: getDistrict('south')!,
+      city: getCity('south', 'ashdod')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תמיכה נפשית לקשיש במשבר',
-      requestType: 'mental-health',
-      requestSubType: ['counseling'],
+      requestName: 'סיוע פסיכולוגי למשפחה',
+      requestType: getAssistanceType('mental-health')!,
+      requestSubType: [
+        getAssistanceSubType('mental-health', 'counseling')!,
+        getAssistanceSubType('mental-health', 'crisis-support')!,
+      ],
       requestDescription:
-        'קשיש מאשדוד שחווה אובדן של בן משפחה, זקוק לתמיכה נפשית וייעוץ פסיכולוגי',
+        'משפחה מאשדוד מבקשת סיוע פסיכולוגי לילדים שנפגעו נפשית מהמצב',
       needTransportation: false,
       needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'in-progress',
+      requestStatus: 'pending',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
     },
@@ -239,20 +314,23 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 10,
     requesterDetails: {
-      requesterName: 'מרכז קהילתי בחיפה',
+      requesterName: 'משפחה מחיפה',
       phone: '050-0000009',
-      district: 'חיפה',
-      city: 'חיפה',
-      street: 'רחוב בלפור',
+      district: getDistrict('north')!,
+      city: getCity('north', 'haifa')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תיקון מערכת החשמל במרכז הקהילתי',
-      requestType: 'maintenance',
-      requestSubType: ['electrical'],
+      requestName: 'תיקון חשמל בדירה',
+      requestType: getAssistanceType('maintenance')!,
+      requestSubType: [
+        getAssistanceSubType('maintenance', 'electrical')!,
+        getAssistanceSubType('maintenance', 'cleaning')!,
+      ],
       requestDescription:
-        'מרכז קהילתי בחיפה עם בעיות במערכת החשמל, זקוק לתיקון דחוף כדי להמשיך לפעול',
+        'משפחה מחיפה מבקשת עזרה בתיקון בעיות חשמל בדירתם',
       needTransportation: false,
-      needVolunteers: false,
+      needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
@@ -267,94 +345,46 @@ export const assistanceRequests: IRequest[] = [
     requesterDetails: {
       requesterName: 'משפחה מירושלים',
       phone: '050-0000010',
-      district: 'ירושלים',
-      city: 'ירושלים',
-      street: 'רחוב יפו',
+      district: getDistrict('jerusalem')!,
+      city: getCity('jerusalem', 'jerusalem')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'סיוע במוצרי היגיינה למשפחה עם ילדים',
-      requestType: 'personal-equipment',
-      requestSubType: ['hygiene'],
+      requestName: 'ציוד אישי למשפחה',
+      requestType: getAssistanceType('personal-equipment')!,
+      requestSubType: [
+        getAssistanceSubType('personal-equipment', 'hygiene')!,
+        getAssistanceSubType('personal-equipment', 'medical-supplies')!,
+        getAssistanceSubType('personal-equipment', 'electronics')!,
+      ],
       requestDescription:
-        'משפחה עם שלושה ילדים קטנים זקוקה לחיתולים, מגבונים ומוצרי היגיינה בסיסיים',
-      needTransportation: true,
+        'משפחה מירושלים מבקשת ציוד אישי ומוצרי היגיינה',
+      needTransportation: false,
       needVolunteers: false,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: 1755701331909,
-      updatedAt: 1755701331909,
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
     id: 12,
     requesterDetails: {
-      requesterName: 'סטודנטית מתל אביב',
+      requesterName: 'משפחה מתל אביב',
       phone: '050-0000011',
-      district: 'תל אביב',
-      city: 'תל אביב',
-      street: 'רחוב המלך ג׳ורג׳',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'חיפוש מתנדבים לליווי ילדים ללימודים',
-      requestType: 'volunteers',
-      requestSubType: ['social-volunteers'],
+      requestName: 'מתנדבים לעזרה',
+      requestType: getAssistanceType('volunteers')!,
+      requestSubType: [getAssistanceSubType('volunteers', 'social-volunteers')!],
       requestDescription:
-        'סטודנטית מארגנת קבוצת מתנדבים שתלווה ילדים בדרכם לבית הספר במרכז העיר',
-      needTransportation: false,
-      needVolunteers: true,
-      attachment: '',
-      requestImage: '',
-    },
-    requestStatus: {
-      requestStatus: 'in-progress',
-      createdAt: 1755701331910,
-      updatedAt: 1755701331910,
-    },
-  },
-  {
-    id: 13,
-    requesterDetails: {
-      requesterName: 'עמותה בחדרה',
-      phone: '050-0000012',
-      district: 'צפון',
-      city: 'חדרה',
-      street: 'רחוב הנשיא',
-    },
-    requestDetails: {
-      requestName: 'איסוף ספרים לספריה קהילתית',
-      requestType: 'education-equipment',
-      requestSubType: ['books'],
-      requestDescription:
-        'עמותה מקומית בחדרה מבקשת תרומת ספרים וחומרי לימוד להקמת ספריה קהילתית',
-      needTransportation: false,
-      needVolunteers: false,
-      attachment: '',
-      requestImage: '',
-    },
-    requestStatus: {
-      requestStatus: 'completed',
-      createdAt: 1755701331911,
-      updatedAt: 1755701331911,
-    },
-  },
-  {
-    id: 14,
-    requesterDetails: {
-      requesterName: 'משפחה מרחובות',
-      phone: '050-0000000',
-      district: 'תל אביב',
-      city: 'תל אביב',
-      street: 'רחוב לא ידוע',
-    },
-    requestDetails: {
-      requestName: 'סיוע באוכל למשפחות מפונים בדירה זמנית בתל אביב',
-      requestType: 'food', // מזון
-      requestSubType: ['hot-meals'], // מנות חמות
-      requestDescription:
-        'משפחה מרחובות שביתם נפגע, עם 2 ילדים קטנים בדירה זמנית בת״א, מטבח קטן ואין להם זמן לבשל',
+        'משפחה מתל אביב מבקשת מתנדבים לעזרה כללית',
       needTransportation: false,
       needVolunteers: true,
       attachment: '',
@@ -364,31 +394,82 @@ export const assistanceRequests: IRequest[] = [
       requestStatus: 'pending',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
-      assignedTo: ['חמ״ל צפון'],
+    },
+  },
+  {
+    id: 13,
+    requesterDetails: {
+      requesterName: 'משפחה מהצפון',
+      phone: '050-0000012',
+      district: getDistrict('north')!,
+      city: getCity('north', 'tiberias')!, // Using tiberias as closest match
+      street: 'רחוב הרצל',
+    },
+    requestDetails: {
+      requestName: 'ציוד לימודי לילדים',
+      requestType: getAssistanceType('education-equipment')!,
+      requestSubType: [getAssistanceSubType('education-equipment', 'books')!],
+      requestDescription:
+        'משפחה מהצפון מבקשת ציוד לימודי וספרים לילדים',
+      needTransportation: false,
+      needVolunteers: false,
+      attachment: '',
+      requestImage: '',
+    },
+    requestStatus: {
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
+    },
+  },
+  {
+    id: 14,
+    requesterDetails: {
+      requesterName: 'משפחה מתל אביב',
+      phone: '050-0000013',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!,
+      street: 'רחוב הרצל',
+    },
+    requestDetails: {
+      requestName: 'מזון למשפחה',
+      requestType: getAssistanceType('food')!,
+      requestSubType: [getAssistanceSubType('food', 'hot-meals')!],
+      requestDescription:
+        'משפחה מתל אביב מבקשת מזון חם',
+      needTransportation: false,
+      needVolunteers: false,
+      attachment: '',
+      requestImage: '',
+    },
+    requestStatus: {
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
     id: 15,
     requesterDetails: {
-      requesterName: 'אישה מבוגרת מדימונה',
-      phone: '050-0000001',
-      district: 'דרום',
-      city: 'באר שבע',
-      street: 'רחוב ראשי',
+      requesterName: 'משפחה מהדרום',
+      phone: '050-0000014',
+      district: getDistrict('south')!,
+      city: getCity('south', 'beer-sheva')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'עזרה בהובלת ציוד לדירה חדשה',
-      requestType: 'logistics', // לוגיסטיקה ושינוע
-      requestSubType: ['equipment-move'], // העברת ציוד
+      requestName: 'לוגיסטיקה ושינוע',
+      requestType: getAssistanceType('logistics')!,
+      requestSubType: [getAssistanceSubType('logistics', 'equipment-move')!],
       requestDescription:
-        'אישה מבוגרת שעוברת מדירתה בדימונה לדירה שכורה בבאר שבע, צריכה עזרה בהובלת רהיטים בסיסיים',
+        'משפחה מהדרום מבקשת עזרה בהובלת ציוד',
       needTransportation: true,
       needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'in-progress',
+      requestStatus: 'pending',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
     },
@@ -396,18 +477,18 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 16,
     requesterDetails: {
-      requesterName: 'קשישה מרמת גן',
-      phone: '050-0000002',
-      district: 'מרכז',
-      city: 'רמת גן',
-      street: 'רחוב ביאליק',
+      requesterName: 'משפחה מהמרכז',
+      phone: '050-0000015',
+      district: getDistrict('center')!,
+      city: getCity('center', 'ramat-gan')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'ליווי קשישה לטיפול רפואי',
-      requestType: 'transportation',
-      requestSubType: ['medical-transport'],
+      requestName: 'שינוע רפואי',
+      requestType: getAssistanceType('transportation')!,
+      requestSubType: [getAssistanceSubType('transportation', 'medical-transport')!],
       requestDescription:
-        'קשישה בת 84 מרמת גן, זקוקה למתנדב שילווה אותה לבדיקות בבית החולים איכילוב',
+        'משפחה מהמרכז מבקשת עזרה בשינוע רפואי',
       needTransportation: true,
       needVolunteers: true,
       attachment: '',
@@ -422,18 +503,18 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 17,
     requesterDetails: {
-      requesterName: 'מרכז לנוער בסיכון ביפו',
-      phone: '050-0000003',
-      district: 'תל אביב',
-      city: 'יפו',
-      street: 'רחוב שדרות ירושלים',
+      requesterName: 'משפחה מתל אביב',
+      phone: '050-0000016',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תרומת בגדים לנוער בסיכון',
-      requestType: 'personal-equipment',
-      requestSubType: ['clothing'],
+      requestName: 'ציוד אישי',
+      requestType: getAssistanceType('personal-equipment')!,
+      requestSubType: [getAssistanceSubType('personal-equipment', 'clothing')!],
       requestDescription:
-        'מרכז לנוער בסיכון ביפו מבקש תרומת בגדים במצב טוב – בעיקר חורף: מעילים, סוודרים, נעליים',
+        'משפחה מתל אביב מבקשת ציוד אישי ובגדים',
       needTransportation: false,
       needVolunteers: false,
       attachment: '',
@@ -448,18 +529,18 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 18,
     requesterDetails: {
-      requesterName: 'אמא חד הורית מהוד השרון',
-      phone: '050-0000004',
-      district: 'מרכז',
-      city: 'הוד השרון',
+      requesterName: 'משפחה מהמרכז',
+      phone: '050-0000017',
+      district: getDistrict('center')!,
+      city: getCity('center', 'petah-tikva')!, // Using petah-tikva as closest match
       street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'שמירה על ילדים בזמן שהאם בעבודה',
-      requestType: 'volunteers',
-      requestSubType: ['social-volunteers'],
+      requestName: 'מתנדבים לעזרה',
+      requestType: getAssistanceType('volunteers')!,
+      requestSubType: [getAssistanceSubType('volunteers', 'social-volunteers')!],
       requestDescription:
-        'אמא חד הורית מהוד השרון מבקשת עזרה בשמירה על שני ילדים בגילאי 4 ו-7 בין השעות 15:00–18:00',
+        'משפחה מהמרכז מבקשת מתנדבים לעזרה כללית',
       needTransportation: false,
       needVolunteers: true,
       attachment: '',
@@ -474,20 +555,20 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 19,
     requesterDetails: {
-      requesterName: 'התארגנות מקומית ברעננה',
-      phone: '050-0000005',
-      district: 'מרכז',
-      city: 'רעננה',
-      street: 'רחוב אחוזה',
+      requesterName: 'משפחה מהמרכז',
+      phone: '050-0000018',
+      district: getDistrict('center')!,
+      city: getCity('center', 'rehovot')!, // Using rehovot as closest match
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'חבילות מזון לחיילים בודדים',
-      requestType: 'food',
-      requestSubType: ['food-packages'],
+      requestName: 'מזון למשפחה',
+      requestType: getAssistanceType('food')!,
+      requestSubType: [getAssistanceSubType('food', 'food-packages')!],
       requestDescription:
-        'התארגנות מקומית ברעננה לאיסוף מוצרי מזון יבשים לחיילים בודדים המתגוררים באזור המרכז',
+        'משפחה מהמרכז מבקשת חבילות מזון',
       needTransportation: false,
-      needVolunteers: true,
+      needVolunteers: false,
       attachment: '',
       requestImage: '',
     },
@@ -500,25 +581,25 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 20,
     requesterDetails: {
-      requesterName: 'בית ספר בבת ים',
-      phone: '050-0000006',
-      district: 'מרכז',
-      city: 'בת ים',
-      street: 'רחוב העצמאות',
+      requesterName: 'משפחה מהמרכז',
+      phone: '050-0000019',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'bat-yam')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תרומת מחשבים ללמידה מרחוק',
-      requestType: 'education-equipment',
-      requestSubType: ['computers'],
+      requestName: 'ציוד לימודי',
+      requestType: getAssistanceType('education-equipment')!,
+      requestSubType: [getAssistanceSubType('education-equipment', 'computers')!],
       requestDescription:
-        'בית ספר בבת ים מבקש תרומת מחשבים ניידים לילדים שאין להם גישה למחשב ללמידה מרחוק',
+        'משפחה מהמרכז מבקשת ציוד לימודי ומחשבים',
       needTransportation: false,
       needVolunteers: false,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'completed',
+      requestStatus: 'pending',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
     },
@@ -526,18 +607,18 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 21,
     requesterDetails: {
-      requesterName: 'משפחה מנתניה',
-      phone: '050-0000007',
-      district: 'מרכז',
-      city: 'נתניה',
+      requesterName: 'משפחה מהמרכז',
+      phone: '050-0000020',
+      district: getDistrict('center')!,
+      city: getCity('center', 'petah-tikva')!, // Using petah-tikva as closest match
       street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'סיוע בדיור זמני למשפחה מפונה',
-      requestType: 'housing',
-      requestSubType: ['temporary-housing'],
+      requestName: 'דיור זמני',
+      requestType: getAssistanceType('housing')!,
+      requestSubType: [getAssistanceSubType('housing', 'temporary-housing')!],
       requestDescription:
-        'משפחה מנתניה שדירתם נפגעה, זקוקה לדיור זמני למשך שבועיים עד שיתקנו את הדירה',
+        'משפחה מהמרכז מבקשת דיור זמני',
       needTransportation: false,
       needVolunteers: false,
       attachment: '',
@@ -552,25 +633,25 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 22,
     requesterDetails: {
-      requesterName: 'קשיש מאשדוד',
-      phone: '050-0000008',
-      district: 'דרום',
-      city: 'אשדוד',
-      street: 'רחוב העצמאות',
+      requesterName: 'משפחה מהדרום',
+      phone: '050-0000021',
+      district: getDistrict('south')!,
+      city: getCity('south', 'ashdod')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תמיכה נפשית לקשיש במשבר',
-      requestType: 'mental-health',
-      requestSubType: ['counseling'],
+      requestName: 'ייעוץ פסיכולוגי',
+      requestType: getAssistanceType('mental-health')!,
+      requestSubType: [getAssistanceSubType('mental-health', 'counseling')!],
       requestDescription:
-        'קשיש מאשדוד שחווה אובדן של בן משפחה, זקוק לתמיכה נפשית וייעוץ פסיכולוגי',
+        'משפחה מהדרום מבקשת ייעוץ פסיכולוגי',
       needTransportation: false,
       needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'in-progress',
+      requestStatus: 'pending',
       createdAt: 1755701331908,
       updatedAt: 1755701331908,
     },
@@ -578,20 +659,20 @@ export const assistanceRequests: IRequest[] = [
   {
     id: 23,
     requesterDetails: {
-      requesterName: 'מרכז קהילתי בחיפה',
-      phone: '050-0000009',
-      district: 'חיפה',
-      city: 'חיפה',
-      street: 'רחוב בלפור',
+      requesterName: 'משפחה מהצפון',
+      phone: '050-0000022',
+      district: getDistrict('north')!,
+      city: getCity('north', 'haifa')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'תיקון מערכת החשמל במרכז הקהילתי',
-      requestType: 'maintenance',
-      requestSubType: ['electrical'],
+      requestName: 'תיקון חשמל',
+      requestType: getAssistanceType('maintenance')!,
+      requestSubType: [getAssistanceSubType('maintenance', 'electrical')!],
       requestDescription:
-        'מרכז קהילתי בחיפה עם בעיות במערכת החשמל, זקוק לתיקון דחוף כדי להמשיך לפעול',
+        'משפחה מהצפון מבקשת תיקון חשמל',
       needTransportation: false,
-      needVolunteers: false,
+      needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
@@ -605,78 +686,78 @@ export const assistanceRequests: IRequest[] = [
     id: 24,
     requesterDetails: {
       requesterName: 'משפחה מירושלים',
-      phone: '050-0000010',
-      district: 'ירושלים',
-      city: 'ירושלים',
-      street: 'רחוב יפו',
+      phone: '050-0000023',
+      district: getDistrict('jerusalem')!,
+      city: getCity('jerusalem', 'jerusalem')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'סיוע במוצרי היגיינה למשפחה עם ילדים',
-      requestType: 'personal-equipment',
-      requestSubType: ['hygiene'],
+      requestName: 'ציוד אישי',
+      requestType: getAssistanceType('personal-equipment')!,
+      requestSubType: [getAssistanceSubType('personal-equipment', 'hygiene')!],
       requestDescription:
-        'משפחה עם שלושה ילדים קטנים זקוקה לחיתולים, מגבונים ומוצרי היגיינה בסיסיים',
-      needTransportation: true,
+        'משפחה מירושלים מבקשת ציוד אישי',
+      needTransportation: false,
       needVolunteers: false,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
       requestStatus: 'pending',
-      createdAt: 1755701331909,
-      updatedAt: 1755701331909,
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
     id: 25,
     requesterDetails: {
-      requesterName: 'סטודנטית מתל אביב',
-      phone: '050-0000011',
-      district: 'תל אביב',
-      city: 'תל אביב',
-      street: 'רחוב המלך ג׳ורג׳',
+      requesterName: 'משפחה מתל אביב',
+      phone: '050-0000024',
+      district: getDistrict('tel-aviv')!,
+      city: getCity('tel-aviv', 'tel-aviv')!,
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'חיפוש מתנדבים לליווי ילדים ללימודים',
-      requestType: 'volunteers',
-      requestSubType: ['social-volunteers'],
+      requestName: 'מתנדבים לעזרה',
+      requestType: getAssistanceType('volunteers')!,
+      requestSubType: [getAssistanceSubType('volunteers', 'social-volunteers')!],
       requestDescription:
-        'סטודנטית מארגנת קבוצת מתנדבים שתלווה ילדים בדרכם לבית הספר במרכז העיר',
+        'משפחה מתל אביב מבקשת מתנדבים',
       needTransportation: false,
       needVolunteers: true,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'in-progress',
-      createdAt: 1755701331910,
-      updatedAt: 1755701331910,
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
   {
     id: 26,
     requesterDetails: {
-      requesterName: 'עמותה בחדרה',
-      phone: '050-0000012',
-      district: 'צפון',
-      city: 'חדרה',
-      street: 'רחוב הנשיא',
+      requesterName: 'משפחה מהצפון',
+      phone: '050-0000025',
+      district: getDistrict('north')!,
+      city: getCity('north', 'tiberias')!, // Using tiberias as closest match
+      street: 'רחוב הרצל',
     },
     requestDetails: {
-      requestName: 'איסוף ספרים לספריה קהילתית',
-      requestType: 'education-equipment',
-      requestSubType: ['books'],
+      requestName: 'ציוד לימודי',
+      requestType: getAssistanceType('education-equipment')!,
+      requestSubType: [getAssistanceSubType('education-equipment', 'books')!],
       requestDescription:
-        'עמותה מקומית בחדרה מבקשת תרומת ספרים וחומרי לימוד להקמת ספריה קהילתית',
+        'משפחה מהצפון מבקשת ציוד לימודי',
       needTransportation: false,
       needVolunteers: false,
       attachment: '',
       requestImage: '',
     },
     requestStatus: {
-      requestStatus: 'completed',
-      createdAt: 1755701331911,
-      updatedAt: 1755701331911,
+      requestStatus: 'pending',
+      createdAt: 1755701331908,
+      updatedAt: 1755701331908,
     },
   },
 ];

@@ -1,17 +1,25 @@
 @use '../styles/variables' as *;
 
 .assistance-request-page {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   direction: rtl; // Hebrew text direction
+  overflow: hidden; // Prevent page-level scrolling
 
   &__main {
     flex: 1;
     background-color: #ffffff;
-    padding: $padding-large;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    min-height: 0; // Allow flex item to shrink
+    overflow-y: auto; // Allow content scrolling if needed
+  }
+
+  // Footer positioning
+  .assistance-form-footer {
+    flex-shrink: 0; // Prevent footer from shrinking
   }
 }

@@ -11,7 +11,7 @@
   // Element: controls section
   &__controls {
     flex-shrink: 0;
-    padding: 20px 20px 0 20px;
+    padding: $padding-small;
     border-bottom: 1px solid #e5e7eb;
     background-color: #ffffff;
     z-index: 10;
@@ -56,7 +56,7 @@
     // Element: cards content
     .table-or-cards__cards-content {
       flex: 1;
-      transition: margin-right 0.3s ease;
+      transition: padding-right 0.3s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -102,7 +102,7 @@
     // Element: table content
     .table-or-cards__table-content {
       flex: 1;
-      transition: margin-right 0.3s ease;
+      transition: padding-right 0.3s ease;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -123,11 +123,8 @@
 
   // Element: table search section
   &__table-search {
-    padding: 0 20px 20px 20px;
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 20px;
+    padding: $padding-small;
     flex-shrink: 0;
-    background-color: #ffffff;
     position: relative;
     z-index: 5;
   }
@@ -175,11 +172,9 @@
     text-align: center;
 
     .no-results-message {
-      margin-top: 20px;
       max-width: 400px;
 
       p {
-        margin: 8px 0;
         color: #6b7280;
         font-size: 14px;
         line-height: 1.5;
@@ -206,7 +201,6 @@
         font-size: 14px;
         font-weight: 500;
         color: #6b7280;
-        margin-bottom: 4px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
       }

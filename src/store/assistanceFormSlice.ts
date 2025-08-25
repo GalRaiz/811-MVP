@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { assistanceTypes } from '../data/assistanceTypesData';
+
+import {
+  ISimpleDistrict,
+  ISimpleCity,
+  ISimpleAssistanceType,
+  ISimpleAssistanceSubType,
+} from './types';
 
 interface AssistanceFormState {
   // Form-specific fields (not in IRequest)
@@ -13,16 +21,16 @@ interface AssistanceFormState {
   requestStatus?: 'pending' | 'in-progress' | 'completed';
   createdAt?: number;
   updatedAt?: number;
-  district?: string;
-  city?: string;
+  district?: ISimpleDistrict;
+  city?: ISimpleCity;
   street?: string;
   requesterName: string; // Required field
   requesterPhone: string;
   needTransportation?: boolean;
   needVolunteers?: boolean;
   attachment?: string;
-  requestType: string; // Required field
-  requestSubType?: string[];
+  requestType: ISimpleAssistanceType; // Required field - stores the full type object
+  requestSubType?: ISimpleAssistanceSubType[]; // Stores the full sub-type objects
   requestDescription?: string;
   requestImage?: string;
   assignedTo?: string[];
@@ -43,11 +51,11 @@ const initialState: AssistanceFormState = {
   requesterPhone: '',
   needTransportation: false,
   needVolunteers: false,
-  requestType: '', // Required field
+  requestType: { id: '', label: '', name: '', icon: '' }, // Required field
   requestSubType: [],
   requestDescription: '',
-  district: '',
-  city: '',
+  district: { id: '', label: '', name: '' },
+  city: { id: '', label: '', name: '' },
   street: '',
   attachment: '',
   requestImage: '',
@@ -64,8 +72,6 @@ const assistanceFormSlice = createSlice({
         field:
           | 'requestName'
           | 'requestDescription'
-          | 'district'
-          | 'city'
           | 'street'
           | 'requesterName'
           | 'requesterPhone';
@@ -74,6 +80,18 @@ const assistanceFormSlice = createSlice({
     ) => {
       const { field, value } = action.payload;
       (state as any)[field] = value;
+    },
+    updateCity: (
+      state,
+      action: PayloadAction<{ id: string; name: string; label: string }>
+    ) => {
+      state.city = action.payload;
+    },
+    updateDistrict: (
+      state,
+      action: PayloadAction<{ id: string; name: string; label: string }>
+    ) => {
+      state.district = action.payload;
     },
     setCurrentStep: (state, action: PayloadAction<number>) => {
       state.currentStep = action.payload;
@@ -86,29 +104,102 @@ const assistanceFormSlice = createSlice({
     },
     toggleAssistanceType: (state, action: PayloadAction<string>) => {
       const type = action.payload;
-      const index = state.requestType ? [state.requestType].indexOf(type) : -1;
+      const index = state.requestType
+        ? [state.requestType.label].indexOf(type)
+        : -1;
       if (index > -1) {
-        state.requestType = '';
+        state.requestType = { id: '', label: '', name: '', icon: '' };
       } else {
-        state.requestType = type;
+        // Find the assistance type to get complete object
+        const selectedType = assistanceTypes.find(t => t.label === type);
+        if (selectedType) {
+          state.requestType = {
+            id: selectedType.id,
+            label: selectedType.label,
+            name: selectedType.name,
+            icon: selectedType.icon,
+          };
+        } else {
+          state.requestType = { id: '', label: type, name: '', icon: '' };
+        }
       }
     },
     setAssistanceType: (state, action: PayloadAction<string[]>) => {
-      state.requestType = action.payload[0] || '';
+      const label = action.payload[0] || '';
+      // Find the assistance type to get the complete object
+      const selectedType = assistanceTypes.find(
+        (type: any) => type.label === label
+      );
+      if (selectedType) {
+        state.requestType = {
+          id: selectedType.id,
+          label: selectedType.label,
+          name: selectedType.name,
+          icon: selectedType.icon,
+        };
+      } else {
+        state.requestType = { id: '', label, name: '', icon: '' };
+      }
     },
     setSelectedSubTypes: (state, action: PayloadAction<string[]>) => {
-      state.requestSubType = action.payload;
+      // Convert string array to object array with complete sub-type objects
+      const subTypes = action.payload.map(subTypeId => {
+        // Find the sub-type to get complete object
+        for (const mainType of assistanceTypes) {
+          const subType = mainType.subTypes?.find(st => st.id === subTypeId);
+          if (subType) {
+            return {
+              id: subType.id,
+              label: subType.label,
+              name: subType.name,
+              icon: subType.icon,
+            };
+          }
+        }
+        return {
+          id: subTypeId,
+          label: subTypeId,
+          name: subTypeId,
+          icon: '',
+        };
+      });
+      state.requestSubType = subTypes;
     },
     toggleSelectedSubType: (state, action: PayloadAction<string>) => {
-      const subType = action.payload;
+      const subTypeId = action.payload;
       if (!state.requestSubType) {
         state.requestSubType = [];
       }
-      const index = state.requestSubType.indexOf(subType);
+
+      // Find the sub-type to get complete object
+      let subTypeObj: ISimpleAssistanceSubType | null = null;
+      for (const mainType of assistanceTypes) {
+        const subType = mainType.subTypes?.find(st => st.id === subTypeId);
+        if (subType) {
+          subTypeObj = {
+            id: subType.id,
+            label: subType.label,
+            name: subType.name,
+            icon: subType.icon,
+          };
+          break;
+        }
+      }
+
+      if (!subTypeObj) {
+        subTypeObj = {
+          id: subTypeId,
+          label: subTypeId,
+          name: subTypeId,
+          icon: '',
+        };
+      }
+
+      const index = state.requestSubType.findIndex(st => st.id === subTypeId);
       if (index > -1) {
         state.requestSubType.splice(index, 1);
       } else {
-        state.requestSubType.push(subType);
+        state.requestSubType.push(subTypeObj);
       }
     },
     setTransportationNeeded: (state, action: PayloadAction<boolean>) => {
@@ -135,14 +226,14 @@ const assistanceFormSlice = createSlice({
       // Reset form data but keep current step
       state.requestName = '';
       state.requestDescription = '';
-      state.district = '';
-      state.city = '';
+      state.district = { id: '', label: '', name: '' };
+      state.city = { id: '', label: '', name: '' };
       state.street = '';
       state.requesterName = '';
       state.requesterPhone = '';
       state.needTransportation = false;
       state.needVolunteers = false;
-      state.requestType = '';
+      state.requestType = { id: '', label: '', name: '', icon: '' };
       state.requestSubType = [];
       state.attachment = '';
       state.assignedTo = [];
@@ -162,6 +253,8 @@ const assistanceFormSlice = createSlice({
 
 export const {
   updateField,
+  updateCity,
+  updateDistrict,
   setCurrentStep,
   setLoading,
   setError,

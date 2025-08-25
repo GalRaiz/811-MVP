@@ -12,20 +12,25 @@
 
     .main-content {
       flex: 1;
-      padding: $padding-large;
-      margin-left: 280px; // Space for sidebar
+      padding: $padding-medium;
+      padding-right: 274px; // Space for sidebar on the right
+      transition: padding-right 0.3s ease;
+
+      &.nav-closed {
+        padding-right: 80px; // Reduced space when nav is closed
+      }
 
       .dashboard-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: $padding-large;
-        margin-bottom: $padding-large;
+        gap: $padding-normal;
 
         .left-column,
         .right-column {
           display: flex;
+          justify-content: space-between;
           flex-direction: column;
-          gap: $padding-large;
+          gap: $padding-normal;
         }
       }
     }
@@ -49,8 +54,12 @@
   .requester-home-page {
     .dashboard-container {
       .main-content {
-        margin-left: 0;
+        margin-right: 0;
         padding: $padding-normal;
+
+        &.nav-closed {
+          margin-right: 0;
+        }
       }
     }
   }

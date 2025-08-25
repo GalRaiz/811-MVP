@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import FormField from '../storybook/FormField/FormField';
-import './AssistanceFormFinalStep.scss';
 
 const AssistanceFormFinalStep: React.FC = () => {
   const { formState, updateFormField } = useAssistanceForm();

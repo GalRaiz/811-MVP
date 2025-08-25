@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AssistanceFormRequest from './pages/AssistanceFormRequest';
 import RequesterHomePage from './pages/RequesterHomePage';
-import Loader from './components/Loader';
+import Loader from './components/storybook/Loader/Loader';
 import '../src/styles/_variables.scss';
 import { useDispatch } from 'react-redux';
 import {
@@ -16,7 +16,7 @@ import './App.scss';
 import RequestsPage from './pages/RequestsPage';
 import { assistanceRequests } from './data/requestsData';
 import NotFoundPage from './pages/NotFoundPage';
-import ComponetsTests from './pages/ComponetsTests';
+import FormFieldDemo from './pages/FormFieldDemo';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const App = () => {
           </header> */}
 
           <Routes>
-            <Route path="/components" element={<ComponetsTests />} />
+            <Route path="/formDemo" element={<FormFieldDemo />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/requesterHomePage" element={<RequesterHomePage />} />
             <Route

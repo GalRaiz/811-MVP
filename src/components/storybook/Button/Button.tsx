@@ -15,7 +15,9 @@ type ButtonType =
   | 'icon-only'
   | 'close'
   | 'clear'
-  | 'reset';
+  | 'reset'
+  | 'selected'
+  | 'unselected';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type IconPosition = 'left' | 'right';

@@ -1,0 +1,547 @@
+@use '../../styles/variables' as *;
+
+// ============================================================================
+// STEP WRAPPER - Unified Styling for All Form Steps
+// ============================================================================
+// This file contains all styles for form steps, following BEM and SOLID principles.
+//
+// ORGANIZATION:
+// 1. StepWrapper (.step-wrapper) - Main container for all steps
+// 2. Step Header (.step-wrapper__header) - Title and step number
+// 3. Step Content (.step-wrapper__content) - Main content area
+// 4. Step Instructions (.step-wrapper__instructions) - Help text
+// 6. Loading States (.step-wrapper--loading) - Loading overlays
+// 7. Step-Specific Modifiers - Specialized layouts for each step type
+// 8. Responsive Design - Mobile and tablet adaptations
+//
+// BEM PRINCIPLES:
+// - Block: Main component (e.g., .step-wrapper)
+// - Element: Child elements (e.g., &__header, &__content)
+// - Modifier: State variations (e.g., &--loading, &--assistance-type)
+//
+// SOLID PRINCIPLES:
+// - Single Responsibility: Each section handles one aspect of step styling
+// - Open/Closed: Easy to extend with new step features
+// - Liskov Substitution: Consistent interface across all steps
+// - Interface Segregation: Separate styles for different step needs
+// - Dependency Inversion: Uses CSS variables for theming
+// ============================================================================
+
+// ============================================================================
+// STEP WRAPPER - Main Container
+// ============================================================================
+
+.step-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: $padding-large;
+  overflow: hidden;
+}
+
+// ============================================================================
+// STEP HEADER - Title
+// ============================================================================
+
+.step-wrapper__title {
+  font-family: $header-font-family;
+  font-size: $h2-font-size;
+  font-weight: $header-font-weight;
+  color: $text-color;
+  line-height: 1.2;
+}
+
+
+// ============================================================================
+// STEP CONTENT - Main Content Area
+// ============================================================================
+
+.step-wrapper__content {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-medium;
+
+  // For RTL layout, arrange fields from right to left
+  direction: rtl;
+
+  .assistance-type-step {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-medium;
+
+    &__header {
+      align-items: center;
+    }
+  }
+  .sub-type-selector {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-small;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+// ============================================================================
+// STEP INSTRUCTIONS - Help Text
+// ============================================================================
+
+.step-wrapper__instructions {
+  text-align: center;
+  padding: $padding-small;
+  background-color: $header-background-gray;
+  border-radius: $border-radius;
+  border-left: 3px solid $primary-color;
+
+  p {
+    color: $text-muted;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+// ============================================================================
+// STEP-SPECIFIC MODIFIERS - Specialized Layouts
+// ============================================================================
+
+
+
+
+
+
+
+// ============================================================================
+// FINAL DETAILS STEP - Specialized Layout
+// ============================================================================
+
+.step-wrapper--final-details {
+  .final-details-step {
+    width: 100%;
+
+    &__section {
+      margin-bottom: $padding-large;
+    }
+
+    &__question {
+      font-size: 18px;
+      font-weight: 500;
+      color: $text-color;
+      margin-bottom: $padding-normal;
+    }
+
+    &__options {
+      display: flex;
+      gap: $padding-normal;
+      flex-wrap: wrap;
+
+      .btn {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+
+    &__upload-area {
+      position: relative;
+      margin-top: $padding-small;
+    }
+
+    &__file-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &__upload-box {
+      border: 2px dashed $border-color;
+      border-radius: $border-radius;
+      padding: $padding-large;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #f8f9fa;
+
+      &:hover {
+        border-color: $primary-color;
+        background-color: rgba($primary-color, 0.02);
+      }
+    }
+
+    &__upload-icon {
+      font-size: 2rem;
+      color: $text-muted;
+      margin-bottom: $padding-small;
+    }
+
+    &__upload-text {
+      color: $text-muted;
+      font-size: $body-font-size;
+    }
+
+    &__files-list {
+      margin-top: $padding-normal;
+    }
+
+    &__file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $padding-small;
+      background-color: #f8f9fa;
+      border-radius: $border-radius;
+      margin-bottom: $padding-small;
+    }
+
+    &__file-name {
+      font-size: $body-font-size;
+      color: $text-color;
+    }
+
+    &__file-remove {
+      background: none;
+      border: none;
+      color: $text-muted;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: #dc3545;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// CONFIRMATION STEP - Specialized Layout
+// ============================================================================
+
+.step-wrapper--confirmation {
+  .assistance-form {
+    width: 100%;
+
+    &__title {
+      font-size: $h2-font-size;
+      font-weight: 600;
+      text-align: center;
+      margin: 0 0 $padding-large 0;
+      color: #000000;
+    }
+
+    &__fields {
+      display: flex;
+      flex-direction: column;
+      gap: $padding-medium;
+    }
+
+    &__instructions {
+      background-color: #f8f9fa;
+      padding: $padding-medium;
+      border-radius: $border-radius;
+      border-right: 4px solid #2d5016;
+
+      p {
+        margin: 0;
+        line-height: 1.6;
+        color: #333333;
+        font-size: $body-font-size;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// SUMMARY STEP - Specialized Layout
+// ============================================================================
+
+.step-wrapper--summary {
+  .form-summary-step {
+    direction: rtl;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: $border-line;
+      margin-bottom: $padding-medium;
+    }
+
+    &__title {
+      font-size: $h2-font-size;
+      font-weight: 600;
+      color: $text-color;
+      margin: 0;
+    }
+
+    &__date {
+      color: $text-muted;
+      font-size: 14px;
+    }
+
+    &__main-info {
+      margin-bottom: $padding-medium;
+    }
+
+    &__request-title {
+      font-size: $h3-font-size;
+      padding: $padding-small 0;
+      font-weight: 600;
+      color: $text-color;
+      display: flex;
+      align-items: center;
+      gap: $padding-small;
+      margin-bottom: $padding-small;
+    }
+
+    &__request-icon {
+      font-size: 18px;
+    }
+
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $padding-small;
+      margin-bottom: $padding-medium;
+    }
+
+    &__tag {
+      background-color: $header-background-gray;
+      color: $primary-color;
+      padding: $padding-xs $padding-small;
+      border-radius: $border-radius;
+      font-size: 12px;
+      border: 1px solid rgba($primary-color, 0.2);
+      direction: rtl;
+    }
+
+    &__collapsible-sections {
+      display: flex;
+      flex-direction: column;
+      gap: $padding-small;
+      direction: rtl;
+    }
+
+    &__description {
+      background-color: rgba($secondary-color, 0.5);
+      border-radius: $border-radius;
+      padding: $padding-normal;
+      border: 1px solid rgba($border-color, 0.3);
+    }
+
+    &__description-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-color;
+    }
+
+    &__description-text {
+      color: $text-color;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    &__tasks-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-color;
+    }
+
+    &__task-list {
+      display: flex;
+      flex-direction: column;
+      gap: $padding-small;
+    }
+
+    &__task-item {
+      display: flex;
+      align-items: center;
+      gap: $padding-normal;
+      padding: $padding-small;
+      background-color: rgba($secondary-color, 0.3);
+      border-radius: $border-radius;
+      border: 1px solid rgba($border-color, 0.2);
+    }
+
+    &__task-status {
+      background-color: $highlight-color;
+      color: $text-color;
+      padding: 4px 8px;
+      border-radius: $border-radius;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    &__task-text {
+      color: $text-color;
+      font-weight: 500;
+    }
+
+    // Summary fields within accordion
+    .summary-field {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: $padding-small 0;
+      border-bottom: 1px solid rgba($border-color, 0.2);
+      direction: rtl;
+      gap: $padding-small;
+      width: 100%;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      label {
+        font-weight: 600;
+        color: $text-color;
+        min-width: 120px;
+        max-width: 120px;
+        text-align: right;
+        flex-shrink: 0;
+        line-height: 1.4;
+      }
+
+      span {
+        color: $text-muted;
+        text-align: right;
+        flex: 1;
+        word-break: break-word;
+        line-height: 1.4;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        min-width: 0;
+        max-width: none;
+        white-space: normal;
+        overflow: visible;
+        height: auto;
+      }
+    }
+
+    // Accordion styling within summary step
+    .accordion {
+      margin-bottom: $padding-small;
+      width: 100%;
+      max-width: 100%;
+      
+      .accordion-item {
+        margin-bottom: $padding-xs;
+        
+        &__header {
+          direction: rtl;
+          text-align: right;
+          
+          .accordion-item__title {
+            direction: rtl;
+            text-align: right;
+          }
+          
+          .accordion-item__subtitle {
+            direction: rtl;
+            text-align: right;
+          }
+        }
+        
+        &__content {
+          direction: rtl;
+          text-align: right;
+          padding: $padding-small !important;
+          overflow: visible;
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          
+          > div {
+            direction: rtl;
+            text-align: right;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+          }
+        }
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// FINAL STEP - Specialized Layout
+// ============================================================================
+
+.step-wrapper--final {
+  .final-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    &__title {
+      font-family: $header-font-family;
+      font-size: $h2-font-size;
+      font-weight: $header-font-weight;
+      color: $text-color;
+      text-align: center;
+      margin: 0 0 $padding-large 0;
+    }
+    
+    &__image {
+      height: 300px;
+    }
+  }
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN - Mobile and Tablet Adaptations
+// ============================================================================
+
+@media (max-width: 768px) {
+  .step-wrapper--summary {
+    .form-summary-step {
+      .summary-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $padding-xs;
+        
+        label {
+          min-width: auto;
+          max-width: none;
+          margin-bottom: $padding-xs;
+        }
+        
+        span {
+          width: 100%;
+          text-align: right;
+        }
+      }
+      
+      .accordion {
+        .accordion-item {
+          &__content {
+            padding: $padding-small;
+          }
+        }
+      }
+    }
+  }
+}
+
+

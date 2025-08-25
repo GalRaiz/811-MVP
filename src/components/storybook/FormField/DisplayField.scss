@@ -1,0 +1,537 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+// ============================================================================
+// DISPLAY FIELD COMPONENT - Read-only Information Display
+// ============================================================================
+// This file contains styles for displaying read-only information in a
+// structured format, following BEM and SOLID principles.
+//
+// ORGANIZATION:
+// 1. Display Field (.display-field) - Main display field container
+// 2. Display Item (.display-item) - Individual field item
+// 3. Display Label (.display-label) - Field labels
+// 4. Display Value (.display-value) - Field values
+// 5. Display Group (.display-group) - Grouped display fields
+// 6. Display Section (.display-section) - Sectioned display areas
+// 7. Responsive Design - Mobile and tablet adaptations
+//
+// BEM PRINCIPLES:
+// - Block: Main component (e.g., .display-field, .display-item)
+// - Element: Child elements (e.g., &__label, &__value)
+// - Modifier: State variations (e.g., &--highlighted, &--compact)
+//
+// SOLID PRINCIPLES:
+// - Single Responsibility: Each section handles one type of display field
+// - Open/Closed: Easy to extend with new display field types
+// - Liskov Substitution: Consistent interface across display field types
+// - Interface Segregation: Separate styles for different display needs
+// - Dependency Inversion: Uses CSS variables for theming
+// ============================================================================
+
+// ============================================================================
+// DISPLAY FIELD - Main Display Field Container
+// ============================================================================
+
+.display-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: inherit;
+
+  // Modifier: compact layout
+  &--compact {
+    gap: 0.25rem;
+
+    .display-field__item {
+      padding: 0.5rem 0;
+    }
+  }
+
+  // Modifier: horizontal layout
+  &--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .display-field__item {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+
+  // Modifier: inline layout
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+    .display-field__item {
+      padding: 0;
+      border-bottom: none;
+    }
+  }
+}
+
+// ============================================================================
+// DISPLAY ITEM - Individual Field Item
+// ============================================================================
+
+.display-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-light, #f3f4f6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Modifier: highlighted item
+  &--highlighted {
+    background-color: var(--background-highlight, rgba($primary-color, 0.05));
+    padding: 1rem;
+    border-radius: $border-radius;
+    border: 1px solid var(--border-highlight, rgba($primary-color, 0.2));
+  }
+
+  // Modifier: compact item
+  &--compact {
+    padding: 0.5rem 0;
+    gap: 0.125rem;
+  }
+
+  // Modifier: inline item
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  // Modifier: no border
+  &--no-border {
+    border-bottom: none;
+  }
+}
+
+// ============================================================================
+// DISPLAY LABEL - Field Labels
+// ============================================================================
+
+.display-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+
+  // Modifier: primary label
+  &--primary {
+    color: var(--text-primary, #1a1a1a);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  // Modifier: small label
+  &--small {
+    font-size: 0.75rem;
+  }
+
+  // Modifier: large label
+  &--large {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  // Modifier: required label
+  &--required {
+    &::after {
+      content: ' *';
+      color: var(--error, #dc2626);
+    }
+  }
+
+  // Modifier: inline label
+  &--inline {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================================
+// DISPLAY VALUE - Field Values
+// ============================================================================
+
+.display-value {
+  font-size: 1rem;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.5;
+  word-break: break-word;
+  font-weight: 400;
+
+  // Modifier: primary value
+  &--primary {
+    font-weight: 600;
+    color: var(--text-primary, #1a1a1a);
+  }
+
+  // Modifier: secondary value
+  &--secondary {
+    color: var(--text-secondary, #6b7280);
+  }
+
+  // Modifier: small value
+  &--small {
+    font-size: 0.875rem;
+  }
+
+  // Modifier: large value
+  &--large {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  // Modifier: highlighted value
+  &--highlighted {
+    color: var(--primary, #3b82f6);
+    font-weight: 600;
+  }
+
+  // Modifier: success value
+  &--success {
+    color: var(--success, #10b981);
+    font-weight: 600;
+  }
+
+  // Modifier: warning value
+  &--warning {
+    color: var(--warning, #f59e0b);
+    font-weight: 600;
+  }
+
+  // Modifier: error value
+  &--error {
+    color: var(--error, #dc2626);
+    font-weight: 600;
+  }
+
+  // Modifier: inline value
+  &--inline {
+    flex: 1;
+  }
+
+  // Modifier: truncated value
+  &--truncated {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Modifier: multiline value
+  &--multiline {
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+}
+
+// ============================================================================
+// DISPLAY GROUP - Grouped Display Fields
+// ============================================================================
+
+.display-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--background-secondary, #f9fafb);
+  border-radius: $border-radius;
+  border: 1px solid var(--border, #d1d5db);
+
+  // Modifier: compact group
+  &--compact {
+    padding: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  // Modifier: horizontal group
+  &--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+
+    .display-item {
+      flex: 1;
+      min-width: 150px;
+    }
+  }
+
+  // Modifier: inline group
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary, #1a1a1a);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &--inline {
+      margin-bottom: 0;
+      margin-right: 0.5rem;
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ============================================================================
+// DISPLAY SECTION - Sectioned Display Areas
+// ============================================================================
+
+.display-section {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // Modifier: compact section
+  &--compact {
+    margin-bottom: 1rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border, #d1d5db);
+    margin-bottom: 1rem;
+
+    &--no-border {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary, #1a1a1a);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary, #6b7280);
+    margin: 0.25rem 0 0 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+// ============================================================================
+// DISPLAY GRID - Grid Layout for Display Fields
+// ============================================================================
+
+.display-grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+
+  // Modifier: 2 columns
+  &--2-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Modifier: 3 columns
+  &--3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Modifier: 4 columns
+  &--4-cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  // Modifier: auto-fit columns
+  &--auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  // Modifier: compact grid
+  &--compact {
+    gap: 0.5rem;
+  }
+}
+
+// ============================================================================
+// DISPLAY LIST - List Layout for Display Fields
+// ============================================================================
+
+.display-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  // Modifier: compact list
+  &--compact {
+    gap: 0.25rem;
+  }
+
+  // Modifier: horizontal list
+  &--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+
+    &--compact {
+      padding: 0.25rem 0;
+    }
+
+    &--highlighted {
+      background-color: var(--background-highlight, rgba($primary-color, 0.05));
+      padding: 0.5rem;
+      border-radius: $border-radius;
+    }
+  }
+
+  &__bullet {
+    width: 4px;
+    height: 4px;
+    background-color: var(--text-secondary, #6b7280);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN
+// ============================================================================
+
+@media (max-width: 768px) {
+  .display-field {
+    &--horizontal {
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .display-field__item {
+        min-width: auto;
+      }
+    }
+  }
+
+  .display-item {
+    &--inline {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+  }
+
+  .display-label {
+    &--inline {
+      margin-right: 0;
+      margin-bottom: 0.25rem;
+      min-width: auto;
+    }
+  }
+
+  .display-group {
+    &--horizontal {
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .display-item {
+        min-width: auto;
+      }
+    }
+
+    &--inline {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+  }
+
+  .display-grid {
+    &--2-cols,
+    &--3-cols,
+    &--4-cols {
+      grid-template-columns: 1fr;
+    }
+
+    &--auto-fit {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .display-list {
+    &--horizontal {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .display-item {
+    padding: 0.75rem 0;
+  }
+
+  .display-label {
+    font-size: 0.8125rem;
+  }
+
+  .display-value {
+    font-size: 0.9375rem;
+  }
+
+  .display-group {
+    padding: 0.75rem;
+  }
+
+  .display-section {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}

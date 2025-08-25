@@ -1,0 +1,264 @@
+@use '../../../../styles/variables' as *;
+
+// ============================================================================
+// ACCORDION COMPONENT - Simple Collapsible Sections
+// ============================================================================
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
+
+  // Single accordion (only one open at a time)
+  &--single {
+    .accordion-item {
+      &--open {
+        ~ .accordion-item--open {
+          .accordion-item__header {
+            border-bottom: 1px solid var(--border, #d1d5db);
+          }
+        }
+      }
+    }
+  }
+
+  // Card style
+  &--card {
+    gap: 1rem;
+
+    .accordion-item {
+      border: 1px solid var(--border, #d1d5db);
+      border-radius: $border-radius;
+      background-color: var(--background, #ffffff);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+  }
+
+  // Compact style
+  &--compact {
+    gap: 0.25rem;
+
+    .accordion-item {
+      &__header {
+        padding: 0.5rem 0.75rem;
+      }
+
+      &__content {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ACCORDION ITEM
+// ============================================================================
+
+.accordion-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--border, #d1d5db);
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  // Open state
+  &--open {
+    .accordion-item__header {
+      background-color: var(--background-highlight, rgba($primary-color, 0.05));
+      border-bottom: 1px solid var(--border, #d1d5db);
+    }
+
+    .accordion-item__icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-item__content {
+      max-height: none;
+      opacity: 1;
+      padding: 1rem;
+    }
+  }
+
+  // Disabled state
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+
+    .accordion-item__header {
+      cursor: not-allowed;
+      background-color: var(--background-disabled, #f3f4f6);
+    }
+  }
+}
+
+// ============================================================================
+// ACCORDION HEADER
+// ============================================================================
+
+.accordion-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--background-secondary, #f9fafb);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: left;
+  font-family: inherit;
+
+  &:hover:not(:disabled) {
+    background-color: var(--background-hover, #f3f4f6);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+// ============================================================================
+// ACCORDION TITLE
+// ============================================================================
+
+.accordion-item__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+// ============================================================================
+// ACCORDION SUBTITLE
+// ============================================================================
+
+.accordion-item__subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+  margin: 0.25rem 0 0 0;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+// ============================================================================
+// ACCORDION ICON
+// ============================================================================
+
+.accordion-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--text-secondary, #6b7280);
+  transition: transform 0.3s ease-in-out;
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+}
+
+// ============================================================================
+// ACCORDION CONTENT
+// ============================================================================
+
+.accordion-item__content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--background, #ffffff);
+}
+
+// ============================================================================
+// ACCORDION BADGE
+// ============================================================================
+
+.accordion-item__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+
+  &--success {
+    background-color: var(--success, #10b981);
+    color: white;
+  }
+
+  &--warning {
+    background-color: var(--warning, #f59e0b);
+    color: white;
+  }
+
+  &--error {
+    background-color: var(--error, #dc2626);
+    color: white;
+  }
+
+  &--info {
+    background-color: var(--primary, #3b82f6);
+    color: white;
+  }
+
+  &--secondary {
+    background-color: var(--text-secondary, #6b7280);
+    color: white;
+  }
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN
+// ============================================================================
+
+@media (max-width: 768px) {
+  .accordion-item {
+    &__header {
+      padding: 0.875rem;
+    }
+
+    &__content {
+      padding: 0.875rem;
+    }
+
+    &__title {
+      font-size: 0.9375rem;
+    }
+
+    &__subtitle {
+      font-size: 0.8125rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .accordion-item {
+    &__header {
+      padding: 0.75rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    &__title {
+      font-size: 0.875rem;
+    }
+
+    &__subtitle {
+      font-size: 0.75rem;
+    }
+
+    &__icon {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+    }
+  }
+}

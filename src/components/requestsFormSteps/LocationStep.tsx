@@ -1,69 +1,123 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import FormField from '../storybook/FormField/FormField';
-import './LocationStep.scss';
+import { locationsFormMock } from '../../data/formsData/locationsFormMock';
 
+/**
+ * LocationStep - Step 2: Location Information
+ *
+ * This component handles the collection of location information including
+ * district, city, and street. It's wrapped by StepWrapper for consistent styling.
+ */
 const LocationStep: React.FC = () => {
-  const { formState, updateFormField } = useAssistanceForm();
+  const { formState, updateDistrictField, updateCityField, updateFormField } =
+    useAssistanceForm();
 
   const handleFieldChange = (
     fieldName: 'district' | 'city' | 'street',
     value: string
   ) => {
-    updateFormField(fieldName, value);
+    if (fieldName === 'district') {
+      // Clear city when district changes
+      updateCityField({ id: '', label: '', name: '' });
+      
+      // Find the district object and set it properly
+      const selectedDistrict = locationsFormMock.find(
+        district => district.id === value
+      );
+      if (selectedDistrict) {
+        updateDistrictField({
+          id: selectedDistrict.id,
+          name: selectedDistrict.name,
+          label: selectedDistrict.label,
+        });
+      }
+    } else if (fieldName === 'city') {
+      // Find the city from the locations data
+      const district = locationsFormMock.find(d => d.id === formState.district?.id);
+      const selectedCity = district?.cities?.find(city => city.id === value);
+      if (selectedCity) {
+        updateCityField({
+          id: selectedCity.id,
+          name: selectedCity.name,
+          label: selectedCity.label,
+        });
+      }
+    } else if (fieldName === 'street') {
+      updateFormField('street', value);
+    }
   };
 
-  const districtOptions = [
-    { value: 'מחוז תל אביב', label: 'מחוז תל אביב' },
-    { value: 'מחוז המרכז', label: 'מחוז המרכז' },
-    { value: 'מחוז חיפה', label: 'מחוז חיפה' },
-    { value: 'מחוז ירושלים', label: 'מחוז ירושלים' },
-    { value: 'מחוז הדרום', label: 'מחוז הדרום' },
-    { value: 'מחוז הצפון', label: 'מחוז הצפון' },
-  ];
+  // District options from mock data
+  const districtOptions = useMemo(() => {
+    return locationsFormMock.map(district => ({
+      label: district.label, // Hebrew label
+      value: district.id,
+    }));
+  }, []);
+
+  // City options based on selected district
+  const cityOptions = useMemo(() => {
+    if (!formState.district?.id) {
+      return [];
+    }
+
+    const selectedDistrict = locationsFormMock.find(
+      district => district.id === formState.district?.id
+    );
+
+    if (!selectedDistrict) {
+      return [];
+    }
+
+    return selectedDistrict.cities.map(city => ({
+      label: city.label, // Hebrew label
+      value: city.id,
+    }));
+  }, [formState.district?.id]);
+
+  // Check if city field should be disabled
+  const isCityDisabled = !formState.district;
 
   return (
-    <div className="location-step">
-      <h2 className="location-step__title">לאיפה להגיע?</h2>
+    <>
+      <FormField
+        id="district"
+        label="מחוז"
+        placeholder="בחר מחוז"
+        type="select"
+        value={formState.district?.id || ''}
+        onChange={value => handleFieldChange('district', value as string)}
+        options={districtOptions}
+        hasDropdown={true}
+        showClear={true}
+        required
+      />
 
-      <div className="location-step__fields">
-        <FormField
-          id="district"
-          label="מחוז"
-          placeholder="בחר מחוז"
-          type="select"
-          value={formState.district || ''}
-          onChange={value => handleFieldChange('district', value as string)}
-          options={districtOptions}
-          hasDropdown={true}
-        />
+      <FormField
+        id="city"
+        label="עיר"
+        placeholder={isCityDisabled ? 'בחר תחילה מחוז...' : 'בחר עיר'}
+        type="select"
+        value={formState.city?.id || ''}
+        onChange={value => handleFieldChange('city', value as string)}
+        options={cityOptions}
+        hasDropdown={true}
+        showClear={true}
+        disabled={isCityDisabled}
+        required
+      />
 
-        <FormField
-          id="city"
-          label="עיר"
-          placeholder="שם העיר"
-          type="text"
-          value={formState.city || ''}
-          onChange={value => handleFieldChange('city', value as string)}
-        />
-
-        <FormField
-          id="street"
-          label="רחוב"
-          placeholder="שם הרחוב"
-          type="text"
-          value={formState.street || ''}
-          onChange={value => handleFieldChange('street', value as string)}
-        />
-      </div>
-
-      <div className="location-step__instructions">
-        <p>
-          אנחנו עובדים עם מחוזות פיקוד העורף. מיקום מדויק מאפשר לנו לשייך את
-          הבקשה לחמ"ל הקרוב.
-        </p>
-      </div>
-    </div>
+      <FormField
+        id="street"
+        label="רחוב"
+        placeholder="שם הרחוב (אופציונלי)"
+        type="text"
+        value={formState.street || ''}
+        onChange={value => handleFieldChange('street', value as string)}
+        showClear={true}
+      />
+    </>
   );
 };
 

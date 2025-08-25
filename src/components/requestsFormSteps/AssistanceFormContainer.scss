@@ -1,0 +1,26 @@
+@use '../../styles/variables' as *;
+
+// ============================================================================
+// ASSISTANCE FORM CONTAINER - Main Container for Multi-Step Form
+// ============================================================================
+
+.assistance-form-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  padding: $padding-normal;
+  margin: 0;
+  width: 100%;
+  overflow-x: hidden;
+
+  // Ensure footer stays at bottom
+  .step-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+

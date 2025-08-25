@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchBar.scss';
-import Button from './Button/Button';
-import { Icons } from './icons/EmojiIcons';
+import Button from '../Button/Button';
+import { Icons } from '../icons/EmojiIcons';
 
 interface ISearchBarProps {
   searchQuery: string;
@@ -57,7 +57,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       {showFilterButton && (
         <Button
           onClick={onFilterClick}
-          size="small"
+          size="medium"
           type="secondary"
           btnText="Filter"
           icon={Icons.filter}

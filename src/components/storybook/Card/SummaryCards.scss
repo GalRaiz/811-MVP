@@ -1,15 +1,14 @@
-@use '../styles/variables' as *;
+@use '../../../styles/variables' as *;
 
 .summary-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $padding-large;
-  margin-top: $padding-large;
+  grid-template-columns: repeat(2, 2fr);
+  gap: $padding-normal;
 
   &__card {
     background-color: $background-color;
     border-radius: $border-radius;
-    padding: $padding-large;
+    padding: $padding-normal;
     box-shadow: $box-shadow;
     transition: all 0.2s ease;
 
@@ -22,7 +21,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: $padding-normal;
     }
 
     &__card__icon {
@@ -47,7 +45,7 @@
 
 @media (max-width: 1200px) {
   .summary-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 2fr);
   }
 }
 

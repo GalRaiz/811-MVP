@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import './Table.scss';
 import SidePanel, { IDetailItem, IFilterOption } from '../SidePanel/SidePanel';
-import SearchBar from '../SearchBar';
-import EmptyState from '../../EmptyState';
+import SearchBar from '../FormField/SearchBar';
+import EmptyState from '../EmptyState/EmptyState';
 import { getNestedValue } from '../../../utils/getNestedValue';
 import {
   getAssistanceTypeLabel,

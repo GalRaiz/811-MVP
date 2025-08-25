@@ -1,26 +1,19 @@
 @use '../../styles/variables' as *;
 
 .assistance-form {
-  max-width: 600px;
+  max-width: 800px;
   width: 100%;
-  background-color: #ffffff;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  padding: $padding-large;
+  padding: $padding-normal;
 
   &__title {
     font-size: $h2-font-size;
     font-weight: 600;
-    text-align: center;
-    margin: 0 0 $padding-large 0;
-    color: #000000;
   }
 
   &__fields {
     display: flex;
     flex-direction: column;
     gap: $padding-medium;
-    margin-bottom: $padding-large;
   }
 
   &__instructions {

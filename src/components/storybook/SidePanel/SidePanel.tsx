@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './SidePanel.scss';
-import EmptyState from '../../EmptyState';
+import EmptyState from '../EmptyState/EmptyState';
 import Button from '../Button/Button';
 import { Icons } from '../icons/EmojiIcons';
 import FormField from '../FormField/FormField';
+import { DisplayField, DisplayGroup } from '../FormField/DisplayField';
 
 export interface IFilterOption {
   key: string;
@@ -74,7 +75,6 @@ const SidePanel: React.FC<ISidePanelProps> = ({
     const newFilterValues = { ...filterValues, [key]: value };
     dependentFilters.forEach(filter => {
       newFilterValues[filter.key] = '';
-      console.log('Clearing dependent filter:', filter.key);
     });
 
     // Update state with all changes at once
@@ -120,7 +120,6 @@ const SidePanel: React.FC<ISidePanelProps> = ({
     const newFilterValues = { ...filterValues, [key]: newValue };
     dependentFilters.forEach(filter => {
       newFilterValues[filter.key] = '';
-      console.log('Clearing dependent filter from multi-select:', filter.key);
     });
 
     // Update state with all changes at once
@@ -142,7 +141,6 @@ const SidePanel: React.FC<ISidePanelProps> = ({
 
     // Call the parent's clear function if provided
     if (onClearFilters) {
-      console.log('Calling parent onClearFilters');
       onClearFilters();
     }
   };
@@ -203,7 +201,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             value={multiSelectValue}
             placeholder={
               isDisabled
-                ? 'בחר תחילה סוג בקשה...'
+                ? 'בחר תחילה סוג...'
                 : `בחר ${filter.label.toLowerCase()}...`
             }
             onChange={e => handleMultiSelectChange(filter.key, e as string[])}
@@ -224,7 +222,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             value={currentValue || ''}
             placeholder={
               isDisabled
-                ? 'בחר תחילה סוג בקשה...'
+                ? 'תחילה בחר'
                 : `חפש לפי: ${filter.label.toLowerCase()}`
             }
             onChange={e => handleFilterChange(filter.key, e as string)}
@@ -243,7 +241,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
         return (
           <div className="side-panel__section side-panel__section--filter">
             <div className="side-panel__filter-header">
-              <h3>Filter Requests</h3>
+              <h5>Filter Options</h5>
               {filterOptions.length > 0 && (
                 <Button
                   type="secondary"
@@ -269,16 +267,20 @@ const SidePanel: React.FC<ISidePanelProps> = ({
       case 'details':
         return (
           <div className="side-panel__section">
-            <h3>Request Details</h3>
             {detailsData &&
             Array.isArray(detailsData) &&
             detailsData.length > 0 ? (
-              detailsData.map((item, idx) => (
-                <div key={idx} className="side-panel__detail-item">
-                  <div className="side-panel__detail-label">{item.label}</div>
-                  <div className="side-panel__detail-value">{item.value}</div>
-                </div>
-              ))
+              <DisplayGroup layout="vertical" compact={false}>
+                {detailsData.map((item, idx) => (
+                  <DisplayField
+                    key={idx}
+                    label={item.label}
+                    value={item.value}
+                    valueVariant="secondary"
+                    valueSize="normal"
+                  />
+                ))}
+              </DisplayGroup>
             ) : (
               <EmptyState />
             )}
@@ -294,7 +296,6 @@ const SidePanel: React.FC<ISidePanelProps> = ({
   return (
     <div className={`side-panel ${isOpen ? 'side-panel--open' : ''}`}>
       <div className="side-panel__header">
-        <h3>{mode === 'filter' ? 'Filter Requests' : 'Request Details'}</h3>
         <Button
           type="close"
           size="small"

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import './RequestSentFinalStep.scss';
 import successForm from '../../assets/successFormSent.png';
 import { resetAll } from '../../store/assistanceFormSlice';
 import Button from '../storybook/Button/Button';

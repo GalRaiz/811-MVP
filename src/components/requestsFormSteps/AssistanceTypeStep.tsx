@@ -1,19 +1,30 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { assistanceTypes } from '../../data/assistanceTypesData';
+import CompactCard from '../storybook/Card/CompactCard';
+import CompactCardGrid from '../storybook/Card/CompactCardGrid';
 import Button from '../storybook/Button/Button';
-import './AssistanceTypeStep.scss';
 
+/**
+ * AssistanceTypeStep - Step 3: Assistance Type Selection
+ *
+ * This component now uses the new CompactCard components directly
+ * for consistent styling and better maintainability.
+ */
 const AssistanceTypeStep: React.FC = () => {
   const { formState, setAssistanceTypes, setSelectedSubTypes, goToNextStep } =
     useAssistanceForm();
 
-  const handleTypeToggle = (typeId: string) => {
+  const handleTypeSelect = (typeId: string) => {
     // Clear subType selection when changing the main type
     setSelectedSubTypes([]);
 
-    // Set only this type as selected (single selection)
-    setAssistanceTypes([typeId]);
+    // Find the assistance type to get the Hebrew label
+    const selectedType = assistanceTypes.find(type => type.id === typeId);
+    if (selectedType) {
+      // Set only this type as selected (single selection) with Hebrew label
+      setAssistanceTypes([selectedType.label]);
+    }
 
     // Automatically navigate to the next step after a short delay
     setTimeout(() => {
@@ -21,53 +32,38 @@ const AssistanceTypeStep: React.FC = () => {
     }, 300);
   };
 
-  const handleReset = () => {
+  const handleClearAll = () => {
     // Clear both the main type and subType selections
     setAssistanceTypes([]);
     setSelectedSubTypes([]);
   };
 
-  const isSelected = (typeId: string) => {
-    return formState.requestType === typeId;
-  };
+  const selectedTypes = formState.requestType?.label ? [formState.requestType.label] : [];
 
   return (
     <div className="assistance-type-step">
       <div className="assistance-type-step__header">
-        <h2 className="assistance-type-step__title">איזה סוג סיוע נדרש?</h2>
-        {formState.requestType && (
-          <Button
-            type="reset"
-            size="small"
-            btnText="אפס בחירה"
-            onClick={handleReset}
-          />
-        )}
+        <Button
+          type="secondary"
+          size="medium"
+          btnText="אפס בחירה"
+          onClick={handleClearAll}
+          isDisabled={!formState.requestType}
+        />
       </div>
 
-      <div className="assistance-type-step__grid">
+      <CompactCardGrid columns={4} gap="normal">
         {assistanceTypes.map(type => (
-          <button
+          <CompactCard
             key={type.id}
-            className={`assistance-type-step__option ${
-              isSelected(type.id)
-                ? 'assistance-type-step__option--selected'
-                : ''
-            }`}
-            onClick={() => handleTypeToggle(type.id)}
-            type="button"
-          >
-            <div className="assistance-type-step__option-icon">{type.icon}</div>
-            <span className="assistance-type-step__option-label">
-              {type.label}
-            </span>
-          </button>
+            id={type.id}
+            label={type.label}
+            icon={type.icon}
+            isSelected={selectedTypes.includes(type.label)}
+            onClick={() => handleTypeSelect(type.id)}
+          />
         ))}
-      </div>
-
-      <div className="assistance-type-step__instructions">
-        <p>בחירה של קטגוריה עוזרת לנו להפנות את הבקשה לגורמים הנכונים.</p>
-      </div>
+      </CompactCardGrid>
     </div>
   );
 };

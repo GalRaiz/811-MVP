@@ -1,9 +1,14 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { assistanceTypes } from '../../data/assistanceTypesData';
-import SubTypeSelector from '../../components/requestsFormSteps/SubTypeSelector/SubTypeSelector';
+import SubTypeSelector from '../../components/requestsFormSteps/SubTypeSelector';
 import './StepSubTypeSelection.scss';
-
+/**
+ * StepSubTypeSelection - Step 4: Sub-Type Selection
+ *
+ * This component handles the selection of specific assistance sub-types.
+ * It's wrapped by StepWrapper for consistent styling and layout.
+ */
 const StepSubTypeSelection: React.FC = () => {
   const { formState, toggleSelectedSubType } = useAssistanceForm();
 
@@ -12,7 +17,7 @@ const StepSubTypeSelection: React.FC = () => {
 
   // Find the assistance type data for the selected main type
   const assistanceTypeData = assistanceTypes.find(
-    type => type.id === selectedMainType
+    type => type.id === selectedMainType?.name || selectedMainType
   );
 
   const handleSubTypeSelect = (subTypeId: string) => {
@@ -21,20 +26,14 @@ const StepSubTypeSelection: React.FC = () => {
 
   if (!assistanceTypeData) {
     return (
-      <div className="step-sub-type-selection">
-        <div className="step-sub-type-selection__error">
-          <p>לא נמצא סוג סיוע נבחר</p>
-        </div>
+      <div className="step-sub-type-selection__error">
+        <p>לא נמצא סוג סיוע נבחר</p>
       </div>
     );
   }
 
   return (
-    <div className="step-sub-type-selection">
-      <h2 className="step-sub-type-selection__title">
-        איזה סוג סיוע בדיוק דרוש?
-      </h2>
-
+    <>
       <div className="step-sub-type-selection__main-type">
         <div className="step-sub-type-selection__main-type-icon">
           {assistanceTypeData.icon}
@@ -42,24 +41,14 @@ const StepSubTypeSelection: React.FC = () => {
         <span className="step-sub-type-selection__main-type-label">
           {assistanceTypeData.label}
         </span>
-        <span className="step-sub-type-selection__main-type-subtitle">
-          בחר את הסוגים הספציפיים הנדרשים
-        </span>
       </div>
 
       <SubTypeSelector
         subTypes={assistanceTypeData.subTypes}
         onSelect={handleSubTypeSelect}
-        selectedSubType={formState.requestSubType || []}
+        selectedSubType={formState.requestSubType?.map(st => ({ id: st.id, label: st.label, name: st.name, icon: st.icon })) || []}
       />
-
-      <div className="step-sub-type-selection__instructions">
-        <p>
-          בחר את הסוג הספציפי של הסיוע הנדרש כדי שנוכל להפנות את הבקשה לגורם
-          המתאים ביותר.
-        </p>
-      </div>
-    </div>
+    </>
   );
 };
 

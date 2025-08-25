@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
-import './FinalDetailsStep.scss';
+import Button from '../storybook/Button/Button';
 
 const FinalDetailsStep: React.FC = () => {
   const { formState, setTransportation, setVolunteers, addFile, removeFile } =
@@ -22,61 +22,45 @@ const FinalDetailsStep: React.FC = () => {
 
   return (
     <div className="final-details-step">
-      <h2 className="final-details-step__title">כמה פרטים אחרונים...</h2>
-
       <div className="final-details-step__section">
         <h3 className="final-details-step__question">נדרש שינוע?</h3>
         <div className="final-details-step__options">
-          <button
-            className={`final-details-step__option ${
-              formState.needTransportation === true
-                ? 'final-details-step__option--selected'
-                : ''
-            }`}
+          <Button
+            btnText="כן, נדרש שינוע"
+            type={
+              formState.needTransportation === true ? 'selected' : 'unselected'
+            }
+            size="medium"
             onClick={() => setTransportation(true)}
-            type="button"
-          >
-            כן, נדרש שינוע
-          </button>
-          <button
-            className={`final-details-step__option ${
-              formState.needTransportation === false
-                ? 'final-details-step__option--selected'
-                : ''
-            }`}
+          />
+          <Button
+            btnText="לא, אין צורך"
+            type={
+              formState.needTransportation === false ? 'selected' : 'unselected'
+            }
+            size="medium"
             onClick={() => setTransportation(false)}
-            type="button"
-          >
-            לא, אין צורך
-          </button>
+          />
         </div>
       </div>
 
       <div className="final-details-step__section">
         <h3 className="final-details-step__question">דרושים מתנדבים?</h3>
         <div className="final-details-step__options">
-          <button
-            className={`final-details-step__option ${
-              formState.needVolunteers === true
-                ? 'final-details-step__option--selected'
-                : ''
-            }`}
+          <Button
+            btnText="כן, דרושים מתנדבים"
+            type={formState.needVolunteers === true ? 'selected' : 'unselected'}
+            size="medium"
             onClick={() => setVolunteers(true)}
-            type="button"
-          >
-            כן, דרושים מתנדבים
-          </button>
-          <button
-            className={`final-details-step__option ${
-              formState.needVolunteers === false
-                ? 'final-details-step__option--selected'
-                : ''
-            }`}
+          />
+          <Button
+            btnText="לא, אין צורך"
+            type={
+              formState.needVolunteers === false ? 'selected' : 'unselected'
+            }
+            size="medium"
             onClick={() => setVolunteers(false)}
-            type="button"
-          >
-            לא, אין צורך
-          </button>
+          />
         </div>
       </div>
 

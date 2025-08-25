@@ -1,4 +1,4 @@
-import noResults from '../assets/readingDog.png';
+import noResults from '../../../assets/readingDog.png';
 import './EmptyState.scss';
 
 interface EmptyStateProps {

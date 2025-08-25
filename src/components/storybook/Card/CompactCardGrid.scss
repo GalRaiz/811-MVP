@@ -1,0 +1,98 @@
+@use '../../../styles/variables' as *;
+
+// BEM Methodology: Block Element Modifier
+.compact-card-grid {
+  // Block: Base grid styles
+  display: grid;
+  width: 100%;
+  gap: $padding-normal;
+
+  // Modifier: Column variations
+  &--columns-1 {
+    grid-template-columns: 1fr;
+  }
+
+  &--columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &--columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &--columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &--columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  &--columns-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  // Modifier: Gap variations
+  &--gap-small {
+    gap: $padding-small;
+  }
+
+  &--gap-normal {
+    gap: $padding-normal;
+  }
+
+  &--gap-large {
+    gap: $padding-large;
+  }
+
+  // Responsive design
+  @media (max-width: 1200px) {
+    &--columns-6 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    &--columns-5 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 992px) {
+    &--columns-6,
+    &--columns-5,
+    &--columns-4 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    &--columns-6,
+    &--columns-5,
+    &--columns-4,
+    &--columns-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--columns-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &--columns-6,
+    &--columns-5,
+    &--columns-4,
+    &--columns-3,
+    &--columns-2 {
+      grid-template-columns: 1fr;
+    }
+
+    // Reduce gaps on mobile
+    &--gap-large {
+      gap: $padding-normal;
+    }
+
+    &--gap-normal {
+      gap: $padding-small;
+    }
+  }
+}

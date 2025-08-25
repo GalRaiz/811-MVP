@@ -65,6 +65,7 @@ const Card: FC<ICardProps> = ({
               type={button.type}
               size="small"
               btnText={button.btnText}
+              icon={button.icon}
               onClick={button.onClick}
             />
           ))}

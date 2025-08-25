@@ -1,6 +1,6 @@
 import React from 'react';
 import './SummaryCards.scss';
-import Button from './storybook/Button/Button';
+import Button, { ButtonProps } from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 
 interface ISummaryCard {
@@ -8,11 +8,7 @@ interface ISummaryCard {
   title: string;
   count: number;
   icon?: string;
-  button?: {
-    btnText: string;
-    onClick: () => void;
-    icon: string;
-  };
+  button?: ButtonProps;
 }
 
 interface SummaryCardsProps {

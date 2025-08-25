@@ -1,6 +1,7 @@
 import React from 'react';
 import './AlertsSection.scss';
 import Button from './storybook/Button/Button';
+import { Icons } from './storybook/icons/EmojiIcons';
 
 interface IAlert {
   id: number;
@@ -38,24 +39,40 @@ const AlertsSection: React.FC = () => {
 
   return (
     <div className="alerts-section">
-      <div className="section-header">
-        <h2>התראות מערכת</h2>
+      <div className="alerts-section__header">
+        <div className="alerts-section__title-wrapper">
+          <div className="alerts-section__bell-icon">
+            <span className="alerts-section__bell">{Icons.bell}</span>
+            {alerts.length > 0 && (
+              <span className="alerts-section__notification-count">
+                {alerts.length}
+              </span>
+            )}
+          </div>
+          <h2 className="alerts-section__title">התראות מערכת</h2>
+        </div>
       </div>
 
-      <div className="alerts-list">
+      <div className="alerts-section__alerts-list">
         {alerts.map(alert => (
-          <div key={alert.id} className="alert-item">
-            <div className="alert-icon">{getAlertIcon(alert.type)}</div>
+          <div key={alert.id} className="alerts-section__alert-item">
+            <div className="alerts-section__alert-icon">
+              {getAlertIcon(alert.type)}
+            </div>
 
-            <div className="alert-content">
-              <div className="alert-header">
-                <h3>{alert.title}</h3>
+            <div className="alerts-section__alert-content">
+              <div className="alerts-section__alert-header">
+                <h3 className="alerts-section__alert-title">{alert.title}</h3>
                 {alert.requestName && (
-                  <span className="request-name">{alert.requestName}</span>
+                  <span className="alerts-section__request-name">
+                    {alert.requestName}
+                  </span>
                 )}
               </div>
 
-              <p className="alert-description">{alert.description}</p>
+              <p className="alerts-section__alert-description">
+                {alert.description}
+              </p>
 
               {alert.actionText && (
                 <Button
