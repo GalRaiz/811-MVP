@@ -9,6 +9,7 @@ import authService from '../../services/authService';
 import { RootState } from '../../store/store';
 import './Login.scss';
 import logo from '../../assets/mate-logo-green.png';
+import PageFooter from '../../components/storybook/NavBar/PageFooter';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
@@ -170,35 +171,29 @@ const Login: React.FC = () => {
                 fullWidth
               />
             </div>
-
-            <div className="login__demo">
-              <h4 className="login__demo-title">Demo Accounts</h4>
-              <div className="login__demo-buttons">
-                <Button
-                  type="secondary"
-                  size="small"
-                  btnText="Admin"
-                  onClick={() => handleDemoLogin('Admin')}
-                  isDisabled={isLoading}
-                />
-                <Button
-                  type="secondary"
-                  size="small"
-                  btnText="Requester"
-                  onClick={() => handleDemoLogin('Requester')}
-                  isDisabled={isLoading}
-                />
-                <Button
-                  type="secondary"
-                  size="small"
-                  btnText="Organization"
-                  onClick={() => handleDemoLogin('Organization')}
-                  isDisabled={isLoading}
-                />
-              </div>
-            </div>
           </form>
         </div>
+        <PageFooter 
+          text="Demo Accounts"
+          buttons={[{
+            type: 'secondary',
+            size: 'medium',
+            btnText: 'requester',
+            onClick: () => handleDemoLogin('Requester'),
+          },  
+          {
+            type: 'secondary',
+            size: 'medium',
+            btnText: 'admin',
+            onClick: () => handleDemoLogin('Admin'),
+          },
+          {
+            type: 'secondary',
+            size: 'medium',
+            btnText: 'organization',
+            onClick: () => handleDemoLogin('Organization'),
+          },]}
+        />
       </Modal>
     </div>
   );

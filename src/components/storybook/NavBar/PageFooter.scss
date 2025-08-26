@@ -6,20 +6,17 @@
   border-top: $border-line;
   padding: $padding-medium;
   color: $text-primary;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   bottom: 0;
   z-index: 100;
 
-  // ==== Content Element ====
+  // ==== Content Element ==== 
   &__content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: $padding-large;
-    margin: 0 auto;
-    max-width: 1200px;
-    flex-wrap: wrap;
+    flex-wrap: wrap;  
 
     @media (max-width: 768px) {
       flex-direction: column;
@@ -32,7 +29,7 @@
   &__text {
     flex: 1;
     min-width: 200px;
-
+    text-align: center;
     p {
       margin: 0;
       font-size: $body-font-size;
@@ -48,6 +45,12 @@
     justify-content: center;
   }
 
+  // ==== Children Element ====
+  &__children {
+    padding: $padding-normal;
+    border-top: $border-line;
+  }
+
   // ==== Pagination Element ====
   &__pagination {
     display: flex;
@@ -58,7 +61,7 @@
     &-numbers {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: $padding-xs;
     }
 
     &-number {
@@ -67,7 +70,7 @@
       justify-content: center;
       width: 32px;
       height: 32px;
-      border: 1px solid $border-color;
+      border: $border-line;
       background-color: $background-color;
       color: $text-primary;
       border-radius: $border-radius;
@@ -159,6 +162,10 @@
       justify-content: center;
     }
 
+    &__children {
+      padding: $padding-normal;
+    }
+
     // RTL responsive adjustments
     [dir="rtl"] & {
       &__content {
@@ -175,52 +182,8 @@
     }
   }
 
-  @media (max-width: 480px) {
-    padding: $padding-small;
-
-    &__progress-wrapper {
-      width: 100%;
-    }
-
-    &__pagination {
-      &-numbers {
-        gap: 1px;
-      }
-
-      &-number {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
-      }
-    }
-
-    &__buttons {
-      flex-direction: column;
-      width: 100%;
-
-      .btn {
-        width: 100%;
-      }
-    }
-
-    // RTL mobile adjustments
-    [dir="rtl"] & {
-      &__buttons {
-        flex-direction: column;
-      }
-    }
-  }
-
   // ==== Accessibility ====
   &:focus-within {
-    outline: 2px solid $primary-color;
-    outline-offset: -2px;
-  }
-
-  // ==== Print Styles ====
-  @media print {
-    position: static;
-    box-shadow: none;
-    border-top: 1px solid $border-color;
+    box-shadow: $box-shadow;
   }
 }

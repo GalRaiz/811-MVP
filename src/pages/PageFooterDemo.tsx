@@ -106,7 +106,20 @@ const PageFooterDemo: React.FC = () => {
             icon: '❌'
           }
         ]}
-      />
+      >
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          <h4>Custom Content Area</h4>
+          <p>This is an example of using children in PageFooter. You can add any custom content here.</p>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+            <button style={{ padding: '8px 16px', border: '1px solid #ccc', borderRadius: '4px' }}>
+              Custom Button 1
+            </button>
+            <button style={{ padding: '8px 16px', border: '1px solid #ccc', borderRadius: '4px' }}>
+              Custom Button 2
+            </button>
+          </div>
+        </div>
+      </PageFooter>
     </div>
   );
 };

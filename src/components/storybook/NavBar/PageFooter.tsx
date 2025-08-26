@@ -21,10 +21,11 @@ interface PaginationProps {
 }
 
 interface PageFooterProps {
-  text?: string;
-  buttons?: ButtonProps[];
+  text: string;
+  buttons: ButtonProps[];
   progress?: PageFooterProgressProps;
   pagination?: PaginationProps;
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -121,12 +122,13 @@ const Pagination: React.FC<PaginationProps> = ({
 };
 
 // ==== Main Component ====
-const PageFooter: React.FC<PageFooterProps> = ({ 
-  text, 
-  buttons, 
-  progress, 
-  pagination, 
-  className = '' 
+const PageFooter: React.FC<PageFooterProps> = ({
+  text,
+  buttons,
+  progress,
+  pagination,
+  children,
+  className = ''
 }) => {
   const footerClassName = `page-footer ${className}`.trim();
 
@@ -171,6 +173,13 @@ const PageFooter: React.FC<PageFooterProps> = ({
           </div>
         )}
       </div>
+
+      {/* Children Section */}
+      {children && (
+        <div className="page-footer__children">
+          {children}
+        </div>
+      )}
     </footer>
   );
 };
