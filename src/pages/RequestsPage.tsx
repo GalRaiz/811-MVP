@@ -45,10 +45,25 @@ const RequestsPage: React.FC = () => {
   ];
 
   const cardRenderer = {
+    cardType: 'marketplace',
     title: (item: IRequest) => item.requestDetails.requestName,
     description: (item: IRequest) =>
       item.requestDetails.requestDescription || 'No description available',
-    imageUrl: (item: IRequest) => item.requestDetails.requestImage || undefined,
+    imageUrl: (item: IRequest) => item.requestDetails.requestImage || undefined,    
+    metaData: (item: IRequest) => [
+      {
+        label: '',
+        icon: item.requestDetails.requestType.icon ?? 'box'
+      },
+      {
+        label: item.requesterDetails.city?.label ?? item.requesterDetails.district?.label ?? '',
+        icon: 'location'
+      },
+      {
+        label: new Date(item.requestStatus.createdAt || '').toLocaleDateString() || '',
+        icon: 'calendar'
+      },
+    ],
   };
 
   return (
@@ -68,7 +83,8 @@ const RequestsPage: React.FC = () => {
               getAssistanceTypeLabel(row.requestDetails.requestType.label),
           },
         ]}
-        searchPlaceholder="חפש בכל השדות..."
+        searchField="requestDetails.requestName"
+        searchPlaceholder="חיפוש לפי שם הבקשה או לפי פילטר חכם בכפתור..."
         filterOptions={filterOptions}
         cardRenderer={cardRenderer}
         panelRenderer={row => [

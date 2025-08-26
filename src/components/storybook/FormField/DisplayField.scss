@@ -249,9 +249,9 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background-color: var(--background-secondary, #f9fafb);
-  border-radius: $border-radius;
-  border: 1px solid var(--border, #d1d5db);
+  // background-color: var(--background-secondary, #f9fafb);
+  // border-radius: $border-radius;
+  // border: 1px solid var(--border, #d1d5db);
 
   // Modifier: compact group
   &--compact {

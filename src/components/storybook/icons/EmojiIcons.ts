@@ -9,7 +9,10 @@ export const Icons = {
   check: '✅',
   heart: '❤️',
   greenHeart: '💚',
-
+  loading: '🔄', 
+  notepad: '📝',
+  clipboard: '📋',
+  
   // User / Account
   user: '👤',
   lock: '🔒',

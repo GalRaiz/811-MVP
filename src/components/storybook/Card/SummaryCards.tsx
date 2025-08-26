@@ -7,7 +7,7 @@ interface ISummaryCard {
   id: number;
   title: string;
   count: number;
-  icon?: string;
+  icon?: string ;
   button?: ButtonProps;
 }
 

@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import './RequesterHomePage.scss';
-import DashboardHeader from '../components/storybook/NavBar/DashboardHeader';
-import RequestsSection from '../components/RequestsSection';
-import AlertsSection from '../components/AlertsSection';
-import SummaryCards from '../components/storybook/Card/SummaryCards';
-import SideNavBar from '../components/storybook/NavBar/SideNavBar';
-import logo from '../assets/mate-logo-white.png';
+import DashboardHeader from '../../components/storybook/NavBar/DashboardHeader';
+import RequestsSection from '../../components/RequestsSection';
+import AlertsSection from '../../components/AlertsSection';
+import SummaryCards from '../../components/storybook/Card/SummaryCards';
+import SideNavBar from '../../components/storybook/NavBar/SideNavBar';
+import logo from '../../assets/mate-logo-white.png';
 import { useNavigate } from 'react-router-dom';
-import { assistanceRequests } from '../data/requestsData';
-import { Icons } from '../components/storybook/icons/EmojiIcons';
+import { assistanceRequests } from '../../data/requestsData';
+import { Icons } from '../../components/storybook/icons/EmojiIcons';
 
 const RequesterHomePage: React.FC = () => {
   const navigate = useNavigate();

@@ -35,6 +35,7 @@ export interface ICardRenderer<T> {
   title: (item: T) => string;
   description?: (item: T) => string;
   imageUrl?: (item: T) => string | undefined;
+  metaData?: (item: T) => { label: string; icon: string }[];
 }
 
 export interface TableOrCardsProps<T> {
@@ -610,8 +611,11 @@ function TableOrCards<T extends { id: string | number }>({
               filteredData.map(item => (
                 <Card
                   key={item.id}
+                  cardType="marketplace"
                   title={cardRenderer.title(item)}
                   description={cardRenderer.description?.(item)}
+                  imageUrl={cardRenderer.imageUrl?.(item)}
+                  metaData={cardRenderer.metaData?.(item)}
                   buttons={[
                     {
                       btnText: 'פרטים נוספים',

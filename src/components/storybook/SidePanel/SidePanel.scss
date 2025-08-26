@@ -64,13 +64,7 @@
     .display-group {
       // Ensure proper spacing within side panel
       margin: 0;
-      
-      .display-item {
-        // Remove bottom margin from last item to avoid extra spacing
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
+  
     }
   }
 

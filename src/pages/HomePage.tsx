@@ -23,6 +23,11 @@ const HomePage = () => {
       imageUrl: mateLogoGreen,
       description: 'דוגמא',
     },
+    {
+      title: 'adminHomePage',
+      imageUrl: mateLogoGreen,
+      description: 'דוגמא',
+    },
   ];
   const clickHandler = (title: string) => {
     navigate(`/${title}`);

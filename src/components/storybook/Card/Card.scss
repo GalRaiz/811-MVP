@@ -1,100 +1,92 @@
-@use '../../../styles/variables' as *;
-@use 'sass:color';
+@use '../../../styles/variables.scss' as *;
 
+// ==== Card Block ====
 .card {
-  width: 300px;
-  background: #fff;
+  // Base styles
+  background-color: $background-color;
+  border: $border-line;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  cursor: pointer;
+  font-family: $text-font-family-body;
+  color: $text-primary;
 
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-  }
+  // ==== Card Elements ====
 
   &__image {
     width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
 
   &__content {
-    flex: 1;
     padding: $padding-normal;
     display: flex;
     flex-direction: column;
-    gap: $padding-small;
-    text-align: left;
-  }
-
-  &__meta {
-    color: $text-muted;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    justify-content: space-between;
+    flex: 1;
+    gap: $padding-xs;
   }
 
   &__title {
-    font-family: $title-font-family;
-    font-size: $h4-font-size;
-    font-weight: 600;
+    font-size: $h5-font-size;
+    font-weight: $header-font-weight;
+    color: $text-primary;
     margin: 0;
-    color: $text-color;
+    line-height: 1.2;
   }
 
   &__description {
     font-size: $body-font-size;
     color: $text-muted;
+    line-height: $body-line-height;
+    margin: 0;
   }
 
-  &__tags {
+  &__meta {
     display: flex;
+    gap: $padding-small;
     align-items: center;
-    gap: 8px;
-    color: $text-color;
+    flex-wrap: wrap;
+    margin-top: $padding-small;
+  }
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    padding: $padding-xs $padding-small;
+    font-size: 12px;
+    border-radius: $border-radius;
+    background-color: $header-background-gray;
+    color: $text-primary;
+    white-space: nowrap;
+    svg,
+    span {
+      display: inline-block;
+    }
+  }
+
+  &__children {
+    padding: $padding-normal 0;
   }
 
   &__footer {
-    margin-top: auto;
-    padding: $padding-small $padding-normal $padding-normal;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: $padding-small;
-
-    .btn {
-      flex: 1;
-      border-radius: $border-radius;
-      padding: 6px 12px;
-      font-size: $body-font-size;
-      cursor: pointer;
-      transition: background 0.2s ease;
-
-      &--primary {
-        background: $primary-color;
-        color: #fff;
-        font-weight: 600;
-
-        &:hover {
-          background: color.adjust($primary-color, $lightness: -10%);
-        }
-      }
-
-      &--secondary {
-        background: #f7f7f7;
-        color: $text-color;
-
-        &:hover {
-          background: #eee;
-        }
-      }
-    }
+    padding: $padding-normal;
+    border-top: $border-line;
+    background-color: $header-background-gray;
+    margin-top: auto;
   }
 }

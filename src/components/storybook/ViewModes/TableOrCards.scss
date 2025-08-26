@@ -145,19 +145,43 @@
   // Element: cards grid
   &__cards-grid {
     display: grid;
-    justify-items: center;
-    padding: $padding-small;
+    justify-items: stretch;
+    padding: $padding-medium;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: $padding-large;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px); // Account for header, search, and controls
+    scrollbar-width: thin;
+    scrollbar-color: $border-color transparent;
+
+    // Custom scrollbar for webkit browsers
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $border-color;
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: darken($border-color, 10%);
+      }
+    }
 
     @media (max-width: 768px) {
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 16px;
+      max-height: calc(100vh - 180px);
     }
 
     @media (max-width: 480px) {
       grid-template-columns: 1fr;
       gap: 12px;
+      max-height: calc(100vh - 160px);
     }
   }
 

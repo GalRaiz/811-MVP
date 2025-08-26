@@ -174,7 +174,7 @@ $button-sizes: (
     justify-content: center;
 
     & + .btn__text {
-      margin-left: $padding-small;
+      gap: $padding-xs;
     }
   }
 
@@ -183,8 +183,7 @@ $button-sizes: (
     flex-direction: row-reverse;
 
     .btn__icon + .btn__text {
-      margin-left: 0;
-      margin-right: $padding-small;
+      gap: $padding-xs;
     }
   }
 

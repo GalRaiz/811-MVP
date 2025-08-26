@@ -21,7 +21,8 @@ export interface FormFieldProps {
     | 'multi-select'
     | 'date'
     | 'checkbox'
-    | 'radio';
+    | 'radio'
+    | 'password';
   value: string | number | boolean | string[];
   onChange: (value: string | number | boolean | string[]) => void;
   options?: FormFieldOption[];
@@ -154,6 +155,7 @@ const FormField: React.FC<FormFieldProps> = ({
       (!disabled &&
         (type === 'text' ||
           type === 'tel' ||
+          type === 'password' ||
           type === 'number' ||
           type === 'textarea') &&
         String(value).trim() !== '') ||
@@ -185,6 +187,7 @@ const FormField: React.FC<FormFieldProps> = ({
     switch (type) {
       case 'text':
       case 'tel':
+      case 'password':
         return (
           <div className="form-field__input-container">
             {icon && <div className="form-field__icon">{icon}</div>}

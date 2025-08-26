@@ -15,7 +15,7 @@ export interface ISimpleAssistanceType {
   id: string;
   label: string;
   name: string;
-  icon: string;
+  icon?: string;
 }
 
 export interface ISimpleAssistanceSubType {
@@ -59,6 +59,7 @@ export interface IRequestsState {
 }
 export interface RootState {
   requests: IRequestsState;
+  auth: any; // Will be properly typed from the store
 }
 
 export interface IUserData {

@@ -26,7 +26,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       const fieldName = searchField.split('.').pop() || searchField;
       return `חפש ב${fieldName.toLowerCase()}...`;
     }
-    return 'חפש בכל השדות...';
+    return '...חיפוש';
   };
 
   const handleClearSearch = () => {

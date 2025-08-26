@@ -1,5 +1,3 @@
-
-
 export interface IAssistanceType {
   id: string;
   label: string; // Hebrew
