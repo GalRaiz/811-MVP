@@ -9,9 +9,24 @@
   background: linear-gradient(135deg, $background-color, $secondary-color 100%);
   direction: rtl;
 
-  &__modal-content {
+  &__card {
+
+    .card__header {
+      text-align: center;  
+    }
+    
+    .card__title {
+      font-size: $h3-font-size;
+      font-weight: 700;
+      color: $text-color;
+    }
+    
+    
+  }
+
+  &__card-content {
     padding: $padding-normal;
-    width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,52 +54,4 @@
     flex-direction: column;
     gap: $padding-normal;
   }
-
-  &__actions {
-    margin-top: $padding-normal;
-  }
-
-  &__demo {
-    padding-top: $padding-large;
-    border-top: $border-line;
-  }
-
-  &__demo-title {
-    font-size: $h5-font-size;
-    font-weight: 600;
-    color: $text-muted;
-    text-align: center;
-    margin-bottom: $padding-normal;
-  }
-
-  &__demo-buttons {
-    display: flex;
-    gap: $padding-small;
-    justify-content: center;
-  }
-
-  &__error {
-    color: $error-color;
-    font-size: $h5-font-size;
-    padding: $padding-small;
-    background-color: rgba($error-color, 0.1);
-    border-radius: $border-radius;
-    border-left: 3px solid $error-color;
-
-    &--global {
-      text-align: center;
-      font-size: $h5-font-size;
-      margin-top: $padding-normal;
-    }
-  }
-}
-
-// Form field error state
-.form-field--error .form-field__input {
-  border-color: $error-color;
-  box-shadow: 0 0 0 1px $error-color;
-}
-
-.form-field--error .form-field__label {
-  color: $error-color;
 }

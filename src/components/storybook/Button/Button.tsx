@@ -23,6 +23,7 @@ type ButtonSize = 'small' | 'medium' | 'large';
 type IconPosition = 'left' | 'right';
 
 export interface ButtonProps {
+  id: string;
   type?: ButtonType;
   size?: ButtonSize;
   btnText?: string;

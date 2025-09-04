@@ -1,0 +1,82 @@
+// TableContainer.scss
+.table-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; // Important for flex child to shrink
+  
+  // Search bar should not shrink
+  .search-bar {
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+  }
+  
+  &__layout {
+    display: flex; // Changed from grid to flexbox for better control
+    flex: 1;
+    min-height: 0; // Important for flex child to shrink
+    gap: 1rem;
+    transition: all 0.3s ease;
+    
+    // When panel is closed - table takes full width
+    &:not(.table-container__layout--panel-open) {
+      .table-container__table {
+        flex: 1;
+        min-width: 0;
+      }
+      
+      .side-panel {
+        display: none;
+      }
+    }
+    
+    // When panel is open - table and panel share space
+    &--panel-open {
+      .table-container__table {
+        flex: 1;
+        min-width: 0;
+        margin-right: 0; // Remove any right margin
+      }
+      
+      .side-panel {
+        flex-shrink: 0;
+        width: 400px;
+        min-width: 400px;
+        display: flex;
+      }
+    }
+  }
+  
+  &__table {
+    min-width: 0; // Prevent table from overflowing
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // Important for flex child to shrink
+    overflow: hidden; // Prevent content overflow
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .table-container {
+    &__layout {
+      flex-direction: column; // Stack vertically on mobile
+      
+      &--panel-open {
+        .table-container__table {
+          flex: 1;
+          min-height: 0;
+        }
+        
+        .side-panel {
+          width: 100%;
+          min-width: 100%;
+          height: auto;
+          max-height: 50vh; // Limit height on mobile
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+@use '../../../styles/variables.scss' as *;
+
+// ==== Page Footer Block ====
+.page-footer {
+  background-color: $background-color;
+  border-top: $border-line;
+  padding: $padding-medium;
+  color: $text-primary;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+
+  // ==== Content Element ==== 
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $padding-large;
+    flex-wrap: wrap;  
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: $padding-normal;
+      align-items: stretch;
+    }
+  }
+
+  // ==== Text Element ====
+  &__text {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    p {
+      margin: 0;
+      font-size: $body-font-size;
+      color: $text-muted;
+      line-height: $body-line-height;
+    }
+  }
+
+  // ==== Progress Bar Wrapper ====
+  &__progress-wrapper {
+    min-width: 200px;
+    display: flex;
+    justify-content: center;
+  }
+
+  // ==== Children Element ====
+  &__children {
+    padding: $padding-normal;
+    border-top: $border-line;
+  }
+
+  // ==== Pagination Wrapper Element ====
+  &__pagination-wrapper {
+    min-width: 200px;
+    display: flex;
+    justify-content: center;
+  }
+
+  // ==== Buttons Element ====
+  &__buttons {
+    display: flex;
+    gap: $padding-small;
+    flex-wrap: wrap;
+    min-width: 200px;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  // ==== RTL Support ====
+  [dir="rtl"] & {
+    text-align: right;
+
+    &__content {
+      flex-direction: row-reverse;
+    }
+
+    &__pagination-wrapper {
+      // Pagination component handles its own RTL
+    }
+
+    &__buttons {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ==== Responsive Design ====
+  @media (max-width: 768px) {
+    padding: $padding-normal;
+
+    &__content {
+      flex-direction: column;
+      gap: $padding-normal;
+    }
+
+    &__progress-wrapper {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__pagination-wrapper {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__buttons {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__children {
+      padding: $padding-normal;
+    }
+
+    // RTL responsive adjustments
+    [dir="rtl"] & {
+      &__content {
+        flex-direction: column;
+      }
+
+      &__pagination-wrapper {
+        // Pagination component handles its own RTL
+      }
+
+      &__buttons {
+        flex-direction: row;
+      }
+    }
+  }
+
+  // ==== Accessibility ====
+  &:focus-within {
+    box-shadow: $box-shadow;
+  }
+}

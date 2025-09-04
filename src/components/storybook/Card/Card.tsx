@@ -1,76 +1,144 @@
-import { FC } from "react";
+// Card.tsx - Simplified shell component following Modal pattern
+import { FC, ReactNode } from "react";
 import "./Card.scss";
-import { Icons } from "../icons/EmojiIcons";
 import Button from "../Button/Button";
 import { ButtonProps } from "../Button/Button";
+import { Icons } from "../icons/EmojiIcons";
 
-// ==== Interfaces ====
-interface BaseCardProps {
+type CardType = 'default' | 'marketplace' | 'info' | 'compact';
+type CardSize = 'small' | 'medium' | 'large';
+type CardVariant = 'default' | 'elevated' | 'outlined';
+
+interface CardProps {
+  id: string;
+  type?: CardType;
+  size?: CardSize;
+  variant?: CardVariant;
   title?: string;
   description?: string;
+  children?: ReactNode;
   buttons?: ButtonProps[];
-  children?: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  cardType?: "default" | "marketplace";
-}
-
-interface MarketplaceCardProps extends BaseCardProps {
+  // Type-specific props
   imageUrl?: string;
   metaData?: Array<{
     label: string;
     icon: string;
   }>;
+  icon?: ReactNode;
+  avatar?: ReactNode;
+  actions?: ReactNode;
 }
 
-export type ICardProps = MarketplaceCardProps;
+const Card: FC<CardProps> = ({
+  id,
+  type = 'default',
+  size = 'medium',
+  variant = 'default',
+  title,
+  description,
+  children,
+  buttons,
+  onClick,
+  className = "",
+  imageUrl,
+  metaData,
+  icon,
+  avatar,
+  actions,
+}) => {
+  const cardClassName = `card card--${type} card--${size} card--${variant} ${className}`.trim();
+  const cardId = `card-${id}`;
 
-// ==== Main Component ====
-const Card: FC<ICardProps> = (props) => {
-  const isMarketplace = props.cardType === "marketplace";
-  const cardClassName = `card card--${props.cardType || "default"} ${
-    props.className || ""
-  }`.trim();
+  const renderCardContent = () => {
+    switch (type) {
+      case 'marketplace':
+        return (
+          <>
+            {imageUrl && (
+              <div className="card__image">
+                <img src={imageUrl} alt={title || "card image"} />
+              </div>
+            )}
+            {metaData && metaData.length > 0 && (
+              <div className="card__meta">
+                {metaData.map((item, index) => (
+                  <span key={index} className="card__tag">
+                    {`${Icons[item.icon as keyof typeof Icons] ?? item.icon} ${
+                      item.label
+                    }`}
+                  </span>
+                ))}
+              </div>
+            )}
+          </>
+        );
+      
+      case 'info':
+        return (
+          <>
+            {icon && (
+              <div className="card__icon">
+                {icon}
+              </div>
+            )}
+            {children && (
+              <div className="card__custom-content">
+                {children}
+              </div>
+            )}
+          </>
+        );
+      
+      case 'compact':
+        return (
+          <>
+            {(avatar || actions) && (
+              <div className="card__row">
+                {avatar && (
+                  <div className="card__avatar">
+                    {avatar}
+                  </div>
+                )}
+                {actions && (
+                  <div className="card__actions">
+                    {actions}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        );
+      
+      default:
+        return children;
+    }
+  };
 
   return (
-    <div className={cardClassName} onClick={props.onClick} dir="rtl">
-      {/* Image Section */}
-      {isMarketplace && props.imageUrl && (
-        <div className="card__image">
-          <img src={props.imageUrl} alt={props.title || "card image"} />
+    <div className={cardClassName} onClick={onClick} dir="rtl" id={cardId}>
+      {/* Header Section */}
+      {(title || description) && (
+        <div className="card__header">
+          {title && <h5 className="card__title">{title}</h5>}
+          {description && (
+            <p className="card__description">{description}</p>
+          )}
         </div>
       )}
 
       {/* Content Section */}
       <div className="card__content">
-        {props.title && <h5 className="card__title">{props.title}</h5>}
-
-        {props.description && (
-          <p className="card__description">{props.description}</p>
-        )}
-
-        {isMarketplace && props.metaData && (
-          <div className="card__meta">
-            {props.metaData.map((item, index) => (
-              <span key={index} className="card__tag">
-                {`${Icons[item.icon as keyof typeof Icons] ?? item.icon} ${
-                  item.label
-                }`}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {props.children && (
-          <div className="card__children">{props.children}</div>
-        )}
+        {renderCardContent()}
       </div>
 
-      {/* Footer */}
-      {props.buttons && props.buttons.length > 0 && (
+      {/* Footer Section */}
+      {buttons && buttons.length > 0 && (
         <div className="card__footer">
-          {props.buttons.map((button, index) => (
+          {buttons.map((button, index) => (
             <Button
+              id={`card-button-${index}`}
               key={index}
               type={button.type}
               size="small"

@@ -35,12 +35,14 @@ const NavBar: React.FC<NavBarProps> = ({ logo, title, buttons, onToggle }) => {
           <div className="nav-content__buttons">
             {buttons?.map((button, index) => (
               <div key={index} className="nav-content__buttons__item">
-                <Button
-                  type="transparent-on-dark"
+                <Button 
+                  id={button.id}
+                  type={button.type}
+                  size={button.size}
                   btnText={button.btnText}
                   onClick={button.onClick}
                   icon={button.icon}
-                  fullWidth={true}
+                  fullWidth={button.fullWidth}
                 />
               </div>
             ))}

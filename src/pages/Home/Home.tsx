@@ -6,7 +6,8 @@ import Button from '../../components/storybook/Button/Button';
 import { logout } from '../../store/authSlice';
 import { RootState } from '../../store/store';
 import './Home.scss';
-
+import PageHeader from '../../components/storybook/NavBar/PageHeader';
+import logo from '../../assets/mate-logo-white.png';
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,24 +28,24 @@ const Home: React.FC = () => {
     switch (user?.role) {
       case 'Admin':
         return {
-          title: 'Welcome Admin',
-          description: 'You can manage the system, view all requests, and oversee operations.',
+          title: 'ברוך הבא, אדמין',
+          description: 'כאן אתה יכול לנהל את המערכת, לצפות בכל הבקשות ולנהל את הפעילות.',
           features: [
-            'View all system requests',
-            'Manage user accounts',
-            'System analytics and reports',
-            'Configuration settings'
+            'צפה בכל הבקשות במערכת',
+            'נהל חשבונות משתמשים',
+            'סטטיסטיקה ודוחות מערכת',
+            'הגדרות מערכת'
           ]
         };
       case 'Requester':
         return {
           title: 'Welcome Requester',
-          description: 'You can submit and view your assistance requests.',
+              description: 'אתה יכול לשלוח ולצפות בבקשות שלך.',
           features: [
-            'Submit new assistance requests',
-            'View your request history',
-            'Track request status',
-            'Update request details'
+            'שלוח בקשות חדשות',
+            'צפה בהיסטוריה של הבקשות שלך',
+            'עקוב אחר סטטוס הבקשות',
+            'לעדכן פרטים של הבקשה'
           ]
         };
       case 'Organization':
@@ -60,8 +61,8 @@ const Home: React.FC = () => {
         };
       default:
         return {
-          title: 'Welcome',
-          description: 'Please contact support for role assignment.',
+          title: 'ברוך הבא',
+          description: 'יש ליצור קשר עם התמיכה להצבת תפקיד.',
           features: []
         };
     }
@@ -75,28 +76,27 @@ const Home: React.FC = () => {
 
   return (
     <div className="home">
-      <div className="home__header">
-        <div className="home__user-info">
-          <h1 className="home__title">{roleContent.title}</h1>
-          <p className="home__user-name">Hello, {user.name}</p>
-        </div>
-        <Button
-          type="secondary"
-          size="medium"
-          btnText="Logout"
-          onClick={handleLogout}
-        />
-      </div>
-
+      <PageHeader
+        title={user.role}
+        logo={logo}
+        buttons={
+          [
+            {
+              type: 'secondary',
+              size: 'medium',
+              btnText: 'Logout',
+              onClick: handleLogout
+            }
+          ]
+        }
+      />
       <div className="home__content">
         <div className="home__main-card">
           <Card
-            title={roleContent.title}
+            title={`ברוך הבא, ${user.name}`}
             description={roleContent.description}
-            buttons={[]}
           >
             <div className="home__features">
-              <h3 className="home__features-title">Your Capabilities:</h3>
               <ul className="home__features-list">
                 {roleContent.features.map((feature, index) => (
                   <li key={index} className="home__features-item">

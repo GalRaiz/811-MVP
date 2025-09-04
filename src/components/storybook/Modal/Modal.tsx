@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './Modal.scss';
 import Tabs, { Tab } from './Tabs';
 import Button from '../Button/Button';
+import { Icons } from '../icons/EmojiIcons';
 
 type ModalSize = 'small' | 'medium' | 'large' | 'fit-content' | 'alert';
 
@@ -42,17 +43,7 @@ const Modal = ({
               size="small"
               onClick={onClose}
               icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+            Icons.close
               }
             />
           )}

@@ -3,18 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/storybook/FormField/FormField';
 import Button from '../../components/storybook/Button/Button';
-import Modal from '../../components/storybook/Modal/Modal';
+import Card from '../../components/storybook/Card/Card';
 import { loginStart, loginSuccess, loginFailure, clearError } from '../../store/authSlice';
 import authService from '../../services/authService';
 import { RootState } from '../../store/store';
 import './Login.scss';
 import logo from '../../assets/mate-logo-green.png';
-import PageFooter from '../../components/storybook/NavBar/PageFooter';
+import Footer from '../../components/storybook/NavBar/Footer';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading, error, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setIsError(true);
+    }
+  }, [error]);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -56,8 +63,8 @@ const Login: React.FC = () => {
     // Password validation
     if (!formData.password.trim()) {
       errors.password = 'Password is required';
-    } else if (formData.password.length < 3) {
-      errors.password = 'Password must be at least 3 characters long';
+    } else if (formData.password.length < 4) {
+      errors.password = 'Password must be at least 4 characters long';
     }
 
     setValidationErrors(errors);
@@ -108,20 +115,20 @@ const Login: React.FC = () => {
       Requester: { email: 'rachel@req.com', password: 'req123' },
       Organization: { email: 'olivia@org.com', password: 'org123' },
     };
-
     setFormData(demoCredentials[role]);
   };
 
   return (
     <div className="login">
-      <Modal
-        isOpen={true}
-        onClose={() => {}} // No close functionality for login
+      <Card
+        id="loginCard"
+        type="default"
+        size="large"
+        variant="elevated"
         title="ברוכים הבאים למערכת 811"
-        size="fit-content"
-        showCloseButton={false}
+        className="login__card"
       >
-        <div className="login__modal-content">
+        <div className="login__card-content">
           <div className="login__logo">
             <img src={logo} alt="811-Mate" />
           </div>
@@ -130,39 +137,30 @@ const Login: React.FC = () => {
             <div className="login__form-fields">
               <FormField
                 id="email"
-                // label="Email"
                 type="text"
                 value={formData.email}
                 onChange={(value) => handleInputChange('email', value as string)}
                 placeholder="הזן את הדוא״ל שלך"
                 required
-                className={validationErrors.email ? 'form-field--error' : ''}
+                validationRules={[{ type: 'email' }]}
               />
-              {validationErrors.email && (
-                <div className="login__error">{validationErrors.email}</div>
-              )}
 
               <FormField
                 id="password"
-                // label="Password"
                 type="password"
                 value={formData.password}
                 onChange={(value) => handleInputChange('password', value as string)}
                 placeholder="הזן את הסיסמה שלך"
                 required
-                className={validationErrors.password ? 'form-field--error' : ''}
               />
-              {validationErrors.password && (
-                <div className="login__error">{validationErrors.password}</div>
-              )}
             </div>
-
-            {error && (
+            {isError && (
               <div className="login__error login__error--global">{error}</div>
             )}
 
             <div className="login__actions">
               <Button
+                id="login"
                 type="primary"
                 size="medium"
                 btnText={isLoading ? 'מתחבר...' : 'התחברות'}
@@ -173,28 +171,31 @@ const Login: React.FC = () => {
             </div>
           </form>
         </div>
-        <PageFooter 
+        <Footer 
           text="Demo Accounts"
           buttons={[{
+            id: 'requester',
             type: 'secondary',
             size: 'medium',
             btnText: 'requester',
             onClick: () => handleDemoLogin('Requester'),
           },  
-          {
+          { 
+            id: 'admin',
             type: 'secondary',
             size: 'medium',
             btnText: 'admin',
             onClick: () => handleDemoLogin('Admin'),
           },
           {
+            id: 'organization',
             type: 'secondary',
             size: 'medium',
             btnText: 'organization',
             onClick: () => handleDemoLogin('Organization'),
           },]}
         />
-      </Modal>
+      </Card>
     </div>
   );
 };

@@ -1,14 +1,13 @@
 import React from 'react';
 import { useAssistanceForm } from '../../hooks/useAssistanceForm';
 import { assistanceTypes } from '../../data/assistanceTypesData';
-import CompactCard from '../storybook/Card/CompactCard';
-import CompactCardGrid from '../storybook/Card/CompactCardGrid';
+import { Card } from '../storybook/Card';
 import Button from '../storybook/Button/Button';
 
 /**
  * AssistanceTypeStep - Step 3: Assistance Type Selection
  *
- * This component now uses the new CompactCard components directly
+ * This component now uses the unified Card component
  * for consistent styling and better maintainability.
  */
 const AssistanceTypeStep: React.FC = () => {
@@ -43,7 +42,7 @@ const AssistanceTypeStep: React.FC = () => {
   return (
     <div className="assistance-type-step">
       <div className="assistance-type-step__header">
-        <Button
+        <Button id="clearAssistanceTypes"
           type="secondary"
           size="medium"
           btnText="אפס בחירה"
@@ -52,18 +51,18 @@ const AssistanceTypeStep: React.FC = () => {
         />
       </div>
 
-      <CompactCardGrid columns={4} gap="normal">
+      <div className="assistance-type-step__grid">
         {assistanceTypes.map(type => (
-          <CompactCard
+          <Card id={`assistanceType-${type.id}`}
             key={type.id}
-            id={type.id}
-            label={type.label}
-            icon={type.icon}
-            isSelected={selectedTypes.includes(type.label)}
+            type="compact"
+            title={type.label}
+            avatar={type.icon}
             onClick={() => handleTypeSelect(type.id)}
+            variant={selectedTypes.includes(type.label) ? "outlined" : "default"}
           />
         ))}
-      </CompactCardGrid>
+      </div>
     </div>
   );
 };

@@ -74,12 +74,12 @@ const RequestsPage: React.FC = () => {
         columns={[
           {
             label: 'שם הבקשה',
-            render: row => row.requestDetails.requestName,
+            render: (row: IRequest) => row.requestDetails.requestName,
           },
-          { label: 'מספר סידורי-id', render: row => row.id },
+          { label: 'מספר סידורי-id', render: (row: IRequest) => row.id },
           {
             label: 'סוג הבקשה',
-            render: row =>
+            render: (row: IRequest) =>
               getAssistanceTypeLabel(row.requestDetails.requestType.label),
           },
         ]}

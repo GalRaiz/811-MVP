@@ -3,7 +3,7 @@ import './RequesterHomePage.scss';
 import DashboardHeader from '../../components/storybook/NavBar/DashboardHeader';
 import RequestsSection from '../../components/RequestsSection';
 import AlertsSection from '../../components/AlertsSection';
-import SummaryCards from '../../components/storybook/Card/SummaryCards';
+import { Card } from '../../components/storybook/Card';
 import SideNavBar from '../../components/storybook/NavBar/SideNavBar';
 import logo from '../../assets/mate-logo-white.png';
 import { useNavigate } from 'react-router-dom';
@@ -45,10 +45,7 @@ const RequesterHomePage: React.FC = () => {
       },
     ];
   }, []);
-  const summaryCardsData = summaryCards.map(card => ({
-    ...card,
-    type: 'summary',
-  }));
+
 
   return (
     <div className="requester-home-page">
@@ -76,14 +73,26 @@ const RequesterHomePage: React.FC = () => {
 
             <div className="right-column">
               <AlertsSection />
-              <SummaryCards
-                data={summaryCardsData}
-                button={{
-                  btnText: 'פתיחת בקשה חדשה',
-                  onClick: () => navigate('/AssistanceFormRequest'),
-                  icon: Icons.add,
-                }}
-              />
+              <div className="summary-cards">
+                {summaryCards.map(card => (
+                  <Card
+                    key={card.id}
+                    type="info"
+                    title={card.title}
+                    icon={card.icon}
+                    className="summary-card"
+                  >
+                    <div className="summary-card__count">{card.count}</div>
+                  </Card>
+                ))}
+                <Card
+                  type="info"
+                  title="בקשה חדשה"
+                  icon={Icons.add}
+                  onClick={() => navigate('/AssistanceFormRequest')}
+                  className="summary-card summary-card--new"
+                />
+              </div>
             </div>
           </div>
         </div>

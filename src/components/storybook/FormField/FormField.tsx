@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '../Button/Button';
+import { useFormField, ValidationRule } from '../../../hooks/useFormField';
 import './FormField.scss';
 
 export interface FormFieldOption {
@@ -14,6 +15,7 @@ export interface FormFieldProps {
   placeholder?: string;
   type:
     | 'text'
+    | 'email'
     | 'tel'
     | 'number'
     | 'textarea'
@@ -37,7 +39,10 @@ export interface FormFieldProps {
   rows?: number;
   cols?: number;
   showClear?: boolean | (() => void);
-  icon?: React.ReactNode; // New icon prop
+  icon?: React.ReactNode;
+  validationRules?: ValidationRule[];
+  validateOnChange?: boolean;
+  validateOnBlur?: boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -59,13 +64,34 @@ const FormField: React.FC<FormFieldProps> = ({
   rows = 3,
   cols,
   showClear = true,
-  icon, // New icon prop
+  icon,
+  // New validation props
+  validationRules = [],
+  validateOnChange = false,
+  validateOnBlur = false,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
     Array.isArray(value) ? value : []
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Use the custom hook for form field management
+  const {
+    error: hookError,
+    validate,
+    clearError,
+    handleBlur,
+  } = useFormField({
+    initialValue: value,
+    validationRules: required ? [...validationRules, { type: 'required' }] : validationRules,
+    validateOnChange,
+    validateOnBlur,
+  });
+
+  // Determine which error to show (hook error takes precedence)
+  const displayError = hookError;
+  const showErrorState = !!displayError;
 
   // Handle click outside dropdown
   useEffect(() => {
@@ -97,6 +123,10 @@ const FormField: React.FC<FormFieldProps> = ({
   const handleInputChange = (newValue: string | number | boolean) => {
     if (!disabled) {
       onChange(newValue);
+      // Clear error when user starts typing
+      if (hookError) {
+        clearError();
+      }
     }
   };
 
@@ -108,6 +138,10 @@ const FormField: React.FC<FormFieldProps> = ({
 
       setSelectedOptions(newSelectedOptions);
       onChange(newSelectedOptions);
+      // Clear error when user makes a selection
+      if (hookError) {
+        clearError();
+      }
     }
   };
 
@@ -115,6 +149,10 @@ const FormField: React.FC<FormFieldProps> = ({
     if (!disabled) {
       onChange(optionValue);
       setIsDropdownOpen(false);
+      // Clear error when user makes a selection
+      if (hookError) {
+        clearError();
+      }
     }
   };
 
@@ -134,6 +172,10 @@ const FormField: React.FC<FormFieldProps> = ({
         onChange('');
       } else {
         onChange('');
+      }
+      // Clear error when field is cleared
+      if (hookError) {
+        clearError();
       }
     }
   };
@@ -175,6 +217,18 @@ const FormField: React.FC<FormFieldProps> = ({
     }
   };
 
+  // Enhanced input change handler with validation
+  const handleInputChangeWithValidation = (newValue: string | number | boolean) => {
+    handleInputChange(newValue);
+    // Trigger validation if configured
+    if (validateOnChange) {
+      // Small delay to avoid validation on every keystroke
+      setTimeout(() => {
+        validate();
+      }, 300);
+    }
+  };
+
   const renderInput = () => {
     const baseInputProps = {
       id,
@@ -182,6 +236,7 @@ const FormField: React.FC<FormFieldProps> = ({
       disabled,
       required,
       className: 'form-field__input',
+      onBlur: handleBlur,
     };
 
     switch (type) {
@@ -196,7 +251,7 @@ const FormField: React.FC<FormFieldProps> = ({
               type={type}
               value={value as string}
               placeholder={placeholder}
-              onChange={e => handleInputChange(e.target.value)}
+              onChange={e => handleInputChangeWithValidation(e.target.value)}
             />
             {shouldShowClear && (
               <Button
@@ -205,6 +260,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 icon="×"
                 onClick={handleClearClick}
                 isDisabled={disabled}
+                id="clear"
               />
             )}
           </div>
@@ -222,13 +278,14 @@ const FormField: React.FC<FormFieldProps> = ({
               min={min}
               max={max}
               step={step}
-              onChange={e => handleInputChange(Number(e.target.value))}
+              onChange={e => handleInputChangeWithValidation(Number(e.target.value))}
             />
             {shouldShowClear && (
               <Button
                 type="icon-only"
                 size="small"
                 icon="×"
+                id="clear"
                 onClick={handleClearClick}
                 isDisabled={disabled}
               />
@@ -246,13 +303,14 @@ const FormField: React.FC<FormFieldProps> = ({
               placeholder={placeholder}
               rows={rows}
               cols={cols}
-              onChange={e => handleInputChange(e.target.value)}
+              onChange={e => handleInputChangeWithValidation(e.target.value)}
             />
             {shouldShowClear && (
               <Button
                 type="icon-only"
                 size="small"
                 icon="×"
+                id="clear"
                 onClick={handleClearClick}
                 isDisabled={disabled}
               />
@@ -268,13 +326,14 @@ const FormField: React.FC<FormFieldProps> = ({
               {...baseInputProps}
               type="date"
               value={value as string}
-              onChange={e => handleInputChange(e.target.value)}
+              onChange={e => handleInputChangeWithValidation(e.target.value)}
             />
             {shouldShowClear && (
               <Button
                 type="icon-only"
                 size="small"
                 icon="×"
+                id="clear"
                 onClick={handleClearClick}
                 isDisabled={disabled}
               />
@@ -288,7 +347,7 @@ const FormField: React.FC<FormFieldProps> = ({
             {...baseInputProps}
             type="checkbox"
             checked={value as boolean}
-            onChange={e => handleInputChange(e.target.checked)}
+            onChange={e => handleInputChangeWithValidation(e.target.checked)}
           />
         );
 
@@ -303,7 +362,7 @@ const FormField: React.FC<FormFieldProps> = ({
                   value={option.value}
                   checked={value === option.value}
                   disabled={disabled || option.disabled}
-                  onChange={e => handleInputChange(e.target.value)}
+                  onChange={e => handleInputChangeWithValidation(e.target.value)}
                   className="form-field__radio-input"
                 />
                 <span className="form-field__radio-label">{option.label}</span>
@@ -325,6 +384,7 @@ const FormField: React.FC<FormFieldProps> = ({
                     placeholder ||
                     'בחר אפשרות'
                   }
+                  id="dropdown"
                   onClick={toggleDropdown}
                   isDisabled={disabled}
                   icon="▼"
@@ -343,6 +403,7 @@ const FormField: React.FC<FormFieldProps> = ({
                         }
                         size="small"
                         btnText={option.label}
+                        id="dropdown"
                         onClick={() => handleSelectChange(option.value)}
                         isDisabled={option.disabled}
                         fullWidth
@@ -356,6 +417,7 @@ const FormField: React.FC<FormFieldProps> = ({
                   type="icon-only"
                   size="small"
                   icon="×"
+                  id="clear"
                   onClick={handleClearClick}
                   isDisabled={disabled}
                 />
@@ -368,7 +430,7 @@ const FormField: React.FC<FormFieldProps> = ({
             <select
               {...baseInputProps}
               value={value as string}
-              onChange={e => handleInputChange(e.target.value)}
+              onChange={e => handleInputChangeWithValidation(e.target.value)}
             >
               {placeholder && (
                 <option value="" disabled>
@@ -390,6 +452,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 type="icon-only"
                 size="small"
                 icon="×"
+                id="clear"
                 onClick={handleClearClick}
                 isDisabled={disabled}
               />
@@ -402,6 +465,7 @@ const FormField: React.FC<FormFieldProps> = ({
           <div className="form-field__input-container">
             <div className="form-field__multi-select" ref={dropdownRef}>
               <Button
+               id="dropdown"
                 type="secondary"
                 size="medium"
                 btnText={
@@ -439,6 +503,7 @@ const FormField: React.FC<FormFieldProps> = ({
             </div>
             {shouldShowClear && (
               <Button
+                id="clear"
                 type="icon-only"
                 size="small"
                 icon="×"
@@ -455,7 +520,7 @@ const FormField: React.FC<FormFieldProps> = ({
   };
 
   return (
-    <div className={`form-field ${className} ${disabled ? 'disabled' : ''}`}>
+    <div className={`form-field ${className} ${disabled ? 'disabled' : ''} ${showErrorState ? 'form-field--error' : ''}`}>
       {label && (
         <label htmlFor={id} className="form-field__label">
           {label}
@@ -463,6 +528,12 @@ const FormField: React.FC<FormFieldProps> = ({
         </label>
       )}
       <div className="form-field__input-wrapper">{renderInput()}</div>
+      {showErrorState && displayError && (
+        <div className="form-field__error-tooltip">
+          <span className="form-field__error-icon">⚠️</span>
+          <span className="form-field__error-message">{displayError}</span>
+        </div>
+      )}
     </div>
   );
 };

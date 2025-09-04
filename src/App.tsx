@@ -17,11 +17,9 @@ import './App.scss';
 import RequestsPage from './pages/RequestsPage';
 import { assistanceRequests } from './data/requestsData';
 import NotFoundPage from './pages/NotFoundPage';
-import FormFieldDemo from './pages/FormFieldDemo';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import PageFooterDemo from './pages/PageFooterDemo';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,10 +45,6 @@ const App = () => {
         <Loader />
       ) : (
         <>
-          {/* <header className="App-header">
-            <img src={mateLogoGreen} className="App-logo" alt="logo" />
-          </header> */}
-
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={
@@ -58,8 +52,7 @@ const App = () => {
                 <Home />
               </ProtectedRoute>
             } />
-            <Route path="/formDemo" element={<FormFieldDemo />} />
-            <Route path="/footerDemo" element={<PageFooterDemo />} />
+
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/requesterHomePage" element={
               <ProtectedRoute requiredRole="Requester">
@@ -69,7 +62,7 @@ const App = () => {
             <Route
               path="/AssistanceFormRequest"
               element={
-                <ProtectedRoute requiredRole="Requester">
+                <ProtectedRoute >
                   <AssistanceFormRequest />
                 </ProtectedRoute>
               }

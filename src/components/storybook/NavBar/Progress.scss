@@ -1,0 +1,80 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+// ==== Progress Block ====
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-small;
+  align-items: center;
+
+  // ==== Steps Element ====
+  &__steps {
+    min-width: 100vw;
+    display: flex;
+    gap: $padding-small;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__step {
+    background-color: $progress-bar-color;
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+    flex: 1;
+
+    // ==== Active Modifier ====
+    &--active {
+      background-color: $secondary-color;
+    }
+
+    // ==== Completed Modifier ====
+    &--completed {
+      background-color: color.adjust($primary-color, $lightness: 10%);
+    }
+  }
+
+  // ==== Size Modifiers ====
+  &--small {
+    .progress__step {
+      height: 3px;
+      max-width: 35px;
+    }
+  }
+
+  &--medium {
+    .progress__step {
+      height: 4px;
+      max-width: 45px;
+    }
+  }
+
+  &--large {
+    .progress__step {
+      height: 6px;
+      max-width: 55px;
+    }
+  }
+
+  // ==== Responsive Design ====
+  @media (max-width: 768px) {
+    &__steps {
+      gap: $padding-xs;
+    }
+
+    &__step {
+      max-width: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__steps {
+      gap: 2px;
+    }
+
+    &__step {
+      max-width: 30px;
+      height: 3px;
+    }
+  }
+}

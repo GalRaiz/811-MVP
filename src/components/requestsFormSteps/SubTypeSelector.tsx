@@ -1,7 +1,6 @@
 import React from 'react';
 import { IAssistanceSubType } from '../../data/assistanceTypesData';
-import CompactCard from '../storybook/Card/CompactCard';
-import CompactCardGrid from '../storybook/Card/CompactCardGrid';
+import { Card } from '../storybook/Card';
 import Button from '../storybook/Button/Button';
 
 interface SubTypeSelectorProps {
@@ -13,7 +12,7 @@ interface SubTypeSelectorProps {
 /**
  * SubTypeSelector - Component for selecting multiple assistance sub-types
  *
- * This component now uses the new CompactCard components directly
+ * This component now uses the unified Card component
  * for consistent styling and better maintainability.
  */
 const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
@@ -46,18 +45,18 @@ const SubTypeSelector: React.FC<SubTypeSelectorProps> = ({
         />
       </div>
 
-      <CompactCardGrid columns={2} gap="normal">
+      <div className="sub-type-selector__grid">
         {subTypes.map(subType => (
-          <CompactCard
+          <Card
             key={subType.id}
-            id={subType.id}
-            label={subType.label}
-            icon={subType.icon}
-            isSelected={selectedSubType.some(st => st.id === subType.id)}
+            type="compact"
+            title={subType.label}
+            avatar={subType.icon}
             onClick={() => onSelect(subType.id)}
+            variant={selectedSubType.some(st => st.id === subType.id) ? "outlined" : "default"}
           />
         ))}
-      </CompactCardGrid>
+      </div>
     </div>
   );
 };

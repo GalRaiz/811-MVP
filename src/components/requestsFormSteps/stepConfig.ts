@@ -2,7 +2,7 @@ import React from 'react';
 import AssistanceForm from './AssistanceForm';
 import LocationStep from './LocationStep';
 import AssistanceTypeStep from './AssistanceTypeStep';
-import StepSubTypeSelection from '../../pages/AssistanceForm/StepSubTypeSelection';
+import StepSubTypeSelection from './AssistanceForm/StepSubTypeSelection';
 import FinalDetailsStep from './FinalDetailsStep';
 import AssistanceFormFinalStep from './AssistanceFormFinalStep';
 import FormSummaryStep from './FormSummaryStep';

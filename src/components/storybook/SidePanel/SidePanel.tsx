@@ -11,7 +11,7 @@ export interface IFilterOption {
   label: string;
   name: string;
   type?: 'select' | 'text' | 'multi-select';
-  options?: { value: string; label: string }[]; // for select
+  options?: { value: string; label: string }[];
   dependsOn?: string; // key of the filter this depends on
   getOptions?: (
     selectedValues: Record<string, string>
@@ -31,6 +31,7 @@ interface ISidePanelProps {
   detailsData?: IDetailItem[] | React.ReactNode;
   onClose: () => void;
   isOpen: boolean;
+  title?: string; // Optional title for the panel
 }
 
 const SidePanel: React.FC<ISidePanelProps> = ({
@@ -41,6 +42,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
   detailsData = [],
   onClose,
   isOpen,
+  title,
 }) => {
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
 
@@ -99,119 +101,73 @@ const SidePanel: React.FC<ISidePanelProps> = ({
       // FormField multi-select passes an array
       newValues = value;
     } else {
-      // Legacy string handling (comma-separated)
-      const currentValues = filterValues[key]
-        ? filterValues[key].split(',').filter(v => v.trim())
-        : [];
-      newValues = currentValues.includes(value)
-        ? currentValues.filter(v => v !== value)
-        : [...currentValues, value];
+      // Handle string value (fallback)
+      newValues = value ? [value] : [];
     }
 
-    const newValue = newValues.join(',');
-    console.log('Multi-select new value:', newValue);
-
-    // Find dependent filters that need to be cleared
-    const dependentFilters = filterOptions.filter(
-      filter => filter.dependsOn === key
-    );
-
-    // Create new filter values with the changed value and cleared dependent filters
-    const newFilterValues = { ...filterValues, [key]: newValue };
-    dependentFilters.forEach(filter => {
-      newFilterValues[filter.key] = '';
-    });
-
-    // Update state with all changes at once
-    setFilterValues(newFilterValues);
-
-    // Call onFilterChange for the main filter change
-    onFilterChange?.({ key, value: newValue });
-
-    // Call onFilterChange for each cleared dependent filter
-    dependentFilters.forEach(filter => {
-      onFilterChange?.({ key: filter.key, value: '' });
-    });
+    // Convert array back to string for consistency with existing logic
+    const stringValue = newValues.join(',');
+    handleFilterChange(key, stringValue);
   };
 
   const handleClearAll = () => {
-    console.log('handleClearAll called - clearing all filters');
-    // Clear the local state
-    setFilterValues({});
-
-    // Call the parent's clear function if provided
-    if (onClearFilters) {
-      onClearFilters();
-    }
-  };
-
-  const handleClose = () => {
-    console.log('handleClose called - clearing filters and closing panel');
-    // Clear filters when closing the panel
     setFilterValues({});
     onClearFilters?.();
-    onClose();
   };
 
-  const getFilterOptions = (filter: IFilterOption) => {
+  const getCurrentValue = (key: string): string => {
+    return filterValues[key] || '';
+  };
+
+  const getOptions = (filter: IFilterOption): { value: string; label: string }[] => {
     if (filter.getOptions) {
       return filter.getOptions(filterValues);
     }
     return filter.options || [];
   };
 
-  const renderFilterInput = (filter: IFilterOption) => {
-    const currentValue = filterValues[filter.key];
-    const options = getFilterOptions(filter);
+  const isDisabled = (filter: IFilterOption): boolean => {
+    if (!filter.dependsOn) return false;
+    const parentValue = filterValues[filter.dependsOn];
+    return !parentValue || parentValue.trim() === '';
+  };
 
-    // Check if this filter depends on another filter and if that dependency is not selected
-    const isDisabled: boolean = Boolean(
-      filter.dependsOn && !filterValues[filter.dependsOn]?.trim()
-    );
+  const renderFilterInput = (filter: IFilterOption) => {
+    const currentValue = getCurrentValue(filter.key);
+    const options = getOptions(filter);
+    const disabled = isDisabled(filter);
 
     switch (filter.type) {
-      case 'text':
-        return (
-          <FormField // search by text
-            id={filter.key}
-            type="text"
-            value={currentValue || ''}
-            placeholder={`חפש לפי: ${filter.label.toLowerCase()}...`}
-            onChange={e => handleFilterChange(filter.key, e as string)}
-            showClear={true}
-            icon={Icons.search}
-            disabled={isDisabled}
-          />
-        );
-
-      case 'multi-select': {
-        const multiSelectValue =
-          currentValue && currentValue.trim()
-            ? currentValue.split(',').filter(v => v.trim())
-            : [];
-        console.log('Rendering multi-select FormField:', {
-          key: filter.key,
-          currentValue,
-          multiSelectValue,
-        });
+      case 'multi-select':
         return (
           <FormField
             id={filter.key}
             type="multi-select"
-            value={multiSelectValue}
+            value={currentValue ? currentValue.split(',').filter(Boolean) : []}
             placeholder={
-              isDisabled
-                ? 'בחר תחילה סוג...'
-                : `בחר ${filter.label.toLowerCase()}...`
+              disabled
+                ? 'תחילה בחר'
+                : `חפש לפי: ${filter.label.toLowerCase()}`
             }
             onChange={e => handleMultiSelectChange(filter.key, e as string[])}
             options={options}
             hasDropdown={true}
             showClear={true}
-            disabled={isDisabled}
+            disabled={disabled}
           />
         );
-      }
+
+      case 'text':
+        return (
+          <FormField
+            id={filter.key}
+            type="text"
+            value={currentValue}
+            placeholder={`חפש לפי: ${filter.label.toLowerCase()}`}
+            onChange={e => handleFilterChange(filter.key, e as string)}
+            showClear={true}
+          />
+        );
 
       case 'select':
       default:
@@ -219,9 +175,9 @@ const SidePanel: React.FC<ISidePanelProps> = ({
           <FormField
             id={filter.key}
             type="select"
-            value={currentValue || ''}
+            value={currentValue}
             placeholder={
-              isDisabled
+              disabled
                 ? 'תחילה בחר'
                 : `חפש לפי: ${filter.label.toLowerCase()}`
             }
@@ -229,7 +185,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
             options={options}
             hasDropdown={true}
             showClear={true}
-            disabled={isDisabled}
+            disabled={disabled}
           />
         );
     }
@@ -241,13 +197,14 @@ const SidePanel: React.FC<ISidePanelProps> = ({
         return (
           <div className="side-panel__section side-panel__section--filter">
             <div className="side-panel__filter-header">
-              <h5>Filter Options</h5>
+              <h5>{title || 'Filter Options'}</h5>
               {filterOptions.length > 0 && (
                 <Button
                   type="secondary"
                   size="small"
                   btnText="Clear All"
                   onClick={handleClearAll}
+                  icon={Icons.refresh}
                 />
               )}
             </div>
@@ -259,7 +216,13 @@ const SidePanel: React.FC<ISidePanelProps> = ({
                 </div>
               ))
             ) : (
-              <EmptyState />
+              <div className="empty-state">
+                <div className="empty-state__icon">🔍</div>
+                <div className="empty-state__title">No Filters Available</div>
+                <div className="empty-state__description">
+                  There are no filter options configured for this view.
+                </div>
+              </div>
             )}
           </div>
         );
@@ -267,6 +230,7 @@ const SidePanel: React.FC<ISidePanelProps> = ({
       case 'details':
         return (
           <div className="side-panel__section">
+            <h5>{title || 'Details'}</h5>
             {detailsData &&
             Array.isArray(detailsData) &&
             detailsData.length > 0 ? (
@@ -282,12 +246,26 @@ const SidePanel: React.FC<ISidePanelProps> = ({
                 ))}
               </DisplayGroup>
             ) : (
-              <EmptyState />
+              <div className="empty-state">
+                <div className="empty-state__icon">📋</div>
+                <div className="empty-state__title">No Details Available</div>
+                <div className="empty-state__description">
+                  Select an item to view its details.
+                </div>
+              </div>
             )}
           </div>
         );
       default:
-        return <EmptyState />;
+        return (
+          <div className="empty-state">
+            <div className="empty-state__icon">❓</div>
+            <div className="empty-state__title">Unknown Mode</div>
+            <div className="empty-state__description">
+              The side panel is in an unknown mode.
+            </div>
+          </div>
+        );
     }
   };
 
@@ -297,9 +275,9 @@ const SidePanel: React.FC<ISidePanelProps> = ({
     <div className={`side-panel ${isOpen ? 'side-panel--open' : ''}`}>
       <div className="side-panel__header">
         <Button
-          type="close"
+          type="icon-only"
           size="small"
-          onClick={handleClose}
+          onClick={onClose}
           icon={Icons.close}
         />
       </div>

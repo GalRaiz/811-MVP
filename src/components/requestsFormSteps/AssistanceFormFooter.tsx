@@ -97,6 +97,7 @@ const AssistanceFormFooter: React.FC = () => {
         {/* Don't show Previous button on first step */}
         {formState.currentStep > 1 ? (
           <Button
+            id="previousStep"
             type="primary"
             icon={
               <span className="assistance-form-footer__button-arrow">→</span>
@@ -106,6 +107,7 @@ const AssistanceFormFooter: React.FC = () => {
           />
         ) : (
           <Button
+            id="goHome"
             type="secondary"
             btnText="חזור לדף הבית"
             onClick={handleGoHome}
@@ -122,6 +124,7 @@ const AssistanceFormFooter: React.FC = () => {
         </div>
 
         <Button
+          id="nextStep"
           type="primary"
           size="medium"
           onClick={handleNext}

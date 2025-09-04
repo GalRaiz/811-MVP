@@ -1,10 +1,10 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import Table, { Column } from '../Table/Table';
+import { Table, Column } from '../Table';
 import SidePanel from '../SidePanel/SidePanel';
 import SearchBar from '../FormField/SearchBar';
 import EmptyState from '../EmptyState/EmptyState';
 import Modal from '../Modal/Modal';
-import Card from '../Card/Card';
+import { Card } from '../Card';
 import Button from '../Button/Button';
 import { getNestedValue } from '../../../utils/getNestedValue';
 
@@ -502,22 +502,7 @@ function TableOrCards<T extends { id: string | number }>({
     ]
   );
 
-  // Adapter function to convert the filter change format for Table component
-  const handleTableFilterChange = useCallback(
-    (filters: Record<string, string | string[]>) => {
-      // Convert array values to strings for compatibility
-      const stringFilters: Record<string, string> = {};
-      Object.entries(filters).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          stringFilters[key] = value.join(',');
-        } else {
-          stringFilters[key] = value;
-        }
-      });
-      onFilterChange?.(stringFilters);
-    },
-    [onFilterChange]
-  );
+
 
   const renderViewToggle = () => {
     if (!showViewToggle) return null;
@@ -566,13 +551,8 @@ function TableOrCards<T extends { id: string | number }>({
           <Table
             data={filteredData}
             columns={columns}
-            filterOptions={filterOptions}
-            onFilterChange={handleTableFilterChange}
-            panelRenderer={panelRenderer}
-            searchField={searchField}
-            searchPlaceholder={searchPlaceholder}
-            disableInternalFiltering={true}
             onRowClick={handleTableRowClick}
+            hasActiveFilters={hasActiveFilters}
           />
         </div>
         <SidePanel
@@ -611,7 +591,7 @@ function TableOrCards<T extends { id: string | number }>({
               filteredData.map(item => (
                 <Card
                   key={item.id}
-                  cardType="marketplace"
+                  type="marketplace"
                   title={cardRenderer.title(item)}
                   description={cardRenderer.description?.(item)}
                   imageUrl={cardRenderer.imageUrl?.(item)}

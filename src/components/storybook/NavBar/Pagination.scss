@@ -1,0 +1,109 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+// ==== Pagination Block ====
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: $padding-small;
+  min-width: 200px;
+  justify-content: center;
+  
+
+  // ==== Arrow Elements ====
+  &__arrow {
+    background: transparent;
+    border: none;
+    color: $primary-color;
+    font-size: $h3-font-size;
+    font-weight: 500;
+    cursor: pointer;
+    padding: $padding-xs;
+    border-radius: $border-radius;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+
+    &:hover:not(:disabled) {
+      color: $primary-color;
+      background-color: $header-background-gray;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+      color: $text-muted;
+    }
+
+    // &--prev {
+    //   // RTL support - no special styling needed
+    // }
+
+    // &--next {
+    //   // RTL support - no special styling needed
+    // }
+  }
+
+  // ==== Numbers Element ====
+  &__numbers {
+    display: flex;
+    align-items: center;
+    gap: $padding-small;
+  }
+
+  // ==== Number Element ====
+  &__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    color: $text-primary;
+    border-radius: $border-radius;
+    font-size: $h5-font-size;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background-color: $header-background-gray;
+      color: $primary-color;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    // ==== Active Modifier ====
+    &--active {
+      background-color: color.adjust($primary-color, $lightness: 15%);
+      color: $text-inverse;
+      border: none;
+    }
+
+    // ==== Ellipsis Modifier ====
+    &--ellipsis {
+      cursor: default;
+      border: none;
+      background: transparent;
+      width: auto;
+      padding: 0 4px;
+      color: $text-muted;
+
+      &:hover {
+        background: transparent;
+        color: $text-muted;
+      }
+    }
+  }
+
+  // ==== RTL Support ====
+  [dir="rtl"] & {
+    flex-direction: row-reverse;
+  }
+}

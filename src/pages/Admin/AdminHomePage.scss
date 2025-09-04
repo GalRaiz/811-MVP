@@ -8,6 +8,8 @@
   display: flex;
   min-height: 100vh;
   direction: rtl;
+  height: 100vh; // Ensure full viewport height
+  overflow: hidden; // Prevent page-level scrolling
 
   // ============================================================================
   // USER INFO - Admin Role Display
@@ -43,6 +45,9 @@
     display: flex;
     flex-direction: column;
     gap: $padding-large;
+    min-height: 0; // Important for flex child to shrink
+    height: 100vh; // Full viewport height
+    overflow: hidden; // Prevent content overflow
   }
 
   // ============================================================================
@@ -54,6 +59,11 @@
     border-radius: $border-radius;
     padding: $padding-large;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0; // Important for flex child to shrink
+    overflow: hidden; // Prevent section overflow
   }
 
   &__requests-header {
@@ -63,6 +73,7 @@
     margin-bottom: $padding-large;
     flex-wrap: wrap;
     gap: $padding-medium;
+    flex-shrink: 0; // Prevent header from shrinking
   }
 
   &__requests-title {
@@ -78,9 +89,117 @@
     flex-wrap: wrap;
   }
 
-  &__requests-table {
-    .table {
-      width: 100%;
+  // ============================================================================
+  // TABLE CONTAINER - Fixed Height with Scrolling
+  // ============================================================================
+
+  &__container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // Important for flex child to shrink
+    position: relative;
+    overflow: hidden; // Prevent container overflow
+
+    // When navigation is closed, adjust spacing
+    &.nav-closed {
+      margin-left: 0;
+    }
+
+    &__table {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0; // Important for flex child to shrink
+      overflow: hidden; // Prevent table overflow
+      
+      // Ensure TableContainer takes full height and doesn't overflow
+      .table-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+
+        // Override default table container layout for fixed height
+        &__layout {
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
+          
+          // When panel is open, ensure table has fixed height
+          &--panel-open {
+            .table-container__table {
+              flex: 1;
+              min-height: 0;
+              overflow: hidden;
+              
+              // Ensure the table itself has proper height constraints
+              .table {
+                height: 100%;
+                min-height: 0;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                
+                &__layout {
+                  flex: 1;
+                  min-height: 0;
+                  overflow: hidden;
+                }
+                
+                &__wrapper {
+                  flex: 1;
+                  min-height: 0;
+                  overflow: hidden;
+                }
+                
+                &__content {
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  overflow: hidden;
+                  
+                  thead {
+                    flex-shrink: 0; // Keep header fixed
+                  }
+                  
+                  tbody {
+                    flex: 1;
+                    overflow-y: auto; // Enable vertical scrolling
+                    overflow-x: hidden;
+                    min-height: 0;
+                    
+                    // Custom scrollbar styling for better UX
+                    &::-webkit-scrollbar {
+                      width: 8px;
+                    }
+                    
+                    &::-webkit-scrollbar-track {
+                      background: #f1f5f9;
+                      border-radius: 4px;
+                    }
+                    
+                    &::-webkit-scrollbar-thumb {
+                      background: #cbd5e1;
+                      border-radius: 4px;
+                      transition: background 0.2s ease;
+                      
+                      &:hover {
+                        background: #94a3b8;
+                      }
+                    }
+                    
+                    &::-webkit-scrollbar-corner {
+                      background: #f1f5f9;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -92,6 +211,13 @@
     display: flex;
     align-items: center;
     gap: $padding-xs;
+    
+    p {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
   }
 
   &__status-icon {
@@ -107,6 +233,13 @@
     display: flex;
     align-items: center;
     gap: $padding-xs;
+    
+    p {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
   }
 
   &__field-icon {
@@ -123,5 +256,66 @@
     font-weight: 500;
     color: $text-color;
   }
- 
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN
+// ============================================================================
+
+@media (max-width: 768px) {
+  .admin-home-page {
+    &__content {
+      margin-right: 0;
+      padding: $padding-medium;
+      height: 100vh;
+    }
+    
+    &__requests-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $padding-medium;
+    }
+    
+    &__requests-tabs {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    
+    &__container {
+      &__table {
+        .table-container {
+          &__layout {
+            &--panel-open {
+              .table-container__table {
+                .table {
+                  &__content {
+                    tbody {
+                      overflow-y: auto; // Ensure scrolling works on mobile
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-home-page {
+    &__requests-section {
+      padding: $padding-medium;
+    }
+    
+    &__requests-tabs {
+      flex-direction: column;
+      width: 100%;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
 }
